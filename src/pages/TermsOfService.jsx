@@ -71,7 +71,7 @@ export default function TermsOfService() {
 
             <h3 className="text-white font-semibold text-sm mt-4 mb-2">5.1 Client Cancellation</h3>
             <p>
-              Clients may cancel services at any time by providing 30 days' written notice to <a href="mailto:info@argogroup.com" className="text-gold hover:underline">info@argogroup.com</a>. The effective cancellation date will be determined from the date the written notice is received.
+              Clients may cancel services at any time by providing 30 days' written notice to <a href="mailto:info@groupargous.com" className="text-gold hover:underline">info@groupargous.com</a>. The effective cancellation date will be determined from the date the written notice is received.
             </p>
 
             <h3 className="text-white font-semibold text-sm mt-4 mb-2">5.2 Pro-Rated Final Invoice</h3>
@@ -132,7 +132,7 @@ export default function TermsOfService() {
 
             <h3 className="text-white font-semibold text-sm mt-4 mb-2">9.2 ARGO Group Portfolio Rights</h3>
             <p>
-              ARGO Group retains the right to reference and display work completed for Clients in its portfolio, case studies, and marketing materials. If a Client wishes to restrict this use, they must submit a written request to <a href="mailto:info@argogroup.com" className="text-gold hover:underline">info@argogroup.com</a>, and ARGO Group will honor the request on a case-by-case basis.
+              ARGO Group retains the right to reference and display work completed for Clients in its portfolio, case studies, and marketing materials. If a Client wishes to restrict this use, they must submit a written request to <a href="mailto:info@groupargous.com" className="text-gold hover:underline">info@groupargous.com</a>, and ARGO Group will honor the request on a case-by-case basis.
             </p>
 
             <h3 className="text-white font-semibold text-sm mt-4 mb-2">9.3 Pre-Existing IP</h3>
@@ -171,7 +171,7 @@ export default function TermsOfService() {
 
             <h3 className="text-white font-semibold text-sm mt-4 mb-2">12.2 EU/EEA Clients — GDPR Compliance</h3>
             <p>
-              For Clients based in the European Union or European Economic Area, ARGO processes personal data in compliance with the General Data Protection Regulation (GDPR) (EU) 2016/679. Clients have the right to access, rectify, erase, restrict, or port their personal data, and to lodge a complaint with a supervisory authority. To exercise any of these rights, contact <a href="mailto:info@argogroup.com" className="text-gold hover:underline">info@argogroup.com</a>.
+              For Clients based in the European Union or European Economic Area, ARGO processes personal data in compliance with the General Data Protection Regulation (GDPR) (EU) 2016/679. Clients have the right to access, rectify, erase, restrict, or port their personal data, and to lodge a complaint with a supervisory authority. To exercise any of these rights, contact <a href="mailto:info@groupargous.com" className="text-gold hover:underline">info@groupargous.com</a>.
             </p>
 
             <h3 className="text-white font-semibold text-sm mt-4 mb-2">12.3 Data Shared by Clients</h3>
@@ -228,7 +228,7 @@ export default function TermsOfService() {
             <div className="mt-4 p-5 bg-dark-surface border border-dark-border rounded-xl">
               <p className="text-white font-medium">ARGO Group</p>
               <p className="mt-1">
-                Email: <a href="mailto:info@argogroup.com" className="text-gold hover:underline">info@argogroup.com</a>
+                Email: <a href="mailto:info@groupargous.com" className="text-gold hover:underline">info@groupargous.com</a>
               </p>
               <p className="mt-1">Barcelona, Spain · Miami, Florida, USA</p>
             </div>

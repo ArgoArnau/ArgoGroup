@@ -53,8 +53,8 @@ export default function Footer({ setShowBanner }) {
             <h4 className="text-white font-semibold text-sm tracking-wider uppercase mb-4">{t.footer.contactTitle}</h4>
             <ul className="space-y-3 mb-6">
               <li>
-                <a href="mailto:info@argogroup.com" className="flex items-center gap-2 text-gray-400 hover:text-gold text-sm transition-colors">
-                  <Mail size={14} /> info@argogroup.com
+                <a href="mailto:info@groupargous.com" className="flex items-center gap-2 text-gray-400 hover:text-gold text-sm transition-colors">
+                  <Mail size={14} /> info@groupargous.com
                 </a>
               </li>
             </ul>
