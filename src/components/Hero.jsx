@@ -33,7 +33,7 @@ export default function Hero() {
         </h1>
 
         {/* Subheading */}
-        <p className="text-gray-400 text-sm md:text-base whitespace-nowrap mb-3">
+        <p className="text-gray-400 text-sm md:text-base mb-3">
           {t.hero.sub}
         </p>
 
