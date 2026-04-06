@@ -18,7 +18,7 @@ function FAQItem({ item, isOpen, onToggle }) {
 
       <div className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
         <div className="overflow-hidden">
-          <p className="px-6 pb-5 text-gray-400 text-sm leading-relaxed">{item.a}</p>
+          <p className="px-6 pt-4 pb-5 text-gray-400 text-sm leading-relaxed">{item.a}</p>
         </div>
       </div>
     </div>
