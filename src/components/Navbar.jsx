@@ -48,7 +48,7 @@ export default function Navbar() {
             </a>
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com/company/YOURCOMPANY"
+              href="https://www.linkedin.com/company/group-argo/"
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 border border-dark-border rounded-full flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-colors"
@@ -88,7 +88,7 @@ export default function Navbar() {
         <div className="md:hidden bg-dark-surface border-t border-dark-border px-4 pb-4 pt-2 space-y-3">
           <a href="#services" onClick={handleServicesClick} className="block text-gray-300 hover:text-gold py-2 text-sm">{t.nav.services}</a>
           <a
-            href="https://linkedin.com/company/YOURCOMPANY"
+            href="https://www.linkedin.com/company/group-argo/"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}

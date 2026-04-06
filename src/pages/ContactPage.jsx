@@ -47,7 +47,7 @@ export default function ContactPage() {
           </a>
           <span className="hidden sm:block text-dark-border">|</span>
           <a
-            href="https://linkedin.com/company/YOURCOMPANY"
+            href="https://www.linkedin.com/company/group-argo/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-400 hover:text-gold transition-colors text-sm"

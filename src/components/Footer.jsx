@@ -59,7 +59,7 @@ export default function Footer({ setShowBanner }) {
               </li>
             </ul>
             <a
-              href="https://linkedin.com/company/YOURCOMPANY"
+              href="https://www.linkedin.com/company/group-argo/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center w-9 h-9 border border-dark-border rounded-full text-gray-400 hover:text-gold hover:border-gold transition-colors mb-3"
