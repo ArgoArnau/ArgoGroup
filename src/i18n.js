@@ -232,7 +232,7 @@ export const translations = {
               heading: 'Paid Media y Estrategia de Canales',
               headline: 'El mensaje correcto, en la plataforma correcta, frente a las personas correctas',
               items: [
-                'Meta Ads, Google Ads, TikTok Ads y LinkedIn Ads — elegimos los canales que encajan con tu audiencia',
+                'Meta Ads, Google Ads, TikTok Ads y LinkedIn Ads; elegimos los canales que encajan con tu audiencia',
                 'Alineación total con tus objetivos de marketing, calendarios comerciales y lanzamientos de producto',
                 'Planes de escalado diseñados para crecer en ingresos sin sacrificar rentabilidad',
               ],
@@ -242,7 +242,7 @@ export const translations = {
               headline: 'Estamos dentro de tus campañas cada día para que tú no tengas que estarlo',
               items: [
                 'Optimización continua de estructura de campañas, segmentación de audiencias y asignación de presupuesto',
-                'Decisiones en tiempo real basadas en datos — sin esperar informes mensuales para arreglar lo que falla',
+                'Decisiones en tiempo real basadas en datos; sin esperar informes mensuales para arreglar lo que falla',
                 'A/B testing en creatividades, copy y segmentación para encontrar lo que convierte más rápido',
               ],
             },
@@ -263,7 +263,7 @@ export const translations = {
           sections: [
             {
               heading: 'Automatización Full-Funnel',
-              headline: 'Del primer clic al cierre — completamente automatizado',
+              headline: 'Del primer clic al cierre; completamente automatizado',
               items: [
                 'Flujos end-to-end: captación, nurturing y entrega del lead sin pasos manuales',
                 'Personalización instantánea: la IA genera contenido y comunicaciones a escala',
@@ -274,7 +274,7 @@ export const translations = {
               heading: 'CRM y Captación de Leads',
               headline: 'Cada lead capturado, sincronizado y listo para cerrar',
               items: [
-                'Sincronización instantánea con HubSpot, Pipedrive y más — cero leads perdidos',
+                'Sincronización instantánea con HubSpot, Pipedrive y más; cero leads perdidos',
                 'Alertas en tiempo real para que tu equipo actúe en el momento exacto',
                 'Puntuación y segmentación automática de leads desde el primer día',
               ],
@@ -293,7 +293,7 @@ export const translations = {
               headline: 'Siempre sabrás qué funciona y por qué',
               items: [
                 'Dashboards personalizados: vista en tiempo real de inversión, coste por lead y ROI',
-                'Un informe centralizado para todas tus métricas — sin más hojas de cálculo',
+                'Un informe centralizado para todas tus métricas; sin más hojas de cálculo',
                 'Analítica predictiva para anticipar el crecimiento y ajustar la estrategia a tiempo',
               ],
             },
@@ -355,7 +355,7 @@ export const translations = {
         },
         {
           q: '¿Qué pasa si una campaña no está funcionando?',
-          a: 'Monitorizamos las campañas a diario y ajustamos de forma proactiva. Siempre sabrás qué está pasando y por qué — la transparencia total es fundamental en nuestra forma de trabajar.',
+          a: 'Monitorizamos las campañas a diario y ajustamos de forma proactiva. Siempre sabrás qué está pasando y por qué; la transparencia total es fundamental en nuestra forma de trabajar.',
         },
         {
           q: '¿Necesito tener herramientas o tecnología configurada antes de trabajar con vosotros?',
