@@ -28,7 +28,7 @@ export default function ContactPage() {
 
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 border-t border-dark-border pt-10">
           <a
-            href="https://wa.me/YOURPHONENUMBER"
+            href="https://wa.me/34685162838?text=Hi%2C%20I%27m%20interested%20in%20ARGO%27s%20services"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-gray-400 hover:text-gold transition-colors text-sm"

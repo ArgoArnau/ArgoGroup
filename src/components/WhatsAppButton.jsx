@@ -1,7 +1,7 @@
 export default function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/YOURPHONENUMBER"
+      href="https://wa.me/34685162838?text=Hi%2C%20I%27m%20interested%20in%20ARGO%27s%20services"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 group"
