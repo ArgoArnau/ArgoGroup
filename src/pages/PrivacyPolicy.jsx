@@ -19,7 +19,7 @@ export default function PrivacyPolicy() {
               ARGO Group is a digital marketing and AI automation agency with offices in Barcelona, Spain, and Miami, Florida, USA. We provide performance marketing, workflow automation, AI-powered services, and CRM integration to clients worldwide.
             </p>
             <p className="mt-3">
-              For any privacy-related questions or requests, please contact us at: <a href="mailto:info@groupargo.com" className="text-gold hover:underline">info@groupargo.com</a>
+              For any privacy-related questions or requests, please contact us at: <a href="mailto:info@groupargous.com" className="text-gold hover:underline">info@groupargous.com</a>
             </p>
           </div>
 
@@ -166,7 +166,7 @@ export default function PrivacyPolicy() {
               <p className="text-white font-medium">ARGO Group</p>
               <p className="mt-1">Barcelona, Spain · Miami, Florida, USA</p>
               <p className="mt-1">
-                Email: <a href="mailto:info@groupargo.com" className="text-gold hover:underline">info@groupargo.com</a>
+                Email: <a href="mailto:info@groupargous.com" className="text-gold hover:underline">info@groupargous.com</a>
               </p>
             </div>
           </div>
