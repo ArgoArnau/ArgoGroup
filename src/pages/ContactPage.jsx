@@ -40,10 +40,10 @@ export default function ContactPage() {
           </a>
           <span className="hidden sm:block text-dark-border">|</span>
           <a
-            href="mailto:hello@argo.com"
+            href="mailto:info@groupargous.com"
             className="flex items-center gap-2 text-gray-400 hover:text-gold transition-colors text-sm"
           >
-            <Mail size={14} /> hello@argo.com
+            <Mail size={14} /> info@groupargous.com
           </a>
           <span className="hidden sm:block text-dark-border">|</span>
           <a
