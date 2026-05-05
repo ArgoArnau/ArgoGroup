@@ -60,7 +60,7 @@ export const translations = {
           sections: [
             {
               heading: 'Full-Funnel Automation',
-              headline: 'From first click to closed deal — fully automated',
+              headline: 'From first click to closed deal; fully automated',
               items: [
                 'End-to-end workflows: lead capture, nurturing, and delivery without manual steps',
                 'Instant personalization: AI generates custom content and communications at scale',
@@ -71,7 +71,7 @@ export const translations = {
               heading: 'CRM & Lead Capture',
               headline: 'Every lead captured, synced, and ready to close',
               items: [
-                'Instant CRM sync with HubSpot, Pipedrive, and more — zero leads fall through the cracks',
+                'Instant CRM sync with HubSpot, Pipedrive, and more; zero leads fall through the cracks',
                 'Real-time alerts so your sales team acts at the right moment',
                 'Automatic lead scoring and segmentation out of the box',
               ],
@@ -90,8 +90,50 @@ export const translations = {
               headline: 'Always know what\'s working and why',
               items: [
                 'Custom dashboards: real-time view of ad spend, lead costs, and campaign ROI',
-                'One centralized report for all your metrics — no more spreadsheet juggling',
+                'One centralized report for all your metrics; no more spreadsheet juggling',
                 'Predictive analytics to anticipate growth and adjust strategy before it\'s too late',
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Creative & Brand Assets',
+          subtitle: 'Where brand identity meets measurable results',
+          sections: [
+            {
+              heading: 'Brand Foundations That Perform',
+              headline: 'A consistent brand is the baseline for any campaign that scales',
+              items: [
+                'Logo, color systems, typography, and brand guide built to perform across paid and organic channels',
+                'Visual identity designed with conversion in mind',
+                'Brand foundations that make every ad, landing page, and post instantly recognizable',
+              ],
+            },
+            {
+              heading: 'Creative Built for Paid Media',
+              headline: 'Ad creatives designed to be tested, iterated, and optimized',
+              items: [
+                'Static and motion creatives tailored for Ads',
+                'Visuals aligned with audience, funnel stage, and campaign objective',
+                'Iterative design process integrated with our performance team: we create, test, and double down on what works',
+              ],
+            },
+            {
+              heading: 'Social Media & Website Design',
+              headline: 'The digital surfaces where your audience meets your brand',
+              items: [
+                'Social media feed setup and launch content aligned with your brand guide',
+                'Website design or redesign focused on clarity, speed, and conversion',
+                'Seamless integration with our performance marketing and automation workflows',
+              ],
+            },
+            {
+              heading: 'Additional Creative Services',
+              headline: 'Everything else your brand might need along the way',
+              items: [
+                'Merchandise design, editorial, and packaging',
+                'Custom creative for product launches, events, and seasonal campaigns',
+                'Project-based creative work tailored to specific commercial goals',
               ],
             },
           ],
@@ -295,6 +337,48 @@ export const translations = {
                 'Dashboards personalizados: vista en tiempo real de inversión, coste por lead y ROI',
                 'Un informe centralizado para todas tus métricas; sin más hojas de cálculo',
                 'Analítica predictiva para anticipar el crecimiento y ajustar la estrategia a tiempo',
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Creatividad y Activos de Marca',
+          subtitle: 'Donde la identidad de marca se convierte en resultados medibles',
+          sections: [
+            {
+              heading: 'Bases de Marca que Convierten',
+              headline: 'Una marca consistente es la base de cualquier campaña que escala',
+              items: [
+                'Logo, sistemas de color, tipografía y guía de marca diseñados para rendir en canales de pago y orgánicos',
+                'Identidad visual concebida con la conversión en mente',
+                'Bases de marca que hacen que cada anuncio, landing page y publicación sea reconocible al instante',
+              ],
+            },
+            {
+              heading: 'Creatividades para Paid Media',
+              headline: 'Creatividades diseñadas para ser testadas, iteradas y optimizadas',
+              items: [
+                'Creatividades estáticas y en movimiento adaptadas a cada plataforma de Ads',
+                'Visuales alineados con la audiencia, la fase del funnel y el objetivo de campaña',
+                'Proceso de diseño iterativo integrado con nuestro equipo de performance: creamos, testamos y apostamos por lo que funciona',
+              ],
+            },
+            {
+              heading: 'Redes Sociales y Diseño Web',
+              headline: 'Las superficies digitales donde tu audiencia se encuentra con tu marca',
+              items: [
+                'Configuración del feed de redes sociales y contenido de lanzamiento alineado con tu guía de marca',
+                'Diseño o rediseño de web enfocado en claridad, velocidad y conversión',
+                'Integración fluida con nuestros flujos de performance marketing y automatización',
+              ],
+            },
+            {
+              heading: 'Servicios Creativos Adicionales',
+              headline: 'Todo lo demás que tu marca pueda necesitar en el camino',
+              items: [
+                'Diseño de merchandising, editorial y packaging',
+                'Creatividades personalizadas para lanzamientos de producto, eventos y campañas de temporada',
+                'Trabajo creativo por proyecto adaptado a objetivos comerciales específicos',
               ],
             },
           ],

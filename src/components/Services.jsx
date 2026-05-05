@@ -1,7 +1,7 @@
-import { TrendingUp, Zap } from 'lucide-react'
+import { TrendingUp, Zap, Palette } from 'lucide-react'
 import { useLang } from '../context/LangContext'
 
-const icons = [<TrendingUp size={32} />, <Zap size={32} />]
+const icons = [<TrendingUp size={32} />, <Zap size={32} />, <Palette size={32} />]
 
 export default function Services() {
   const { t } = useLang()
@@ -24,7 +24,7 @@ export default function Services() {
               <div className="text-gold mb-4">{icons[idx]}</div>
               <h3 className="font-serif text-2xl font-bold text-white mb-2">{service.title}</h3>
               <p className="text-gray-400 italic mb-6 text-sm leading-relaxed">{service.subtitle}</p>
-              <div className={`grid grid-cols-1 gap-6 ${service.sections.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+              <div className={`grid grid-cols-1 gap-6 ${service.sections.length === 4 ? 'sm:grid-cols-4' : service.sections.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
                 {service.sections.map((section) => (
                   <div key={section.heading}>
                     {section.heading ? (
