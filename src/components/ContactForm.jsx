@@ -27,6 +27,7 @@ export default function ContactForm() {
         body: JSON.stringify(form),
       })
       if (res.ok) {
+        if (typeof fbq === 'function') fbq('track', 'Lead')
         navigate('/thank-you')
       } else {
         setError('Something went wrong. Please try again or email us directly.')
