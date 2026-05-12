@@ -28,7 +28,7 @@ export default function ContactForm() {
       })
       if (res.ok) {
         if (typeof fbq === 'function') fbq('track', 'Lead')
-        navigate('/thank-you')
+        setTimeout(() => navigate('/thank-you'), 500)
       } else {
         setError('Something went wrong. Please try again or email us directly.')
       }
