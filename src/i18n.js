@@ -59,12 +59,12 @@ export const translations = {
           subtitle: 'AI-Powered Funnel Automation & Integration',
           sections: [
             {
-              heading: 'Full-Funnel Automation',
-              headline: 'From first click to closed deal; fully automated',
+              heading: 'Custom AI Integration',
+              headline: 'Bridging your tech stack at the infrastructure level',
               items: [
-                'End-to-end workflows: lead capture, nurturing, and delivery without manual steps',
-                'Instant personalization: AI generates custom content and communications at scale',
-                'Connected systems: your entire tech stack works together, automatically',
+                'We architect the integration layer between your platforms.',
+                'Intelligent Document & Data Processing: extract, validate, and route structured data.',
+                'App & Platform Configuration: From configuring your existing stack to building what doesn\'t exist yet.',
               ],
             },
             {
@@ -77,12 +77,12 @@ export const translations = {
               ],
             },
             {
-              heading: 'Engagement & Follow-Up',
-              headline: 'Stay top of mind without lifting a finger',
+              heading: 'Full-Funnel Automation',
+              headline: 'From first click to closed deal; fully automated',
               items: [
-                'WhatsApp & email sequences that feel personal, sent automatically',
-                'Dormant lead recovery: bring cold prospects back into active conversations',
-                'n8n and Make orchestrate every touchpoint without manual handoffs',
+                'End-to-end workflows: lead capture, nurturing, and delivery without manual steps',
+                'Instant personalization: AI generates custom content and communications at scale',
+                'Connected systems: your entire tech stack works together, automatically',
               ],
             },
             {
@@ -304,12 +304,12 @@ export const translations = {
           subtitle: 'Automatización avanzada del funnel con IA e integración de sistemas',
           sections: [
             {
-              heading: 'Automatización Full-Funnel',
-              headline: 'Del primer clic al cierre; completamente automatizado',
+              heading: 'Integración IA a Medida',
+              headline: 'Conectamos tu stack tecnológico a nivel de infraestructura',
               items: [
-                'Flujos end-to-end: captación, nurturing y entrega del lead sin pasos manuales',
-                'Personalización instantánea: la IA genera contenido y comunicaciones a escala',
-                'Sistemas conectados: todo tu stack tecnológico trabajando junto, automáticamente',
+                'Diseñamos la capa de integración entre tus plataformas.',
+                'Procesamiento Inteligente de Documentos y Datos: extrae, valida y enruta datos estructurados.',
+                'Configuración de Apps y Plataformas: Desde configurar tu stack actual hasta construir lo que aún no existe.',
               ],
             },
             {
@@ -322,12 +322,12 @@ export const translations = {
               ],
             },
             {
-              heading: 'Engagement y Seguimiento',
-              headline: 'Mantente presente sin mover un dedo',
+              heading: 'Automatización Full-Funnel',
+              headline: 'Del primer clic al cierre; completamente automatizado',
               items: [
-                'Secuencias de WhatsApp y email que se sienten personales, enviadas automáticamente',
-                'Recuperación de leads dormidos: reactiva prospectos fríos en conversaciones activas',
-                'n8n y Make orquestan cada punto de contacto sin intervención manual',
+                'Flujos end-to-end: captación, nurturing y entrega del lead sin pasos manuales',
+                'Personalización instantánea: la IA genera contenido y comunicaciones a escala',
+                'Sistemas conectados: todo tu stack tecnológico trabajando junto, automáticamente',
               ],
             },
             {
