@@ -12,6 +12,16 @@ function LinkedInIcon({ size = 14 }) {
   )
 }
 
+function InstagramIcon({ size = 14 }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>
+  )
+}
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
@@ -46,16 +56,30 @@ export default function Navbar() {
             <a href="#services" onClick={handleServicesClick} className="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">
               {t.nav.services}
             </a>
-            {/* LinkedIn */}
-            <a
-              href="https://www.linkedin.com/company/group-argo/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 border border-dark-border rounded-full flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-colors"
-              title="LinkedIn"
-            >
-              <LinkedInIcon size={14} />
-            </a>
+            {/* Social icons */}
+            <div className="flex items-center gap-2">
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/company/group-argo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 border border-dark-border rounded-full flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-colors"
+                title="LinkedIn"
+              >
+                <LinkedInIcon size={14} />
+              </a>
+
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/group_argo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 border border-dark-border rounded-full flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-colors"
+                title="Instagram"
+              >
+                <InstagramIcon size={14} />
+              </a>
+            </div>
 
             {/* Language toggle */}
             <div className="flex items-center border border-dark-border rounded-full overflow-hidden text-xs">
@@ -95,6 +119,15 @@ export default function Navbar() {
             className="flex items-center gap-2 text-gray-300 hover:text-gold py-2 text-sm"
           >
             <LinkedInIcon size={14} /> LinkedIn
+          </a>
+          <a
+            href="https://www.instagram.com/group_argo/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-2 text-gray-300 hover:text-gold py-2 text-sm"
+          >
+            <InstagramIcon size={14} /> Instagram
           </a>
 
           {/* Mobile language toggle */}

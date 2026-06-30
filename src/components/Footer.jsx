@@ -11,6 +11,16 @@ function LinkedInIcon({ size = 16 }) {
   )
 }
 
+function InstagramIcon({ size = 16 }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>
+  )
+}
+
 export default function Footer({ setShowBanner }) {
   const { t } = useLang()
 
@@ -66,6 +76,15 @@ export default function Footer({ setShowBanner }) {
               title="LinkedIn"
             >
               <LinkedInIcon size={16} />
+            </a>
+            <a
+              href="https://www.instagram.com/group_argo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center w-9 h-9 border border-dark-border rounded-full text-gray-400 hover:text-gold hover:border-gold transition-colors mb-3 ml-2"
+              title="Instagram"
+            >
+              <InstagramIcon size={16} />
             </a>
             <br />
             <Link to="/contact" className="btn-outline text-sm px-5 py-2">{t.nav.contact}</Link>
