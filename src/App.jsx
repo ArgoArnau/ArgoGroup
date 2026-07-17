@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import SEO from './components/SEO'
 import ScrollToTop from './components/ScrollToTop'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
@@ -19,6 +20,7 @@ function AppLayout({ showBanner, setShowBanner }) {
 
   return (
     <div className="min-h-screen bg-dark text-white">
+      <SEO />
       <ScrollToTop />
       {!isThankYou && <Navbar />}
       <Routes>
