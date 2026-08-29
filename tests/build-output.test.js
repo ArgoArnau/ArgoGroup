@@ -22,6 +22,18 @@ const read = (relative) => readFileSync(join(DIST, relative), 'utf8')
 // redirecting /slug to /slug/.
 const htmlFor = (path) => read(path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 
+test('the Search Console verification tag survives prerendering', () => {
+  // Google re-checks this periodically; losing it silently un-verifies the
+  // property and stops the sitemap being read.
+  for (const route of routes) {
+    assert.match(
+      htmlFor(route.path),
+      /<meta name="google-site-verification" content="[\w-]+" \/>/,
+      `${route.path} must keep the verification tag`,
+    )
+  }
+})
+
 const ENTITIES = { amp: '&', lt: '<', gt: '>', quot: '"', '#x27': "'", '#39': "'", nbsp: ' ' }
 
 // Approximates what a crawler that does not execute JavaScript can read.
