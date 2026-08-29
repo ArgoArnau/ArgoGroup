@@ -32,6 +32,7 @@ export const site = {
 // markdown build; `sitemap` decides what ends up in sitemap.xml and llms.txt.
 export const routes = [
   { path: '/', slug: 'index', sitemap: true, changefreq: 'weekly', priority: '1.0' },
+  { path: '/about', slug: 'about', sitemap: true, changefreq: 'monthly', priority: '0.8' },
   { path: '/contact', slug: 'contact', sitemap: true, changefreq: 'monthly', priority: '0.9' },
   { path: '/privacy-policy', slug: 'privacy-policy', sitemap: true, changefreq: 'yearly', priority: '0.3' },
   { path: '/terms-of-service', slug: 'terms-of-service', sitemap: true, changefreq: 'yearly', priority: '0.3' },

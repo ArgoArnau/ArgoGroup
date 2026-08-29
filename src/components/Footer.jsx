@@ -44,6 +44,7 @@ export default function Footer({ setShowBanner }) {
             <h4 className="text-white font-semibold text-sm tracking-wider uppercase mb-4">{t.footer.navTitle}</h4>
             <ul className="space-y-2">
               <li><a href="#services" className="text-gray-400 hover:text-gold text-sm transition-colors">{t.nav.services}</a></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-gold text-sm transition-colors">{t.nav.about}</Link></li>
               <li><Link to="/contact" className="text-gray-400 hover:text-gold text-sm transition-colors">{t.nav.contact}</Link></li>
               <li><Link to="/privacy-policy" className="text-gray-400 hover:text-gold text-sm transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms-of-service" className="text-gray-400 hover:text-gold text-sm transition-colors">Terms of Service</Link></li>
