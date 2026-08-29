@@ -20,8 +20,10 @@ const edgeConfig = edge.config
 const included = [].concat(edgeConfig.path).map((pattern) => new URLPattern({ pathname: pattern }))
 const excluded = [].concat(edgeConfig.excludedPath || []).map((pattern) => new URLPattern({ pathname: pattern }))
 
+// An absent `method` means no restriction, so the handler sees every method and
+// filters them itself — the same arrangement as in production.
 const runsEdgeFunction = (pathname, method) =>
-  (edgeConfig.method || ['GET', 'HEAD']).includes(method)
+  (!edgeConfig.method || edgeConfig.method.includes(method))
   && included.some((pattern) => pattern.test({ pathname }))
   && !excluded.some((pattern) => pattern.test({ pathname }))
 

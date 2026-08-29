@@ -132,6 +132,23 @@ test('HEAD negotiates the same way but sends no body', async () => {
   assert.equal(await response.text(), '')
 })
 
+test('the edge function declares no method filter, so HEAD still reaches it', async () => {
+  // Netlify rejects HEAD in config.method; declaring GET alone would skip the
+  // HEAD requests that `curl -sI` makes, so the filter lives in the handler.
+  const { config } = await import('../netlify/edge-functions/markdown.js')
+  assert.equal(config.method, undefined)
+  assert.equal(config.onError, 'bypass')
+})
+
+test('methods other than GET and HEAD pass straight through', async () => {
+  const response = await fetch(`${origin}/`, {
+    method: 'POST',
+    headers: { accept: 'text/markdown' },
+  })
+  assert.match(response.headers.get('content-type'), /^text\/html/, 'POST must not negotiate')
+  await response.text()
+})
+
 test('a markdown-only client gets 406 where no markdown representation exists', async () => {
   const response = await get('/404.html', { accept: 'text/markdown' })
   assert.equal(response.status, 406)

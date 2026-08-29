@@ -44,6 +44,12 @@ const markdownResponse = (body, status, request, links) =>
   })
 
 export default async function handler(request, context) {
+  // Netlify's config.method does not accept HEAD, and `curl -sI` — the command
+  // acceptmarkdown.com verifies with — sends HEAD. So the method filter lives
+  // here rather than in the declaration: document fetches negotiate, anything
+  // else passes straight through.
+  if (request.method !== 'GET' && request.method !== 'HEAD') return context.next()
+
   const { pathname } = new URL(request.url)
   const accept = request.headers.get('accept')
   const { serveMarkdown, markdownPath, notAcceptable } = negotiate(accept, pathname, markdownPathFor)
@@ -116,7 +122,10 @@ export const config = {
     '/*.ico',
     '/*.webmanifest',
   ],
-  method: ['GET', 'HEAD'],
+  // No `method` key on purpose: Netlify only accepts GET, POST, PUT, PATCH,
+  // DELETE and OPTIONS there, and declaring GET alone would skip HEAD requests.
+  // The handler filters methods itself instead.
+  //
   // If anything in here throws, serve the plain origin response instead of an
   // error page: agent readiness must never cost the site its availability.
   onError: 'bypass',
