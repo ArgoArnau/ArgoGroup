@@ -63,7 +63,10 @@ function renderHtml(path) {
 const documents = []
 
 for (const route of routes) {
-  write(route.path === '/' ? 'index.html' : `${route.slug}/index.html`, renderHtml(route.path))
+  // `<slug>.html`, not `<slug>/index.html`: Netlify serves the former directly
+  // at /slug with a 200, while the latter makes /slug a 301 to /slug/ — which
+  // would put a redirect on every canonical URL and every sitemap entry.
+  write(route.path === '/' ? 'index.html' : `${route.slug}.html`, renderHtml(route.path))
 
   const markdown = markdownFor(route.path, { lang: 'en', html: renderPageBody(route.path) })
   write(markdownPathFor(route.path).slice(1), markdown)

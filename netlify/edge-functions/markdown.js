@@ -66,6 +66,15 @@ export default async function handler(request, context) {
     return passthrough
   }
 
+  // Netlify normalises trailing slashes with a 301. Pass redirects through so
+  // the client lands on the canonical URL and negotiates there, rather than
+  // returning a markdown body under a 3xx status.
+  if (response.status >= 300 && response.status < 400) {
+    const redirect = new Response(response.body, response)
+    withNegotiationHeaders(redirect.headers, { markdownPath, canonical })
+    return redirect
+  }
+
   // The path does not exist: answer the 404 in the format that was asked for.
   if (response.status === 404) {
     const body = await readMarkdown(request, NOT_FOUND_MARKDOWN_PATH)
@@ -77,10 +86,10 @@ export default async function handler(request, context) {
     return markdownResponse(body, 404, request, { markdownPath: null, canonical: null })
   }
 
-  if (markdownPath) {
+  if (markdownPath && response.ok) {
     const body = await readMarkdown(request, markdownPath)
     if (body !== null) {
-      return markdownResponse(body, response.status, request, { markdownPath, canonical })
+      return markdownResponse(body, 200, request, { markdownPath, canonical })
     }
   }
 

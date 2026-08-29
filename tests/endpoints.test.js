@@ -57,10 +57,31 @@ test('HTML responses vary on Accept and advertise their markdown alternate', asy
   }
 })
 
-test('a trailing slash resolves to the same page', async () => {
+test('canonical URLs answer 200 directly, with no redirect hop', async () => {
+  // A `<slug>/index.html` layout would make Netlify 301 /slug to /slug/, putting
+  // a redirect on every canonical URL and sitemap entry. Guard against that.
+  for (const route of routes) {
+    const response = await get(route.path, { accept: BROWSER_ACCEPT })
+    assert.equal(response.status, 200, `${canonicalFor(route.path)} must not redirect`)
+    await response.text()
+  }
+})
+
+test('a trailing slash redirects to the canonical URL', async () => {
   const response = await get('/contact/', { accept: BROWSER_ACCEPT })
-  assert.equal(response.status, 200)
-  assert.match(await response.text(), /Let&#x27;s Talk|Let's Talk/)
+  assert.equal(response.status, 301)
+  assert.equal(response.headers.get('location'), '/contact')
+
+  const followed = await get('/contact', { accept: BROWSER_ACCEPT })
+  assert.equal(followed.status, 200)
+  assert.match(await followed.text(), /Let&#x27;s Talk|Let's Talk/)
+})
+
+test('a redirect is passed through rather than answered with markdown', async () => {
+  const response = await get('/contact/', { accept: 'text/markdown' })
+  assert.equal(response.status, 301)
+  assert.equal(response.headers.get('location'), '/contact')
+  assert.ok(varyIncludesAccept(response), 'a negotiated redirect must still vary on Accept')
 })
 
 // ── acceptmarkdown.com ─────────────────────────────────────────────────────

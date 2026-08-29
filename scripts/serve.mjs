@@ -50,26 +50,38 @@ const readIfFile = async (path) => {
   }
 }
 
-// Mirrors Netlify's static resolution: exact file, then pretty URL, then the
-// site's own 404.html with a real 404 status.
-async function serveStatic(pathname) {
-  const clean = decodeURIComponent(pathname).replace(/\/+$/, '') || '/'
-  const candidates = clean === '/'
-    ? [join(DIST, 'index.html')]
-    : [join(DIST, clean), join(DIST, clean, 'index.html'), join(DIST, `${clean}.html`)]
+const ok = (body, path) => new Response(body, {
+  status: 200,
+  headers: {
+    'Content-Type': CONTENT_TYPES[extname(path)] || 'application/octet-stream',
+    Vary: 'Accept-Encoding',
+  },
+})
 
-  for (const candidate of candidates) {
-    if (!candidate.startsWith(DIST)) break
-    const body = await readIfFile(candidate)
-    if (body) {
-      return new Response(body, {
-        status: 200,
-        headers: {
-          'Content-Type': CONTENT_TYPES[extname(candidate)] || 'application/octet-stream',
-          Vary: 'Accept-Encoding',
-        },
-      })
-    }
+const movedTo = (location) => new Response(null, { status: 301, headers: { Location: location } })
+
+// Mirrors Netlify's static resolution, including the redirects its Pretty URLs
+// behaviour adds — `<name>.html` is served in place at /name, while a
+// `<name>/index.html` would make /name a 301 to /name/. Modelling the redirects
+// rather than resolving straight through is the point: it is what catches a
+// canonical URL that does not answer 200.
+async function serveStatic(pathname) {
+  const decoded = decodeURIComponent(pathname)
+  const hadTrailingSlash = decoded.length > 1 && decoded.endsWith('/')
+  const clean = decoded.replace(/\/+$/, '') || '/'
+
+  if (clean === '/') {
+    const body = await readIfFile(join(DIST, 'index.html'))
+    if (body) return ok(body, 'index.html')
+  } else if (join(DIST, clean).startsWith(DIST)) {
+    const exact = await readIfFile(join(DIST, clean))
+    if (exact) return ok(exact, clean)
+
+    const flat = await readIfFile(join(DIST, `${clean}.html`))
+    if (flat) return hadTrailingSlash ? movedTo(clean) : ok(flat, `${clean}.html`)
+
+    const nested = await readIfFile(join(DIST, clean, 'index.html'))
+    if (nested) return hadTrailingSlash ? ok(nested, 'index.html') : movedTo(`${clean}/`)
   }
 
   const notFound = await readIfFile(join(DIST, '404.html'))
