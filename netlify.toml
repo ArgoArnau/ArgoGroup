@@ -1,0 +1,57 @@
+# Netlify configuration for groupargous.com
+#
+# Deliberately NO SPA catch-all (`/* /index.html 200`): scripts/prerender.mjs
+# emits a real HTML file per route, so every real page resolves on its own and
+# anything else falls through to dist/404.html with a genuine 404 status. A
+# catch-all would make every URL answer 200 with the app shell, which tells
+# agents that every path exists.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Accept negotiation happens in netlify/edge-functions/markdown.js, which sets
+# Vary on the responses it touches. These static rules are the safety net for
+# anything the edge function does not run on.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Vary = "Accept, Accept-Encoding"
+    X-Content-Type-Options = "nosniff"
+
+# Content-hashed bundles: never negotiated, safe to cache forever.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Vary = "Accept-Encoding"
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# The markdown twins of each page, also reachable directly.
+[[headers]]
+  for = "/*.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+    Vary = "Accept, Accept-Encoding"
+
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/llms-full.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=utf-8"

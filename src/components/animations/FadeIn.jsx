@@ -46,18 +46,13 @@ export default function FadeIn({
   return (
     <div
       ref={ref}
+      data-reveal=""
       className={className}
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : `translateY(${translateY}px)`,
         transition: `opacity ${duration}ms ease, transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`,
         transitionDelay: `${delay}ms`,
-        // Respect user's OS "reduce motion" setting — no animation at all
-        // This is important for accessibility and required for good UX
-        ...(typeof window !== "undefined" &&
-          window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? { transition: "none", opacity: 1, transform: "none" }
-          : {}),
       }}
     >
       {children}

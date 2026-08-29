@@ -14,7 +14,7 @@ import TermsOfService from './pages/TermsOfService'
 
 const STORAGE_KEY = 'argo_cookie_consent'
 
-function AppLayout({ showBanner, setShowBanner }) {
+export function AppLayout({ showBanner, setShowBanner }) {
   const location = useLocation()
   const isThankYou = location.pathname === '/thank-you'
 

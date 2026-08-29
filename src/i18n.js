@@ -1,5 +1,37 @@
 export const translations = {
   en: {
+    meta: {
+      title: 'Argo Group | Performance Marketing Agency in Spain & Miami',
+      description:
+        'We scale your business with results-driven marketing: lead generation, paid media creatives, and automation systems. Book a call.',
+      pages: {
+        '/': {
+          title: 'Argo Group | Performance Marketing Agency in Spain & Miami',
+          description:
+            'We scale your business with results-driven marketing: lead generation, paid media creatives, and automation systems. Book a call.',
+        },
+        '/contact': {
+          title: 'Contact Argo Group | Performance Marketing & Automation',
+          description:
+            'Talk to the ARGO Group team about performance marketing, paid media creative, and AI process automation. We reply within 24 hours.',
+        },
+        '/thank-you': {
+          title: 'Thank You | Argo Group',
+          description:
+            'Thanks for reaching out to ARGO Group. Our team will contact you within 24 hours.',
+        },
+        '/privacy-policy': {
+          title: 'Privacy Policy | Argo Group',
+          description:
+            'How ARGO Group collects, uses, stores, and protects personal data, and the rights you have over it.',
+        },
+        '/terms-of-service': {
+          title: 'Terms of Service | Argo Group',
+          description:
+            'The terms that govern use of the ARGO Group website and the services we provide.',
+        },
+      },
+    },
     nav: {
       services: 'Services',
       contact: 'Contact',
@@ -245,6 +277,38 @@ export const translations = {
   },
 
   es: {
+    meta: {
+      title: 'Argo Group | Agencia de Performance Marketing en España y Miami',
+      description:
+        'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
+      pages: {
+        '/': {
+          title: 'Argo Group | Agencia de Performance Marketing en España y Miami',
+          description:
+            'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
+        },
+        '/contact': {
+          title: 'Contacto Argo Group | Performance Marketing y Automatización',
+          description:
+            'Habla con el equipo de ARGO Group sobre performance marketing, creatividades para paid media y automatización de procesos con IA. Respondemos en 24 horas.',
+        },
+        '/thank-you': {
+          title: 'Gracias | Argo Group',
+          description:
+            'Gracias por contactar con ARGO Group. Nuestro equipo se pondrá en contacto en 24 horas.',
+        },
+        '/privacy-policy': {
+          title: 'Política de Privacidad | Argo Group',
+          description:
+            'Cómo ARGO Group recopila, usa, almacena y protege los datos personales, y los derechos que tienes sobre ellos.',
+        },
+        '/terms-of-service': {
+          title: 'Términos de Servicio | Argo Group',
+          description:
+            'Los términos que rigen el uso del sitio web de ARGO Group y los servicios que prestamos.',
+        },
+      },
+    },
     nav: {
       services: 'Servicios',
       contact: 'Contacto',
