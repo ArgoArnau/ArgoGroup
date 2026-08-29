@@ -8,6 +8,7 @@ import { StaticRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { AppLayout } from './App.jsx'
 import { LangProvider } from './context/LangContext.jsx'
+import About from './pages/About.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import Home from './pages/Home.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
@@ -18,6 +19,7 @@ const noop = () => {}
 
 const PAGES = {
   '/': Home,
+  '/about': About,
   '/contact': ContactPage,
   '/thank-you': ThankYou,
   '/privacy-policy': PrivacyPolicy,

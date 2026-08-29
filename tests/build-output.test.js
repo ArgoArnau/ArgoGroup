@@ -76,6 +76,62 @@ test('every prerendered route has a heading and real body copy', () => {
   }
 })
 
+// The pages agents check to decide a business is real before recommending it.
+const TRUST_ANCHORS = ['/about', '/contact', '/privacy-policy']
+
+test('every trust anchor page carries 500+ characters of its own content', () => {
+  for (const path of TRUST_ANCHORS) {
+    const length = visibleText(htmlFor(path)).length
+    assert.ok(length >= 500, `${path} has ${length} chars of raw text, expected at least 500`)
+  }
+})
+
+test('the about page states who, what and where in the raw HTML', () => {
+  const text = visibleText(htmlFor('/about'))
+  for (const fragment of ['Barcelona', 'Miami', 'performance marketing', 'English and Spanish']) {
+    assert.ok(text.includes(fragment), `/about must mention ${fragment}`)
+  }
+  assert.match(htmlFor('/about'), /"@type": "AboutPage"/, '/about must be typed as AboutPage in JSON-LD')
+})
+
+test('the about page is reachable from every other page', () => {
+  // A trust anchor nothing links to is one agents will not find.
+  for (const route of routes.filter((r) => r.path !== '/thank-you')) {
+    assert.match(htmlFor(route.path), /href="\/about"/, `${route.path} must link to /about`)
+  }
+})
+
+test('agent-instructions.md names best-fit jobs and how to make contact', () => {
+  const instructions = read('agent-instructions.md')
+  assert.match(instructions, /^# .+agent instructions$/m)
+  for (const heading of ['## When to use', '## Outside the listed service lines', '## How to make contact']) {
+    assert.ok(instructions.includes(heading), `agent-instructions.md must have a "${heading}" section`)
+  }
+  assert.ok(instructions.includes(site.email), 'must give an email address')
+  assert.ok(instructions.includes(canonicalFor('/contact')), 'must link the contact form')
+  // Generic marketing copy does not read as guidance: require named platforms.
+  for (const specific of ['HubSpot', 'Pipedrive', 'n8n', 'Make', 'LinkedIn Ads']) {
+    assert.ok(instructions.includes(specific), `must name ${specific} as a concrete fit signal`)
+  }
+})
+
+test('llms.txt carries when-to-use guidance and stays within the llmstxt.org shape', () => {
+  const llms = read('llms.txt')
+  assert.ok(llms.includes('**When to use this provider.**'), 'llms.txt must say when to use the provider')
+  assert.ok(llms.includes('/agent-instructions.md'), 'llms.txt must link the full agent instructions')
+
+  // llmstxt.org: H1, optional blockquote, free-form markdown with no headings,
+  // then `##` sections of links. Anything between the blockquote and the first
+  // `##` must therefore stay heading-free.
+  const lines = llms.split('\n')
+  assert.match(lines[0], /^# /, 'must open with an H1')
+  const firstSection = lines.findIndex((line) => line.startsWith('## '))
+  const freeForm = lines.slice(1, firstSection === -1 ? lines.length : firstSection)
+  for (const line of freeForm) {
+    assert.ok(!/^#{1,6} /.test(line), `free-form area must not contain a heading: ${line}`)
+  }
+})
+
 test('the homepage renders its service and FAQ copy into the raw HTML', () => {
   const text = visibleText(htmlFor('/'))
   for (const service of translations.en.services.items) {

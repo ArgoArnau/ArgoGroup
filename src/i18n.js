@@ -1,32 +1,37 @@
 export const translations = {
   en: {
     meta: {
-      title: 'Argo Group | Performance Marketing Agency in Spain & Miami',
+      title: 'ARGO Group | Performance Marketing Agency in Spain & Miami',
       description:
         'We scale your business with results-driven marketing: lead generation, paid media creatives, and automation systems. Book a call.',
       pages: {
         '/': {
-          title: 'Argo Group | Performance Marketing Agency in Spain & Miami',
+          title: 'ARGO Group | Performance Marketing Agency in Spain & Miami',
           description:
             'We scale your business with results-driven marketing: lead generation, paid media creatives, and automation systems. Book a call.',
         },
+        '/about': {
+          title: 'About ARGO Group | Performance Marketing & Automation Agency',
+          description:
+            'ARGO Group is a performance marketing and AI automation agency with offices in Barcelona and Miami, serving clients worldwide in English and Spanish.',
+        },
         '/contact': {
-          title: 'Contact Argo Group | Performance Marketing & Automation',
+          title: 'Contact ARGO Group | Performance Marketing & Automation',
           description:
             'Talk to the ARGO Group team about performance marketing, paid media creative, and AI process automation. We reply within 24 hours.',
         },
         '/thank-you': {
-          title: 'Thank You | Argo Group',
+          title: 'Thank You | ARGO Group',
           description:
             'Thanks for reaching out to ARGO Group. Our team will contact you within 24 hours.',
         },
         '/privacy-policy': {
-          title: 'Privacy Policy | Argo Group',
+          title: 'Privacy Policy | ARGO Group',
           description:
             'How ARGO Group collects, uses, stores, and protects personal data, and the rights you have over it.',
         },
         '/terms-of-service': {
-          title: 'Terms of Service | Argo Group',
+          title: 'Terms of Service | ARGO Group',
           description:
             'The terms that govern use of the ARGO Group website and the services we provide.',
         },
@@ -34,8 +39,47 @@ export const translations = {
     },
     nav: {
       services: 'Services',
+      about: 'About',
       contact: 'Contact',
       cta: 'Get in Touch',
+    },
+    about: {
+      title: 'About ARGO Group',
+      sub: 'A performance marketing and automation partner built around transparency, speed, and direct access.',
+      intro: [
+        'ARGO Group is a performance marketing and AI automation agency. We work with companies that want their advertising spend to turn into predictable revenue, and we keep paid media, funnel automation, and creative production inside a single team so strategy, execution, and measurement never sit in separate silos.',
+        'We are based in Barcelona, Spain and Miami, Florida, and we operate online-first with on-ground support in both locations. That lets us work with clients across time zones, in English and Spanish, without the handoffs and delays that distance usually introduces.',
+        'We are deliberately not a volume agency. Every client works with a dedicated account manager who knows the account, and you talk to the people doing the work rather than to a layer of account handlers.',
+      ],
+      sections: [
+        {
+          title: 'What we do',
+          desc: 'Three connected practices: performance marketing across Meta, Google, TikTok, and LinkedIn Ads; AI process automation that links your CRM, forms, and internal tools into one funnel; and creative and brand assets built to be tested and iterated inside those campaigns.',
+        },
+        {
+          title: 'How we work',
+          desc: 'Full visibility into what your budget is doing and why. Campaigns are reviewed daily rather than reported monthly, decisions are explained as they are made, and you receive concrete optimization steps whenever something needs to improve.',
+        },
+        {
+          title: 'How we communicate',
+          desc: 'Direct access to the team from 9:00 to 18:00 in both Spain and Miami, over WhatsApp, email, or Slack. Questions get answered the same day, and new enquiries receive a reply within 24 hours.',
+        },
+        {
+          title: 'What we build on',
+          desc: 'We work with the platforms you already use and build what is missing: HubSpot and Pipedrive for CRM, n8n and Make for automation, and custom integration layers where off-the-shelf connectors fall short.',
+        },
+      ],
+      factsTitle: 'At a glance',
+      facts: [
+        { label: 'Offices',       value: 'Barcelona, Spain · Miami, Florida' },
+        { label: 'Clients',       value: 'Served worldwide, across time zones' },
+        { label: 'Languages',     value: 'English and Spanish' },
+        { label: 'Hours',         value: 'Monday to Friday, 09:00–18:00 (Spain and Miami)' },
+        { label: 'Response time', value: 'Within 24 hours' },
+      ],
+      ctaTitle: 'Want to talk?',
+      ctaSub: 'Tell us about your business and we will get back to you within 24 hours.',
+      cta: 'Contact the team',
     },
     hero: {
       badge: 'Barcelona · Miami',
@@ -278,32 +322,37 @@ export const translations = {
 
   es: {
     meta: {
-      title: 'Argo Group | Agencia de Performance Marketing en España y Miami',
+      title: 'ARGO Group | Agencia de Performance Marketing en España y Miami',
       description:
         'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
       pages: {
         '/': {
-          title: 'Argo Group | Agencia de Performance Marketing en España y Miami',
+          title: 'ARGO Group | Agencia de Performance Marketing en España y Miami',
           description:
             'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
         },
+        '/about': {
+          title: 'Sobre ARGO Group | Agencia de Performance Marketing y Automatización',
+          description:
+            'ARGO Group es una agencia de performance marketing y automatización con IA, con oficinas en Barcelona y Miami, que atiende clientes en todo el mundo en inglés y español.',
+        },
         '/contact': {
-          title: 'Contacto Argo Group | Performance Marketing y Automatización',
+          title: 'Contacto ARGO Group | Performance Marketing y Automatización',
           description:
             'Habla con el equipo de ARGO Group sobre performance marketing, creatividades para paid media y automatización de procesos con IA. Respondemos en 24 horas.',
         },
         '/thank-you': {
-          title: 'Gracias | Argo Group',
+          title: 'Gracias | ARGO Group',
           description:
             'Gracias por contactar con ARGO Group. Nuestro equipo se pondrá en contacto en 24 horas.',
         },
         '/privacy-policy': {
-          title: 'Política de Privacidad | Argo Group',
+          title: 'Política de Privacidad | ARGO Group',
           description:
             'Cómo ARGO Group recopila, usa, almacena y protege los datos personales, y los derechos que tienes sobre ellos.',
         },
         '/terms-of-service': {
-          title: 'Términos de Servicio | Argo Group',
+          title: 'Términos de Servicio | ARGO Group',
           description:
             'Los términos que rigen el uso del sitio web de ARGO Group y los servicios que prestamos.',
         },
@@ -311,8 +360,47 @@ export const translations = {
     },
     nav: {
       services: 'Servicios',
+      about: 'Nosotros',
       contact: 'Contacto',
       cta: 'Contáctanos',
+    },
+    about: {
+      title: 'Sobre ARGO Group',
+      sub: 'Un partner de performance marketing y automatización construido sobre transparencia, rapidez y acceso directo.',
+      intro: [
+        'ARGO Group es una agencia de performance marketing y automatización con IA. Trabajamos con empresas que quieren que su inversión publicitaria se convierta en ingresos predecibles, y mantenemos paid media, automatización del funnel y producción creativa dentro de un mismo equipo, para que estrategia, ejecución y medición nunca queden en compartimentos separados.',
+        'Tenemos sede en Barcelona (España) y Miami (Florida), y operamos con un enfoque digital y soporte presencial en ambas ubicaciones. Eso nos permite trabajar con clientes en distintas zonas horarias, en inglés y español, sin las transferencias y demoras que suele introducir la distancia.',
+        'No somos una agencia de volumen, y es deliberado. Cada cliente trabaja con un account manager dedicado que conoce la cuenta, y hablas con las personas que hacen el trabajo, no con una capa de intermediarios.',
+      ],
+      sections: [
+        {
+          title: 'Qué hacemos',
+          desc: 'Tres prácticas conectadas: performance marketing en Meta, Google, TikTok y LinkedIn Ads; automatización de procesos con IA que conecta tu CRM, formularios y herramientas internas en un único funnel; y creatividades y activos de marca diseñados para testarse e iterarse dentro de esas campañas.',
+        },
+        {
+          title: 'Cómo trabajamos',
+          desc: 'Visibilidad total sobre qué hace tu presupuesto y por qué. Revisamos las campañas a diario en lugar de reportar una vez al mes, explicamos las decisiones según se toman y recibes pasos concretos de optimización cuando algo necesita mejorar.',
+        },
+        {
+          title: 'Cómo nos comunicamos',
+          desc: 'Acceso directo al equipo de 9:00 a 18:00 tanto en España como en Miami, por WhatsApp, email o Slack. Las preguntas se responden el mismo día, y las consultas nuevas reciben respuesta en menos de 24 horas.',
+        },
+        {
+          title: 'Sobre qué construimos',
+          desc: 'Trabajamos con las plataformas que ya usas y construimos lo que falta: HubSpot y Pipedrive para CRM, n8n y Make para automatización, y capas de integración a medida donde los conectores estándar se quedan cortos.',
+        },
+      ],
+      factsTitle: 'De un vistazo',
+      facts: [
+        { label: 'Oficinas',            value: 'Barcelona, España · Miami, Florida' },
+        { label: 'Clientes',            value: 'En todo el mundo, en distintas zonas horarias' },
+        { label: 'Idiomas',             value: 'Inglés y español' },
+        { label: 'Horario',             value: 'Lunes a viernes, 09:00–18:00 (España y Miami)' },
+        { label: 'Tiempo de respuesta', value: 'Menos de 24 horas' },
+      ],
+      ctaTitle: '¿Hablamos?',
+      ctaSub: 'Cuéntanos sobre tu negocio y te responderemos en menos de 24 horas.',
+      cta: 'Contactar con el equipo',
     },
     hero: {
       badge: 'Barcelona · Miami',

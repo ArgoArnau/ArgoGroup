@@ -227,6 +227,7 @@ test('the machine-readable files are all served', async () => {
     ['/llms.txt', /^text\/plain/],
     ['/llms-full.txt', /^text\/plain/],
     ['/404.md', /^text\/markdown/],
+    ['/agent-instructions.md', /^text\/markdown/],
   ]
 
   for (const [path, contentType] of expectations) {
@@ -235,6 +236,18 @@ test('the machine-readable files are all served', async () => {
     assert.match(response.headers.get('content-type'), contentType, `${path} content-type`)
     assert.ok((await response.text()).length > 0, `${path} body`)
   }
+})
+
+test('llms.txt and robots.txt both point at agent instructions that resolve', async () => {
+  const llms = await (await get('/llms.txt')).text()
+  const robots = await (await get('/robots.txt')).text()
+  const path = `${site.origin}/agent-instructions.md`
+  assert.ok(llms.includes(path), 'llms.txt must link the agent instructions')
+  assert.ok(robots.includes(path), 'robots.txt must point at the agent instructions')
+
+  const response = await get('/agent-instructions.md')
+  assert.equal(response.status, 200)
+  assert.match(response.headers.get('content-type'), /^text\/markdown/)
 })
 
 test('robots.txt advertises the sitemap that actually exists', async () => {

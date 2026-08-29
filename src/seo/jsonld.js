@@ -111,6 +111,7 @@ const faqPage = (t) => ({
 
 const PAGE_TYPES = {
   '/': { type: 'WebPage' },
+  '/about': { type: 'AboutPage' },
   '/contact': { type: 'ContactPage' },
   '/thank-you': { type: 'WebPage' },
   '/privacy-policy': { type: 'WebPage' },

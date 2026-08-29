@@ -16,7 +16,7 @@ const load = (...segments) => import(pathToFileURL(join(ROOT, ...segments)).href
 
 const { renderRoute, renderPageBody } = await import(pathToFileURL(SSR_ENTRY).href)
 const { site, routes, canonicalFor, markdownPathFor } = await load('src', 'site.js')
-const { markdownFor, llmsTxt, llmsFullTxt } = await load('src', 'content', 'markdown.js')
+const { markdownFor, llmsTxt, llmsFullTxt, agentInstructions } = await load('src', 'content', 'markdown.js')
 
 const HEAD_START = '<!--head-start-->'
 const HEAD_END = '<!--head-end-->'
@@ -99,12 +99,15 @@ write('robots.txt', [
   '',
   '# AI and agent crawlers are welcome. A markdown mirror of every page is',
   '# listed in /llms.txt, and the HTML URLs answer Accept: text/markdown.',
+  '# When to use this provider and how to make contact:',
+  `# ${site.origin}/agent-instructions.md`,
   '',
   `Sitemap: ${site.origin}/sitemap.xml`,
   '',
 ].join('\n'))
 
 // ── llms.txt / llms-full.txt ───────────────────────────────────────────────
+write('agent-instructions.md', agentInstructions('en'))
 write('llms.txt', llmsTxt('en'))
 write('llms-full.txt', llmsFullTxt(documents))
 
@@ -117,12 +120,14 @@ const notFoundMarkdown = [
   '## Where to look next',
   '',
   `- [Home](${canonicalFor('/')}) - what ${site.name} does`,
+  `- [About](${canonicalFor('/about')}) - who ${site.name} is, offices, and how it works`,
   `- [Contact](${canonicalFor('/contact')}) - reach the team, reply within 24 hours`,
   `- [Privacy Policy](${canonicalFor('/privacy-policy')})`,
   `- [Terms of Service](${canonicalFor('/terms-of-service')})`,
   '',
   '## Machine-readable index',
   '',
+  `- [/agent-instructions.md](${site.origin}/agent-instructions.md) - when to use this provider and how to make contact`,
   `- [/llms.txt](${site.origin}/llms.txt) - every page, with a one-line description`,
   `- [/llms-full.txt](${site.origin}/llms-full.txt) - the whole site as one markdown document`,
   `- [/sitemap.xml](${site.origin}/sitemap.xml) - every indexable URL`,

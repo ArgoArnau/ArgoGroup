@@ -56,6 +56,9 @@ export default function Navbar() {
             <a href="#services" onClick={handleServicesClick} className="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">
               {t.nav.services}
             </a>
+            <Link to="/about" className="text-gray-300 hover:text-gold transition-colors text-sm tracking-wide">
+              {t.nav.about}
+            </Link>
             {/* Social icons */}
             <div className="flex items-center gap-2">
               {/* LinkedIn */}
@@ -111,6 +114,7 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-dark-surface border-t border-dark-border px-4 pb-4 pt-2 space-y-3">
           <a href="#services" onClick={handleServicesClick} className="block text-gray-300 hover:text-gold py-2 text-sm">{t.nav.services}</a>
+          <Link to="/about" onClick={() => setMenuOpen(false)} className="block text-gray-300 hover:text-gold py-2 text-sm">{t.nav.about}</Link>
           <a
             href="https://www.linkedin.com/company/group-argo/"
             target="_blank"
