@@ -4,6 +4,17 @@
 
 html { scroll-behavior: smooth; }
 
+/* FadeIn / TextReveal keep their pre-animation state in an inline style.
+   Reveal them for anyone who will never receive the animation: reduced-motion
+   users, and clients with JavaScript disabled (see the <noscript> in index.html). */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }

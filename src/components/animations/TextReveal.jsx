@@ -43,6 +43,7 @@ export default function TextReveal({
         >
           <span
             className="inline-block"
+            data-reveal=""
             style={{
               // Start below the mask floor
               transform: visible ? "translateY(0)" : "translateY(110%)",
