@@ -776,6 +776,15 @@ ul, ol { list-style: none; }
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
   gap: 1.25rem;
 }
+/* Dos de los tres servicios traen cuatro tarjetas, y auto-fit las repartía
+   3 + 1: una tarjeta sola en la segunda fila con dos tercios vacíos al lado.
+   Con exactamente cuatro, un 2x2. El guardado de anchura importa: por debajo
+   ya caben dos columnas por sí solas y forzarlo estropearía el movil. */
+@media (min-width: 1024px) {
+  .section-grid:has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
 .feature-card {
   position: relative;
