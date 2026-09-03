@@ -1403,6 +1403,9 @@ ul, ol { list-style: none; }
   .hero-ctas { flex-direction: column; width: 100%; }
   .hero-ctas .btn { width: 100%; }
   .service-tabs { flex-direction: column; }
+  /* Stacked, the 220px flex-basis becomes a height and leaves ~120px of
+     dead space inside every tab. Let them size to their own text. */
+  .service-tab { flex: 0 0 auto; }
 }
 
 /* ---------- Modo estático (testing / sin animaciones) ---------- */
@@ -1596,4 +1599,52 @@ html.static-test .hero { min-height: 820px; }
   .nav-actions .social-btn { display: none; }
   .nav-burger { display: flex; }
   .mobile-menu { display: block; }
+}
+
+/* ---------- Ajustes de movil ---------- */
+/* El botón flotante se aparta cuando el panel de contacto o el footer están
+   en pantalla: ahí tapaba campos del formulario y el enlace de cookies, y
+   además WhatsApp ya se ofrece como canal dentro de la propia tarjeta. */
+.wa-float {
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-med),
+              opacity var(--dur-med) var(--ease-out),
+              visibility var(--dur-med);
+}
+.wa-float.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.8) translateY(10px);
+  pointer-events: none;
+}
+.wa-float.is-hidden::before { animation: none; }
+
+/* 36px se queda por debajo del mínimo táctil de 44px. */
+@media (pointer: coarse) {
+  .lang-toggle button { min-height: 44px; }
+}
+/* Los enlaces del footer miden 18px de alto: con la separación del grid dan
+   unos 37px de zona pulsable, por debajo del mínimo cómodo en pantalla táctil.
+   Se les da altura real sin tocar el ritmo visual en escritorio. */
+@media (pointer: coarse) {
+  .footer-col ul { gap: 0; }
+  .footer-col ul a,
+  .footer-col ul .loc {
+    display: block;
+    padding-block: 0.7rem;
+  }
+  .footer-legal a,
+  .footer-legal button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* En pantalla táctil la casilla de consentimiento y el "volver" de las páginas
+   legales son los dos controles sueltos que se quedaban pequeños. La etiqueta
+   de la casilla ya es pulsable; esto es para quien apunta a la casilla. */
+@media (pointer: coarse) {
+  .form-consent input { width: 22px; height: 22px; margin-top: 0; }
+  .legal-back { min-height: 44px; }
 }
