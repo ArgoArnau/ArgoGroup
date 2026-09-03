@@ -137,7 +137,7 @@ export default function PrivacyPolicy() {
           <div>
             <h2>10. Your Rights (US Users)</h2>
             <p>
-              Depending on your state of residence, you may have the right to access, correct, or delete the personal information we hold about you. You may also have the right to opt out of certain data processing activities. To make any such request, contact us at <a href="mailto:privacy@argoagency.com">privacy@argoagency.com</a> and we will respond within 30 days.
+              Depending on your state of residence, you may have the right to access, correct, or delete the personal information we hold about you. You may also have the right to opt out of certain data processing activities. To make any such request, contact us at <a href="mailto:info@groupargous.com">info@groupargous.com</a> and we will respond within 30 days.
             </p>
           </div>
 
