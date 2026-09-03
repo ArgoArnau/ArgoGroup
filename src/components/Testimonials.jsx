@@ -1,72 +1,109 @@
-import { useState, useEffect, useCallback } from 'react'
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLang } from '../context/LangContext'
-import FadeIn from './animations/FadeIn'
+import SectionTitle from './SectionTitle'
+import { ChevronLeft, ChevronRight } from './icons'
+
+const AUTOPLAY_MS = 6000
+const SWIPE_PX = 48
 
 export default function Testimonials() {
   const { t } = useLang()
   const items = t.testimonials.items
-  const [current, setCurrent] = useState(0)
 
-  const next = useCallback(() => setCurrent(c => (c + 1) % items.length), [items.length])
-  const prev = () => setCurrent(c => (c - 1 + items.length) % items.length)
+  // Two cards per page on desktop, one on narrow screens. Starts at 1 so the
+  // server and the first client render agree; the effect corrects it on mount.
+  const [perView, setPerView] = useState(1)
+  const [requestedPage, setRequestedPage] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const pointerStart = useRef(null)
+
+  const pages = Math.ceil(items.length / perView)
+  // A narrowing viewport can leave the carousel parked past the last page.
+  const page = Math.min(requestedPage, pages - 1)
 
   useEffect(() => {
-    const timer = setInterval(next, 5000)
+    const measure = () => setPerView(window.innerWidth > 860 ? 2 : 1)
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [])
+
+  const go = useCallback((direction) => {
+    setRequestedPage((current) => (Math.min(current, pages - 1) + direction + pages) % pages)
+  }, [pages])
+
+  useEffect(() => {
+    if (paused || pages < 2) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = setInterval(() => go(1), AUTOPLAY_MS)
     return () => clearInterval(timer)
-  }, [next])
+  }, [go, paused, pages, page])
+
+  const onPointerDown = (event) => { pointerStart.current = event.clientX }
+  const onPointerUp = (event) => {
+    if (pointerStart.current === null) return
+    const dx = event.clientX - pointerStart.current
+    pointerStart.current = null
+    if (Math.abs(dx) > SWIPE_PX) go(dx < 0 ? 1 : -1)
+  }
 
   return (
-    <section className="py-24 bg-dark">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="section testimonials" id="testimonios">
+      <div className="container">
+        <SectionTitle
+          center
+          eyebrow={t.testimonials.eyebrow}
+          title={t.testimonials.title}
+          accent={t.testimonials.accent}
+        />
 
-        {/* Section heading */}
-        <FadeIn duration={700} translateY={20}>
-          <div className="text-center mb-16">
-            <h2 className="section-title">{t.testimonials.title}</h2>
-            <div className="gold-line" />
-          </div>
-        </FadeIn>
-
-        {/* Slider card — fades in as a unit, slider logic unchanged */}
-        <FadeIn delay={150} duration={700} translateY={28}>
-          <div className="relative">
-            <div className="bg-dark-surface border border-dark-border rounded-2xl p-8 md:p-12">
-              <Quote size={40} className="text-gold/30 mb-6" />
-              <p className="text-white text-lg md:text-xl leading-relaxed font-serif italic mb-8">
-                "{items[current].quote}"
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gold/20 border border-gold/40 flex items-center justify-center text-gold font-serif font-bold text-lg flex-shrink-0">
-                  {items[current].initials}
+        <div className="t-carousel">
+          <div
+            className="t-viewport"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+          >
+            <div className="t-track" style={{ transform: `translateX(-${page * 100}%)` }}>
+              {items.map((item) => (
+                <div className="t-slide" key={item.name}>
+                  <figure className="t-card">
+                    <div className="t-quote-mark" aria-hidden="true">&ldquo;</div>
+                    <blockquote>{item.quote}</blockquote>
+                    <figcaption className="t-person">
+                      <div className="t-avatar" aria-hidden="true">{item.initials}</div>
+                      <div>
+                        <div className="name">{item.name}</div>
+                        <div className="role">{item.role}</div>
+                      </div>
+                    </figcaption>
+                  </figure>
                 </div>
-                <div>
-                  <div className="text-white font-semibold">{items[current].name}</div>
-                  <div className="text-gray-400 text-sm">{items[current].role}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex items-center justify-between mt-8">
-              <button onClick={prev} className="p-2 border border-dark-border rounded-full text-gray-400 hover:text-gold hover:border-gold transition-colors">
-                <ChevronLeft size={20} />
-              </button>
-              <div className="flex gap-2">
-                {items.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrent(i)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i === current ? 'bg-gold w-6' : 'bg-dark-border'}`}
-                  />
-                ))}
-              </div>
-              <button onClick={next} className="p-2 border border-dark-border rounded-full text-gray-400 hover:text-gold hover:border-gold transition-colors">
-                <ChevronRight size={20} />
-              </button>
+              ))}
             </div>
           </div>
-        </FadeIn>
+
+          <div className="t-controls">
+            <button className="t-arrow" onClick={() => go(-1)} aria-label={`${t.testimonials.title} —`}>
+              <ChevronLeft />
+            </button>
+            <div className="t-dots">
+              {Array.from({ length: pages }).map((_, index) => (
+                <button
+                  key={index}
+                  className={index === page ? 't-dot active' : 't-dot'}
+                  onClick={() => setRequestedPage(index)}
+                  aria-label={`${index + 1} / ${pages}`}
+                  aria-current={index === page}
+                />
+              ))}
+            </div>
+            <button className="t-arrow" onClick={() => go(1)} aria-label={`${t.testimonials.title} +`}>
+              <ChevronRight />
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   )

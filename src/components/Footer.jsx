@@ -1,99 +1,67 @@
-import { Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
-
-function LinkedInIcon({ size = 16 }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width={size} height={size}>
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
-      <circle cx="4" cy="4" r="2"/>
-    </svg>
-  )
-}
-
-function InstagramIcon({ size = 16 }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-    </svg>
-  )
-}
+import AnchorLink from './AnchorLink'
+import { SECTIONS } from '../sections.js'
+import { InstagramIcon, LinkedInIcon, WhatsAppIcon } from './icons'
+import { site } from '../site.js'
 
 export default function Footer({ setShowBanner }) {
   const { t } = useLang()
 
   return (
-    <footer className="bg-[#0d0d0d] border-t border-dark-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Brand */}
-          <div className="md:col-span-1">
-            <Link to="/" className="flex items-center gap-2">
-              <span className="font-serif text-3xl font-bold tracking-widest text-gold">ARGO</span>
-              <span className="text-xs text-gray-400 tracking-widest uppercase border-l border-dark-border pl-2">Group</span>
+    <footer className="footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Link className="brand" to="/" aria-label={site.name}>
+              <span className="brand-name">ARGO</span>
+              <span className="brand-tag">Group</span>
             </Link>
-            <p className="text-gray-400 text-sm mt-3 mb-6 max-w-xs leading-relaxed">
-              {t.footer.tagline}
-            </p>
+            <p className="footer-tagline">{t.footer.tagline}</p>
+            <div className="footer-social">
+              <a className="social-btn" href={site.sameAs[0]} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <LinkedInIcon />
+              </a>
+              <a className="social-btn" href={site.sameAs[1]} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <InstagramIcon />
+              </a>
+              <a className="social-btn" href={site.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <WhatsAppIcon />
+              </a>
+            </div>
           </div>
 
-          {/* Navigation */}
-          <div>
-            <h4 className="text-white font-semibold text-sm tracking-wider uppercase mb-4">{t.footer.navTitle}</h4>
-            <ul className="space-y-2">
-              <li><a href="#services" className="text-gray-400 hover:text-gold text-sm transition-colors">{t.nav.services}</a></li>
-              <li><Link to="/about" className="text-gray-400 hover:text-gold text-sm transition-colors">{t.nav.about}</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-gold text-sm transition-colors">{t.nav.contact}</Link></li>
-              <li><Link to="/privacy-policy" className="text-gray-400 hover:text-gold text-sm transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/terms-of-service" className="text-gray-400 hover:text-gold text-sm transition-colors">Terms of Service</Link></li>
-              <li>
-                <button
-                  onClick={() => { localStorage.removeItem('argo_cookie_consent'); setShowBanner(true) }}
-                  className="text-gray-400 hover:text-gold text-sm transition-colors"
-                >
-                  Cookie Settings
-                </button>
-              </li>
+          <div className="footer-col">
+            <h4>{t.footer.navTitle}</h4>
+            <ul>
+              {SECTIONS.map((section) => (
+                <li key={section.id}>
+                  <AnchorLink id={section.id}>{t.nav[section.key]}</AnchorLink>
+                </li>
+              ))}
+              <li><Link to="/about">{t.nav.about}</Link></li>
+              <li><Link to="/contact">{t.nav.contact}</Link></li>
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="text-white font-semibold text-sm tracking-wider uppercase mb-4">{t.footer.contactTitle}</h4>
-            <ul className="space-y-3 mb-6">
-              <li>
-                <a href="mailto:info@groupargous.com" className="flex items-center gap-2 text-gray-400 hover:text-gold text-sm transition-colors">
-                  <Mail size={14} /> info@groupargous.com
-                </a>
-              </li>
+          <div className="footer-col">
+            <h4>{t.footer.contactTitle}</h4>
+            <ul>
+              <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+              <li><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">{site.telephoneDisplay}</a></li>
+              <li><span className="loc">{t.hero.badge}</span></li>
             </ul>
-            <a
-              href="https://www.linkedin.com/company/group-argo/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center w-9 h-9 border border-dark-border rounded-full text-gray-400 hover:text-gold hover:border-gold transition-colors mb-3"
-              title="LinkedIn"
-            >
-              <LinkedInIcon size={16} />
-            </a>
-            <a
-              href="https://www.instagram.com/group_argo/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center w-9 h-9 border border-dark-border rounded-full text-gray-400 hover:text-gold hover:border-gold transition-colors mb-3 ml-2"
-              title="Instagram"
-            >
-              <InstagramIcon size={16} />
-            </a>
-            <br />
-            <Link to="/contact" className="btn-outline text-sm px-5 py-2">{t.nav.contact}</Link>
           </div>
         </div>
 
-        <div className="border-t border-dark-border mt-12 pt-8">
-          <p className="text-gray-500 text-sm text-center">{t.footer.copy}</p>
+        <div className="footer-bottom">
+          <span>{t.footer.copy}</span>
+          <div className="footer-legal">
+            <Link to="/privacy-policy">{t.footer.privacy}</Link>
+            <Link to="/terms-of-service">{t.footer.terms}</Link>
+            {/* Consent is revocable: this reopens the banner. */}
+            <button type="button" onClick={() => setShowBanner(true)}>Cookies</button>
+          </div>
         </div>
       </div>
     </footer>

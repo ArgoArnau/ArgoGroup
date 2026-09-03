@@ -1,117 +1,141 @@
 import { useState } from 'react'
-import { Send } from 'lucide-react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
+import { SendIcon } from './icons'
 
 const FORMSPREE_ID = 'mlgoojlw'
+
+// Required fields, in the order the form reads. Kept in step with the field
+// list published to agents in src/content/markdown.js.
+const REQUIRED = ['name', 'email', 'subject', 'message']
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const EMPTY = { name: '', email: '', phone: '', company: '', subject: '', message: '' }
 
 export default function ContactForm() {
   const navigate = useNavigate()
   const { t } = useLang()
   const f = t.contactForm
-  const [form, setForm] = useState({ name: '', email: '', phone: '', company: '', subject: '', message: '' })
+
+  const [values, setValues] = useState(EMPTY)
   const [agreed, setAgreed] = useState(false)
+  const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [submitError, setSubmitError] = useState(null)
 
-  const handleChange = e => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  const errorFor = (name, value = values[name], consent = agreed) => {
+    if (name === 'consent') return consent ? null : f.err_consent
+    if (REQUIRED.includes(name) && !value.trim()) return f.err_required
+    if (name === 'email' && value.trim() && !EMAIL.test(value.trim())) return f.err_email
+    return null
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setValues((previous) => ({ ...previous, [name]: value }))
+    // Only re-check a field that is already showing an error, so typing never
+    // raises one mid-word.
+    setErrors((previous) => (previous[name] ? { ...previous, [name]: errorFor(name, value) } : previous))
+  }
+
+  const handleBlur = (event) => {
+    const { name, value } = event.target
+    setErrors((previous) => ({ ...previous, [name]: errorFor(name, value) }))
+  }
+
+  const handleConsent = (event) => {
+    setAgreed(event.target.checked)
+    setErrors((previous) => (previous.consent ? { ...previous, consent: errorFor('consent', null, event.target.checked) } : previous))
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+
+    const found = {}
+    for (const name of [...Object.keys(EMPTY), 'consent']) {
+      const message = errorFor(name)
+      if (message) found[name] = message
+    }
+    setErrors(found)
+    if (Object.keys(found).length > 0) {
+      document.querySelector('.form-field.has-error input, .form-field.has-error textarea')?.focus()
+      return
+    }
+
     setLoading(true)
-    setError(null)
+    setSubmitError(null)
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(values),
       })
-      if (res.ok) {
-        if (typeof fbq === 'function') fbq('track', 'Lead')
-        setTimeout(() => navigate('/thank-you'), 500)
-      } else {
-        setError('Something went wrong. Please try again or email us directly.')
-      }
+      if (!response.ok) throw new Error(`Formspree responded ${response.status}`)
+      if (typeof window.fbq === 'function') window.fbq('track', 'Lead')
+      navigate('/thank-you')
     } catch {
-      setError('Something went wrong. Please try again or email us directly.')
+      setSubmitError(f.err_generic)
     } finally {
       setLoading(false)
     }
   }
 
+  const fieldProps = (name) => ({
+    name,
+    value: values[name],
+    onChange: handleChange,
+    onBlur: handleBlur,
+    error: errors[name],
+    placeholder: f[`ph_${name}`],
+  })
+
   return (
-    <form onSubmit={handleSubmit} className="bg-dark-surface border border-dark-border rounded-2xl p-8 space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <Field label={f.name}    name="name"    type="text"  value={form.name}    onChange={handleChange} required placeholder={f.ph_name} />
-        <Field label={f.email}   name="email"   type="email" value={form.email}   onChange={handleChange} required placeholder={f.ph_email} />
-        <Field label={f.phone}   name="phone"   type="tel"   value={form.phone}   onChange={handleChange} placeholder={f.ph_phone} />
-        <Field label={f.company} name="company" type="text"  value={form.company} onChange={handleChange} placeholder={f.ph_company} />
-      </div>
+    <form className="form-grid" onSubmit={handleSubmit} noValidate>
+      <Field label={f.name} type="text" autoComplete="name" required {...fieldProps('name')} />
+      <Field label={f.email} type="email" autoComplete="email" inputMode="email" required {...fieldProps('email')} />
+      <Field label={f.phone} type="tel" autoComplete="tel" inputMode="tel" {...fieldProps('phone')} />
+      <Field label={f.company} type="text" autoComplete="organization" {...fieldProps('company')} />
+      <Field label={f.subject} type="text" full required {...fieldProps('subject')} />
+      <Field label={f.message} textarea full required {...fieldProps('message')} />
 
-      <Field label={f.subject} name="subject" type="text" value={form.subject} onChange={handleChange} required placeholder={f.ph_subject} />
-
-      <div>
-        <label className="block text-sm font-medium text-gray-300 mb-2">
-          {f.message} <span className="text-gold">*</span>
-        </label>
-        <textarea
-          name="message"
-          value={form.message}
-          onChange={handleChange}
-          required
-          rows={5}
-          placeholder={f.ph_message}
-          className="w-full bg-dark border border-dark-border rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-gold transition-colors resize-y placeholder-gray-600"
-        />
-      </div>
-
-      {/* Consent checkbox */}
-      <label className="flex items-start gap-3 cursor-pointer">
-        <input
-          type="checkbox"
-          checked={agreed}
-          onChange={e => setAgreed(e.target.checked)}
-          required
-          className="mt-0.5 w-4 h-4 accent-gold flex-shrink-0 cursor-pointer"
-        />
-        <span className="text-gray-400 text-sm">
+      <div className={errors.consent ? 'form-consent has-error' : 'form-consent'}>
+        <input id="f-consent" name="consent" type="checkbox" checked={agreed} onChange={handleConsent} />
+        <label htmlFor="f-consent">
           {f.consent}{' '}
-          <Link to="/privacy-policy" className="text-gold hover:underline">{f.privacyLink}</Link>
-          {' '}{f.andText}{' '}
-          <Link to="/terms-of-service" className="text-gold hover:underline">{f.termsLink}</Link>
-        </span>
-      </label>
+          <Link to="/privacy-policy">{f.privacyLink}</Link>{' '}
+          {f.andText}{' '}
+          <Link to="/terms-of-service">{f.termsLink}</Link>
+        </label>
+        <span className="field-error" role="alert">{errors.consent}</span>
+      </div>
 
-      {error && (
-        <p className="text-red-400 text-sm">{error}</p>
-      )}
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="btn-gold w-full flex items-center justify-center gap-2 py-4 text-base disabled:opacity-60 disabled:cursor-not-allowed"
-      >
-        <Send size={18} /> {loading ? 'Sending…' : f.send}
-      </button>
+      <div className="form-submit">
+        {submitError && <p className="field-error" role="alert" style={{ marginBottom: '0.75rem' }}>{submitError}</p>}
+        <button className="btn btn-gold" type="submit" disabled={loading}>
+          <span>{f.send}</span>
+          <SendIcon />
+        </button>
+      </div>
     </form>
   )
 }
 
-function Field({ label, name, type, value, onChange, required, placeholder }) {
+function Field({ label, name, error, full, required, textarea, ...rest }) {
+  const id = `f-${name}`
+  const className = ['form-field', full && 'full', error && 'has-error'].filter(Boolean).join(' ')
+  const control = { id, name, required, 'aria-invalid': error ? true : undefined, ...rest }
+
   return (
-    <div>
-      <label className="block text-sm font-medium text-gray-300 mb-2">
-        {label}{required && <span className="text-gold ml-1">*</span>}
+    <div className={className}>
+      <label htmlFor={id}>
+        <span>{label}</span>
+        {required && <span className="req" aria-hidden="true"> *</span>}
       </label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        placeholder={placeholder}
-        className="w-full bg-dark border border-dark-border rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:border-gold transition-colors placeholder-gray-600"
-      />
+      {textarea
+        ? <textarea {...control} className={error ? 'invalid' : undefined} />
+        : <input {...control} className={error ? 'invalid' : undefined} />}
+      <span className="field-error" role="alert">{error}</span>
     </div>
   )
 }

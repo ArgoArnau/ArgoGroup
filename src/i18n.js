@@ -39,6 +39,10 @@ export const translations = {
     },
     nav: {
       services: 'Services',
+      method: 'How We Operate',
+      why: 'Why ARGO',
+      testimonials: 'Testimonials',
+      faq: 'FAQ',
       about: 'About',
       contact: 'Contact',
       cta: 'Get in Touch',
@@ -95,7 +99,11 @@ export const translations = {
       ],
     },
     services: {
+      eyebrow: 'What we do',
       title: 'Our Services',
+      // The word the section heading sets in the display serif. Must appear
+      // verbatim in `title`; SectionTitle falls back to the plain title if not.
+      accent: 'Services',
       items: [
         {
           title: 'Performance Marketing',
@@ -217,7 +225,9 @@ export const translations = {
       ],
     },
     methodology: {
+      eyebrow: 'Our process',
       title: 'How We Operate',
+      accent: 'Operate',
       items: [
         { number: '01', title: 'Full Transparency',            desc: 'Full visibility into what\'s working and what\'s not. You\'ll know exactly how your investment is being managed, why decisions are made, and receive clear optimization steps whenever something needs to improve.' },
         { number: '02', title: 'Direct Communication',         desc: 'Direct access to our team 9AM–6PM (Spain & Miami) via WhatsApp, email, and Slack.' },
@@ -226,7 +236,9 @@ export const translations = {
       ],
     },
     whyArgo: {
+      eyebrow: 'What sets us apart',
       title: 'Why ARGO',
+      accent: 'ARGO',
       intro: [
         'Unlike traditional agencies, we function as a close, flexible partner deeply invested in your success.',
         'Direct communication isn\'t optional; it\'s essential. Questions and challenges arise throughout any project, and addressing them quickly makes all the difference.',
@@ -240,7 +252,9 @@ export const translations = {
       ],
     },
     testimonials: {
+      eyebrow: 'Real results',
       title: 'What Our Clients Say',
+      accent: 'Clients',
       items: [
         { quote: 'Our problem wasn\'t getting leads, it was managing them. Many were coming in, but there was no clear follow-up and we were losing opportunities. They implemented AI-powered automations to filter, prioritize, and nurture leads. They also reorganized the entire contact process.', name: 'Carlos Martínez',   role: 'CEO, TechScale EU',            initials: 'CM' },
         { quote: 'Before working with Argo, we were investing in ads but without being clear on what was actually working. Within a few weeks, they helped us organize the entire funnel and we started seeing more stable results.',                                                                 name: 'Laura Sánchez',     role: 'Marketing Director, GrowthCo', initials: 'LS' },
@@ -248,9 +262,14 @@ export const translations = {
         { quote: 'We were investing more and more without being clear if it was sustainable. They started measuring properly, optimizing campaigns, and automating parts of the funnel. Within a few months, they managed to reduce our CAC and maintain growth without blowing up our budget.',     name: 'Sofia Romano',      role: 'Head of Sales, ScaleUp Miami', initials: 'SR' },
       ],
     },
-    clients: { title: 'Trusted By' },
+    clients: {
+      title: 'Trusted By',
+      names: ['TechScale EU', 'GrowthCo', 'Barcelona Ventures', 'ScaleUp Miami'],
+    },
     faq: {
+      eyebrow: 'Good to know',
       title: 'Frequently Asked Questions',
+      accent: 'Questions',
       items: [
         {
           q: 'How does the onboarding process work?',
@@ -279,7 +298,9 @@ export const translations = {
       ],
     },
     homeContact: {
+      eyebrow: "Let's talk",
       title: 'Ready to Scale?',
+      accent: 'Scale',
       sub: "Tell us about your business and we'll get back to you within 24 hours.",
     },
     contactPage: {
@@ -306,6 +327,10 @@ export const translations = {
       ph_company:  'Your Company',
       ph_subject:  'How can we help you?',
       ph_message:  'Tell us about your business...',
+      err_required: 'This field is required.',
+      err_email:    'Please enter a valid email address.',
+      err_consent:  'You must accept the privacy policy.',
+      err_generic:  'Something went wrong. Please try again or email us directly.',
     },
     thankYou: {
       headline: "You're all set.",
@@ -317,6 +342,8 @@ export const translations = {
       navTitle:     'Navigation',
       contactTitle: 'Contact',
       copy:         '© 2026 ARGO Group. All rights reserved.',
+      privacy:      'Privacy Policy',
+      terms:        'Terms of Service',
     },
   },
 
@@ -360,6 +387,10 @@ export const translations = {
     },
     nav: {
       services: 'Servicios',
+      method: 'Cómo Operamos',
+      why: 'Por qué ARGO',
+      testimonials: 'Testimonios',
+      faq: 'FAQ',
       about: 'Nosotros',
       contact: 'Contacto',
       cta: 'Contáctanos',
@@ -416,7 +447,9 @@ export const translations = {
       ],
     },
     services: {
+      eyebrow: 'Lo que hacemos',
       title: 'Nuestros Servicios',
+      accent: 'Servicios',
       items: [
         {
           title: 'Marketing de Resultados',
@@ -538,7 +571,9 @@ export const translations = {
       ],
     },
     methodology: {
+      eyebrow: 'Nuestro proceso',
       title: 'Cómo Operamos',
+      accent: 'Operamos',
       items: [
         { number: '01', title: 'Transparencia Total',                   desc: 'Visibilidad total sobre qué está funcionando y qué no. Sabrás exactamente cómo se gestiona tu inversión, por qué se toman las decisiones y recibirás pasos claros de optimización cuando algo necesite mejorar.' },
         { number: '02', title: 'Comunicación Directa',                   desc: 'Acceso directo a nuestro equipo de 9h a 18h (España y Miami) por WhatsApp, email y Slack.' },
@@ -547,7 +582,9 @@ export const translations = {
       ],
     },
     whyArgo: {
+      eyebrow: 'Nuestra diferencia',
       title: '¿Por qué ARGO?',
+      accent: 'ARGO',
       intro: [
         'A diferencia de las agencias tradicionales, funcionamos como un partner cercano y flexible, profundamente comprometido con tu éxito.',
         'La comunicación directa no es opcional; es esencial. Las preguntas y los desafíos surgen a lo largo de cualquier proyecto, y abordarlos rápidamente marca la diferencia.',
@@ -561,7 +598,9 @@ export const translations = {
       ],
     },
     testimonials: {
+      eyebrow: 'Casos reales',
       title: 'Lo Que Dicen Nuestros Clientes',
+      accent: 'Clientes',
       items: [
         { quote: 'Nuestro problema no era conseguir leads, sino gestionarlos. Entraban muchos, pero no había un seguimiento claro y perdíamos oportunidades. Implementaron automatizaciones con IA para filtrar, priorizar y nutrir leads. También reorganizaron todo el proceso de contacto.',          name: 'Carlos Martínez',   role: 'CEO, TechScale EU',                    initials: 'CM' },
         { quote: 'Antes de trabajar con Argo, invertíamos en publicidad sin tener claro qué funcionaba realmente. En pocas semanas nos ayudaron a ordenar todo el funnel y empezamos a ver resultados más estables.',                                                                                   name: 'Laura Sánchez',     role: 'Directora de Marketing, GrowthCo',     initials: 'LS' },
@@ -569,9 +608,14 @@ export const translations = {
         { quote: 'Estábamos invirtiendo cada vez más sin tener claro si era sostenible. Empezaron a medir bien, a optimizar campañas y a automatizar partes del funnel. En pocos meses lograron reducir nuestro CAC y mantener el crecimiento sin disparar el presupuesto.',                           name: 'Sofia Romano',      role: 'Head of Sales, ScaleUp Miami',         initials: 'SR' },
       ],
     },
-    clients: { title: 'Confían en Nosotros' },
+    clients: {
+      title: 'Confían en Nosotros',
+      names: ['TechScale EU', 'GrowthCo', 'Barcelona Ventures', 'ScaleUp Miami'],
+    },
     faq: {
+      eyebrow: 'Resolvemos tus dudas',
       title: 'Preguntas Frecuentes',
+      accent: 'Frecuentes',
       items: [
         {
           q: '¿Cómo funciona el proceso de incorporación?',
@@ -600,7 +644,9 @@ export const translations = {
       ],
     },
     homeContact: {
+      eyebrow: 'Hablemos',
       title: '¿Listo para Escalar?',
+      accent: 'Escalar',
       sub: 'Cuéntanos sobre tu negocio y te responderemos en menos de 24 horas.',
     },
     contactPage: {
@@ -627,6 +673,10 @@ export const translations = {
       ph_company:  'Tu Empresa',
       ph_subject:  '¿En qué podemos ayudarte?',
       ph_message:  'Cuéntanos sobre tu proyecto...',
+      err_required: 'Este campo es obligatorio.',
+      err_email:    'Introduce un correo electrónico válido.',
+      err_consent:  'Debes aceptar la política de privacidad.',
+      err_generic:  'Algo ha ido mal. Inténtalo de nuevo o escríbenos directamente por email.',
     },
     thankYou: {
       headline: 'Todo listo.',
@@ -638,6 +688,8 @@ export const translations = {
       navTitle:     'Navegación',
       contactTitle: 'Contacto',
       copy:         '© 2026 ARGO. Todos los derechos reservados.',
+      privacy:      'Política de Privacidad',
+      terms:        'Términos de Servicio',
     },
   },
 }
