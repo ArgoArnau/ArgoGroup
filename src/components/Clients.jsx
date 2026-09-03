@@ -8,6 +8,10 @@ export default function Clients() {
   const { t } = useLang()
   const names = t.clients.names
 
+  // No strip until there are real client names to put in it. Filling
+  // clients.names in src/i18n.js is all it takes to bring the section back.
+  if (!names || names.length === 0) return null
+
   return (
     <section className="clients" aria-label={t.clients.title}>
       <p className="clients-label">{t.clients.title}</p>

@@ -5,6 +5,5 @@ export const SECTIONS = [
   { id: 'servicios', key: 'services' },
   { id: 'proceso', key: 'method' },
   { id: 'por-que-argo', key: 'why' },
-  { id: 'testimonios', key: 'testimonials' },
   { id: 'faq', key: 'faq' },
 ]

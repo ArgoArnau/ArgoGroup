@@ -264,7 +264,9 @@ export const translations = {
     },
     clients: {
       title: 'Trusted By',
-      names: ['TechScale EU', 'GrowthCo', 'Barcelona Ventures', 'ScaleUp Miami'],
+      // Empty until there are real, cleared client names to show: the strip
+      // renders nothing while this is empty (see components/Clients.jsx).
+      names: [],
     },
     faq: {
       eyebrow: 'Good to know',
@@ -610,7 +612,7 @@ export const translations = {
     },
     clients: {
       title: 'Confían en Nosotros',
-      names: ['TechScale EU', 'GrowthCo', 'Barcelona Ventures', 'ScaleUp Miami'],
+      names: [],
     },
     faq: {
       eyebrow: 'Resolvemos tus dudas',
