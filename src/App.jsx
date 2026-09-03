@@ -3,9 +3,11 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import SEO from './components/SEO'
 import ScrollToTop from './components/ScrollToTop'
+import ScrollProgress from './components/ScrollProgress'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import CookieBanner from './components/CookieBanner'
+import { useLang } from './context/LangContext'
 import Home from './pages/Home'
 import About from './pages/About'
 import ContactPage from './pages/ContactPage'
@@ -17,12 +19,17 @@ const STORAGE_KEY = 'argo_cookie_consent'
 
 export function AppLayout({ showBanner, setShowBanner }) {
   const location = useLocation()
+  const { lang } = useLang()
   const isThankYou = location.pathname === '/thank-you'
 
   return (
-    <div className="min-h-screen bg-dark text-white">
+    <div className="min-h-screen">
       <SEO />
       <ScrollToTop />
+      <a className="skip-link" href="#main">
+        {lang === 'es' ? 'Ir al contenido' : 'Skip to content'}
+      </a>
+      <ScrollProgress />
       {!isThankYou && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -43,8 +50,11 @@ export default function App() {
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    if (!saved) setShowBanner(true)
+    try {
+      if (!localStorage.getItem(STORAGE_KEY)) setShowBanner(true)
+    } catch {
+      // Storage blocked: skip the banner rather than showing it every render.
+    }
   }, [])
 
   return (
