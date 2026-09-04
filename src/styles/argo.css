@@ -135,7 +135,6 @@ ul, ol { list-style: none; }
   letter-spacing: 0.01em;
 }
 .section-title em {
-  font-style: italic;
   background: linear-gradient(100deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
   -webkit-background-clip: text;
   background-clip: text;
@@ -763,7 +762,6 @@ ul, ol { list-style: none; }
 
 .service-intro {
   font-family: var(--font-display);
-  font-style: italic;
   font-size: clamp(1.15rem, 2.4vw, 1.5rem);
   color: var(--text-soft);
   max-width: 46rem;
@@ -833,7 +831,6 @@ ul, ol { list-style: none; }
 }
 .feature-card .tagline {
   font-family: var(--font-display);
-  font-style: italic;
   font-size: 0.95rem;
   color: var(--gold);
   margin-top: 0.4rem;
@@ -911,7 +908,6 @@ ul, ol { list-style: none; }
 .why-intro p:first-of-type {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 2.6vw, 1.55rem);
-  font-style: italic;
   color: var(--text-soft);
   line-height: 1.45;
 }

@@ -361,12 +361,12 @@ export const translations = {
             'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
         },
         '/about': {
-          title: 'Sobre ARGO Group | Agencia de Performance Marketing y Automatización',
+          title: 'Sobre ARGO Group | Performance Marketing y Automatización',
           description:
             'ARGO Group es una agencia de performance marketing y automatización con IA, con oficinas en Barcelona y Miami, que atiende clientes en todo el mundo en inglés y español.',
         },
         '/contact': {
-          title: 'Contacto ARGO Group | Performance Marketing y Automatización',
+          title: 'Contacta con ARGO Group | Performance Marketing y Automatización',
           description:
             'Habla con el equipo de ARGO Group sobre performance marketing, creatividades para paid media y automatización de procesos con IA. Respondemos en 24 horas.',
         },
