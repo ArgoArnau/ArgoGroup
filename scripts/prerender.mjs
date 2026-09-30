@@ -154,6 +154,9 @@ write('404.html', `<!doctype html>
     <title>404 - Page not found | ${site.name}</title>
     <meta name="description" content="That path does not exist on ${site.origin}. Use the page list, sitemap or llms.txt below to find the right URL." />
     <link rel="alternate" type="text/markdown" href="${site.origin}/404.md" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <style>
       :root { color-scheme: dark; }
       body { margin: 0; background: #1a1a1a; color: #ffffff; font-family: Inter, system-ui, sans-serif; }
