@@ -16,22 +16,22 @@ export default function HeroWaves() {
         <linearGradient id="silkA" x1="0.15" y1="1" x2="0.75" y2="0">
           <stop offset="0" stopColor="#d4af37" stopOpacity="0" />
           <stop offset="0.5" stopColor="#d4af37" stopOpacity="0.04" />
-          <stop offset="0.82" stopColor="#e6c65c" stopOpacity="0.085" />
-          <stop offset="1" stopColor="#f4e3a1" stopOpacity="0.12" />
+          <stop offset="0.82" stopColor="#d4af37" stopOpacity="0.085" />
+          <stop offset="1" stopColor="#f2ede4" stopOpacity="0.12" />
         </linearGradient>
         <linearGradient id="silkB" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f4e3a1" stopOpacity="0.10" />
+          <stop offset="0" stopColor="#f2ede4" stopOpacity="0.10" />
           <stop offset="0.5" stopColor="#d4af37" stopOpacity="0.05" />
-          <stop offset="1" stopColor="#b8962e" stopOpacity="0" />
+          <stop offset="1" stopColor="#d4af37" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="silkC" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#b8962e" stopOpacity="0" />
+          <stop offset="0" stopColor="#d4af37" stopOpacity="0" />
           <stop offset="0.55" stopColor="#d4af37" stopOpacity="0.04" />
-          <stop offset="1" stopColor="#e6c65c" stopOpacity="0.09" />
+          <stop offset="1" stopColor="#d4af37" stopOpacity="0.09" />
         </linearGradient>
         <radialGradient id="crestGlow" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stopColor="#e6c65c" stopOpacity="0.08" />
-          <stop offset="1" stopColor="#e6c65c" stopOpacity="0" />
+          <stop offset="0" stopColor="#d4af37" stopOpacity="0.08" />
+          <stop offset="1" stopColor="#d4af37" stopOpacity="0" />
         </radialGradient>
         <filter id="softBlur" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="16" />
