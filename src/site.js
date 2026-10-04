@@ -14,7 +14,7 @@ export const site = {
   telephone: '+34685162838',
   telephoneDisplay: '+34 685 162 838',
   whatsapp: 'https://wa.me/34685162838',
-  logo: `${SITE_ORIGIN}/favicon.svg`,
+  logo: `${SITE_ORIGIN}/argo-logo.png`,
   image: `${SITE_ORIGIN}/og-image.jpg`,
   sameAs: [
     'https://www.linkedin.com/company/group-argo/',

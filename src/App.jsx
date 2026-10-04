@@ -14,8 +14,8 @@ import ContactPage from './pages/ContactPage'
 import ThankYou from './pages/ThankYou'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import TermsOfService from './pages/TermsOfService'
-
-const STORAGE_KEY = 'argo_cookie_consent'
+import { getConsent } from './lib/consent'
+import { initPixel } from './lib/pixel'
 
 export function AppLayout({ showBanner, setShowBanner }) {
   const location = useLocation()
@@ -50,11 +50,10 @@ export default function App() {
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(STORAGE_KEY)) setShowBanner(true)
-    } catch {
-      // Storage blocked: skip the banner rather than showing it every render.
-    }
+    // Read after hydration so the first render matches the prerendered HTML.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (!getConsent()) setShowBanner(true)
+    return initPixel()
   }, [])
 
   return (

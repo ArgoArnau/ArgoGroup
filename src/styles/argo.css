@@ -1,30 +1,35 @@
 /* ============================================================
    ARGO GROUP — Design System
-   Palette (from brand):
-     bg #0d0d0d · surface #111111 · surface-2 #1a1a1a
-     border #242424 · gold #d4af37 · text #ffffff
-     muted #9ca3af · soft #e5e7eb · whatsapp #25d366
-   Type: Playfair Display (display serif) + Inter (UI/body)
+   Palette (Group ARGO brandbook, 06 · Color & Type):
+     Ink #0d0d0d (background) · Surface #1a1a1a (panels)
+     Gold #d4af37 (accent)    · Cream #f2ede4 (logo and text)
+   Everything else is a tint of those four; whatsapp #25d366 is
+   the one outside colour, kept for the channel it names.
+   Type: Playfair Display (logo 600, headlines 700) + Inter (UI,
+   body, labels; uppercase labels tracked wide). Gold is flat:
+   no gradients, and never gold on cream.
    ============================================================ */
 
 :root {
   /* Color tokens */
   --bg: #0d0d0d;
-  --surface: #111111;
+  --surface: #1a1a1a;
   --surface-2: #1a1a1a;
-  --surface-3: #242424;
-  --border: #242424;
-  --border-soft: rgba(255, 255, 255, 0.06);
+  --surface-3: #2c2b29;
+  --border: #262624;
+  --border-soft: rgba(242, 237, 228, 0.07);
+  --cream: #f2ede4;
   --gold: #d4af37;
-  --gold-light: #e6c65c;
+  /* Hover/pressed states only; never as a gradient stop. */
+  --gold-light: #ddbe55;
   --gold-dark: #b8962e;
   --gold-08: rgba(212, 175, 55, 0.08);
   --gold-15: rgba(212, 175, 55, 0.15);
   --gold-25: rgba(212, 175, 55, 0.25);
   --gold-40: rgba(212, 175, 55, 0.4);
-  --text: #ffffff;
-  --text-soft: #e5e7eb;
-  --text-muted: #9ca3af;
+  --text: var(--cream);
+  --text-soft: #dcd7ce;
+  --text-muted: #a39f98;
   --whatsapp: #25d366;
 
   /* Type */
@@ -32,8 +37,11 @@
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
 
   /* Rhythm */
-  --radius: 16px;
-  --radius-lg: 24px;
+  /* The brandbook's panels are square; a hair of rounding only so edges
+     don't alias. */
+  --radius: 2px;
+  --radius-lg: 2px;
+  --label-track: 0.24em;
   --section-y: clamp(5rem, 10vw, 8.5rem);
   --container: 76rem;
 
@@ -87,7 +95,7 @@ ul, ol { list-style: none; }
   color: #0d0d0d;
   font-weight: 600;
   padding: 0.6rem 1.1rem;
-  border-radius: 8px;
+  border-radius: var(--radius);
   transition: top var(--dur-fast) var(--ease-out);
 }
 .skip-link:focus { top: 1rem; }
@@ -122,7 +130,7 @@ ul, ol { list-style: none; }
   content: "";
   width: 2rem;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold));
+  background: var(--gold);
 }
 
 .section-title {
@@ -135,10 +143,8 @@ ul, ol { list-style: none; }
   letter-spacing: 0.01em;
 }
 .section-title em {
-  background: linear-gradient(100deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--gold);
+  font-style: normal;
 }
 
 .section-sub {
@@ -160,10 +166,11 @@ ul, ol { list-style: none; }
   gap: 0.55rem;
   min-height: 48px;
   padding: 0.85rem 1.75rem;
-  border-radius: 999px;
+  border-radius: var(--radius);
   font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -177,29 +184,19 @@ ul, ol { list-style: none; }
 .btn:active { transform: scale(0.97); }
 
 .btn-gold {
-  background: linear-gradient(120deg, var(--gold-light), var(--gold) 60%, var(--gold-dark));
-  color: #0d0d0d;
-  box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+  background: var(--gold);
+  color: var(--bg);
 }
 .btn-gold:hover {
+  background: var(--gold-light);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px -8px var(--gold-40), 0 0 0 1px var(--gold-25);
+  box-shadow: 0 12px 28px -14px var(--gold-40);
 }
-/* Brillo que atraviesa el botón */
-.btn-gold::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.55) 50%, transparent 60%);
-  transform: translateX(-120%);
-  transition: transform 0.7s var(--ease-out);
-}
-.btn-gold:hover::after { transform: translateX(120%); }
 
 .btn-ghost {
-  border: 1px solid var(--surface-3);
-  color: var(--text-soft);
-  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(242, 237, 228, 0.22);
+  color: var(--text);
+  background: transparent;
 }
 .btn-ghost:hover {
   border-color: var(--gold);
@@ -225,7 +222,7 @@ ul, ol { list-style: none; }
   display: block;
   height: 100%;
   width: 100%;
-  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light));
+  background: var(--gold);
   transform-origin: left;
   transform: scaleX(0);
 }
@@ -256,29 +253,19 @@ ul, ol { list-style: none; }
   height: 72px;
 }
 
+/* The crescent symbol, brandbook 02. The hero's wordmark carries the name. */
 .brand {
   display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-  min-height: 44px;
   align-items: center;
+  min-height: 44px;
 }
-.brand-name {
-  font-family: var(--font-display);
-  font-size: 1.55rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  color: var(--gold);
-  line-height: 1;
+.brand-symbol {
+  height: 2.6rem;
+  width: auto;
+  color: var(--cream);
+  transition: color var(--dur-fast) var(--ease-out);
 }
-.brand-tag {
-  font-size: 0.62rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  border-left: 1px solid var(--surface-3);
-  padding-left: 0.6rem;
-}
+.brand:hover .brand-symbol { color: var(--gold); }
 
 .nav-links {
   display: flex;
@@ -335,7 +322,7 @@ ul, ol { list-style: none; }
 .lang-toggle {
   display: inline-flex;
   border: 1px solid var(--surface-3);
-  border-radius: 999px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 .lang-toggle button {
@@ -429,8 +416,8 @@ ul, ol { list-style: none; }
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(212, 175, 55, 0.09), transparent 70%),
-    radial-gradient(ellipse 45% 38% at 82% 88%, rgba(212, 175, 55, 0.05), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(212, 175, 55, 0.06), transparent 70%),
+    radial-gradient(ellipse 45% 38% at 82% 88%, rgba(212, 175, 55, 0.035), transparent 70%),
     var(--bg);
 }
 /* Auroras doradas que derivan lentamente */
@@ -446,7 +433,7 @@ ul, ol { list-style: none; }
   height: 58vw;
   top: -22%;
   left: -14%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.10), transparent 62%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.07), transparent 62%);
   animation: aurora-a 26s ease-in-out infinite alternate;
 }
 .hero-bg::after {
@@ -472,65 +459,84 @@ ul, ol { list-style: none; }
 }
 
 .hero-content {
+  transform: translate3d(0, calc(var(--hero-scroll, 0) * 140px), 0);
+  opacity: calc(1 - var(--hero-scroll, 0) * 0.9);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* Tracked label between two gold hairlines, as on the brandbook pages. */
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 1.15rem;
-  border: 1px solid var(--gold-25);
-  border-radius: 999px;
-  background: var(--gold-08);
-  font-size: 0.8rem;
-  letter-spacing: 0.18em;
+  gap: 0.9rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
 }
-.hero-badge .dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: pulse-dot 2.2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 0 var(--gold-40); }
-  50% { box-shadow: 0 0 0 6px rgba(212, 175, 55, 0); }
+.hero-badge::before,
+.hero-badge::after {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--gold-40);
 }
 
-/* Titular ARGO — degradado blanco→dorado, entrada única y elegante */
+/* Hero wordmark, brandbook 04: GROUP in tracked Inter, a gold hairline, ARGO
+   in Playfair SemiBold. It enters once: the whole line rises while ARGO's
+   letters close up, then the hairline draws itself. */
 .hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(4.4rem, 15vw, 11rem);
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: 0.14em;
-  text-indent: 0.14em; /* compensa el letter-spacing para centrar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
   margin-top: 1.5rem;
-  background: linear-gradient(175deg, #ffffff 28%, #f0dfae 52%, var(--gold) 74%, var(--gold-dark) 96%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 12px 44px rgba(212, 175, 55, 0.22));
+  font-family: var(--font-display);
+  font-size: clamp(3.3rem, 12vw, 8.75rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  color: var(--cream);
+  filter: drop-shadow(0 12px 44px rgba(212, 175, 55, 0.16));
   opacity: 0;
   animation: title-in 1.15s var(--ease-out) 0.15s forwards;
 }
+.hero-wm-group {
+  font-family: var(--font-body);
+  font-size: max(0.17em, 0.66rem); /* stays legible on phones */
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  margin-right: -0.34em; /* the trailing tracking would push the hairline away */
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.hero-wm-rule {
+  width: 1px;
+  height: 0.66em;
+  background: var(--gold);
+  transform: scaleY(0);
+  animation: rule-grow 0.9s var(--ease-out) 0.75s forwards;
+}
+.hero-wm-argo { margin-right: -0.2em; } /* same, at the end of the line */
 @keyframes title-in {
   from {
     opacity: 0;
     transform: translateY(26px) scale(0.985);
-    letter-spacing: 0.32em;
+    letter-spacing: 0.4em;
   }
   to {
     opacity: 1;
     transform: none;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.2em;
   }
+}
+@keyframes rule-grow {
+  to { transform: scaleY(1); }
 }
 
 /* ---------- Ondas de seda doradas ---------- */
@@ -554,16 +560,16 @@ ul, ol { list-style: none; }
 }
 .wave-line {
   fill: none;
-  stroke: #e6c65c;
+  stroke: var(--gold);
 }
-.wave-line.bright { stroke-width: 1.4; opacity: 0.3; }
-.wave-line.soft { stroke: #ffffff; stroke-width: 1; opacity: 0.09; }
+.wave-line.bright { stroke-width: 1.4; opacity: 0.26; }
+.wave-line.soft { stroke: var(--cream); stroke-width: 1; opacity: 0.08; }
 .wave-line.thin { stroke-width: 1; opacity: 0.16; }
 
 /* Destello de luz que recorre el borde de la onda */
 .wave-glint {
   fill: none;
-  stroke: #ffedb0;
+  stroke: var(--cream);
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-dasharray: 0.14 0.86;
@@ -588,18 +594,21 @@ ul, ol { list-style: none; }
 @keyframes drift-b { to { transform: translate(14px, -8px); } }
 @keyframes drift-c { to { transform: translate(-22px, 4px); } }
 
+/* The brand line, set as the brandbook's cover headline. */
 .hero-sub {
-  max-width: 44rem;
-  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
-  color: var(--text-soft);
-  line-height: 1.5;
-  margin-top: 1.2rem;
-  font-weight: 300;
+  max-width: 40rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-top: 2.2rem;
+  text-wrap: balance;
 }
 .hero-sub2 {
-  margin-top: 0.9rem;
-  font-size: 0.82rem;
-  letter-spacing: 0.26em;
+  margin-top: 1rem;
+  font-size: 0.74rem;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--text-muted);
 }
@@ -627,7 +636,7 @@ ul, ol { list-style: none; }
   backdrop-filter: blur(6px);
 }
 .hero-stat {
-  background: rgba(17, 17, 17, 0.6);
+  background: rgba(26, 26, 26, 0.6);
   padding: 1.5rem 1rem;
   text-align: center;
   transition: background-color var(--dur-med);
@@ -812,7 +821,7 @@ ul, ol { list-style: none; }
 
 .feature-icon {
   width: 46px; height: 46px;
-  border-radius: 12px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -990,8 +999,8 @@ ul, ol { list-style: none; }
   justify-content: center;
   font-weight: 700;
   font-size: 0.9rem;
-  color: #0d0d0d;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+  color: var(--bg);
+  background: var(--gold);
 }
 .t-person .name { font-weight: 600; color: var(--text); font-size: 0.95rem; }
 .t-person .role { font-size: 0.82rem; color: var(--text-muted); }
@@ -1081,7 +1090,29 @@ ul, ol { list-style: none; }
 }
 
 /* ---------- Contacto ---------- */
-.contact { position: relative; overflow: hidden; }
+.contact { position: relative; overflow: hidden; isolation: isolate; }
+/* Blurred light turning slowly behind the panel, the reference's glass. */
+.contact::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: -1;
+  width: min(150vw, 115rem);
+  aspect-ratio: 2 / 1;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg,
+    transparent, rgba(212, 175, 55, 0.34), transparent 28%,
+    rgba(242, 237, 228, 0.14), transparent 52%,
+    rgba(184, 150, 46, 0.3), transparent 78%);
+  filter: blur(80px);
+  transform: translate(-50%, -50%);
+  animation: glass-turn 26s linear infinite;
+  pointer-events: none;
+}
+@keyframes glass-turn {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
 .contact::before {
   content: "";
   position: absolute;
@@ -1097,7 +1128,7 @@ ul, ol { list-style: none; }
   gap: clamp(2rem, 5vw, 4rem);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  background: var(--surface);
   padding: clamp(1.75rem, 4.5vw, 3.5rem);
   overflow: hidden;
 }
@@ -1116,8 +1147,8 @@ ul, ol { list-style: none; }
   align-items: center;
   gap: 0.95rem;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius);
+  background: rgba(242, 237, 228, 0.02);
   padding: 0.9rem 1.1rem;
   min-height: 48px;
   transition: border-color var(--dur-fast), transform var(--dur-fast) var(--ease-out), background-color var(--dur-fast);
@@ -1126,7 +1157,7 @@ ul, ol { list-style: none; }
 .channel .ch-icon {
   width: 38px; height: 38px;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1159,7 +1190,7 @@ ul, ol { list-style: none; }
   width: 100%;
   background: var(--bg);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 0.95rem;
@@ -1172,7 +1203,7 @@ ul, ol { list-style: none; }
 }
 .form-field textarea { min-height: 120px; resize: vertical; }
 .form-field input::placeholder,
-.form-field textarea::placeholder { color: #565b64; }
+.form-field textarea::placeholder { color: #625e58; }
 .form-field input:focus,
 .form-field textarea:focus {
   outline: none;
@@ -1256,7 +1287,44 @@ ul, ol { list-style: none; }
   gap: clamp(2rem, 5vw, 4rem);
   padding-bottom: 3rem;
 }
-.footer-brand .brand-name { font-size: 1.8rem; }
+/* Primary logo, brandbook 01: the crescent symbol, then GROUP (tracked
+   Inter) over ARGO (Playfair SemiBold), no rule between. The gold descriptor
+   sits underneath, outside the logo's clear space. */
+.lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1rem;
+  color: var(--cream);
+}
+.lockup-mark { height: 3.4rem; width: auto; }
+.lockup-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  line-height: 1;
+}
+.lockup-group {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.lockup-argo {
+  font-family: var(--font-display);
+  font-size: 1.95rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--text);
+}
+.lockup-line {
+  margin-top: 1.2rem;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
 .footer-tagline { margin-top: 1rem; color: var(--text-muted); max-width: 24rem; font-size: 0.95rem; }
 .footer-social { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
 
@@ -1289,6 +1357,7 @@ ul, ol { list-style: none; }
   color: var(--text-muted);
 }
 .footer-legal { display: flex; gap: 1.5rem; }
+
 .footer-legal a,
 .footer-legal button { color: var(--text-muted); font-size: inherit; transition: color var(--dur-fast); }
 .footer-legal a:hover,
@@ -1328,20 +1397,71 @@ ul, ol { list-style: none; }
 /* ---------- Animaciones de scroll (reveal) ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transform: translateY(44px);
+  filter: blur(8px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out), filter 0.9s var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal.visible { opacity: 1; transform: translateY(0); filter: none; }
 
 .reveal-scale {
   opacity: 0;
-  transform: scale(0.94);
-  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transform: translateY(40px) scale(0.94);
+  filter: blur(10px);
+  transition: opacity 1s var(--ease-out), transform 1s var(--ease-out), filter 1s var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
-.reveal-scale.visible { opacity: 1; transform: scale(1); }
+.reveal-scale.visible { opacity: 1; transform: none; filter: none; }
+
+/* ---------- Letter mask (components/SplitText.jsx) ---------- */
+/* Each word clips its own line; each letter climbs into it in turn. The
+   padding/negative margin pair keeps ascenders and descenders inside the
+   mask without moving the text. */
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0.1em 0.03em 0.18em;
+  margin: -0.1em -0.03em -0.18em;
+}
+.split-char {
+  display: inline-block;
+  transform: translateY(115%);
+  transition: transform 0.85s var(--ease-out);
+  transition-delay: calc(var(--split-start, 100ms) + var(--i, 0) * 22ms);
+}
+.visible .split-char { transform: none; }
+
+/* Headings carry the motion now: the block itself stays put, the letters
+   rise, then the eyebrow and the line underneath follow. */
+.section-head.reveal,
+.section-head.reveal.visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.section-head .eyebrow,
+.section-head .section-sub {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.section-head .section-sub { transition-delay: 450ms; }
+.section-head.visible .eyebrow,
+.section-head.visible .section-sub { opacity: 1; transform: none; }
+
+/* The hero line rises word by word under the title. */
+.hero-sub .split-char {
+  transform: none;
+  transition: none;
+  animation: split-rise 0.9s var(--ease-out) both;
+  animation-delay: calc(480ms + var(--i, 0) * 45ms);
+}
+@keyframes split-rise {
+  from { transform: translateY(115%); }
+  to { transform: none; }
+}
 
 /* Entrada del héroe (se dispara al cargar) */
 .hero-in {
@@ -1425,6 +1545,12 @@ html.no-anim .reveal-scale {
   transform: none !important;
 }
 html.no-anim .hero-title { opacity: 1 !important; transform: none !important; }
+html.no-anim .hero-wm-rule { transform: none !important; }
+html.no-anim .reveal,
+html.no-anim .reveal-scale { filter: none !important; }
+html.no-anim .split-char,
+html.no-anim .section-head .eyebrow,
+html.no-anim .section-head .section-sub { opacity: 1 !important; transform: none !important; }
 html.no-anim .hero-waves { opacity: 1 !important; }
 html.no-anim .wave-glint { display: none; }
 
@@ -1442,6 +1568,11 @@ html.static-test .hero { min-height: 820px; }
   .reveal, .reveal-scale, .hero-in { opacity: 1; transform: none; animation: none; }
   .marquee-track { animation: none; }
   .hero-title { opacity: 1; transform: none; animation: none; }
+  .hero-wm-rule { transform: none; animation: none; }
+  .reveal, .reveal-scale { filter: none; }
+  .split-char, .hero-sub .split-char { transform: none; animation: none; }
+  .section-head .eyebrow, .section-head .section-sub { opacity: 1; transform: none; }
+  .contact::after { animation: none; }
   .hero-waves { opacity: 1; animation: none; }
   .wave-glint { display: none; }
 }

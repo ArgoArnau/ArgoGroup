@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLang } from '../context/LangContext'
 import SectionTitle from './SectionTitle'
+import Reveal from './Reveal'
 import { CheckIcon } from './icons'
 import { icons } from './iconSet'
 
@@ -63,6 +64,7 @@ export default function Services() {
                     key={section.heading}
                     icon={SERVICE_ICONS[index]?.[sectionIndex]}
                     section={section}
+                    order={sectionIndex}
                   />
                 ))}
               </div>
@@ -74,7 +76,7 @@ export default function Services() {
   )
 }
 
-function FeatureCard({ icon, section }) {
+function FeatureCard({ icon, section, order }) {
   // The gold spotlight in .feature-card::before follows these two properties.
   const trackPointer = (event) => {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -83,7 +85,8 @@ function FeatureCard({ icon, section }) {
   }
 
   return (
-    <article className="feature-card" onPointerMove={trackPointer}>
+    // Cards arrive one after another, as the reference's service row does.
+    <Reveal as="article" className="feature-card" delay={order * 110} onPointerMove={trackPointer}>
       <div className="feature-icon">{icons[icon] ?? icons.sparkles}</div>
       <h4>{section.heading}</h4>
       <p className="tagline">{section.headline}</p>
@@ -92,6 +95,6 @@ function FeatureCard({ icon, section }) {
           <li key={item}><CheckIcon />{item}</li>
         ))}
       </ul>
-    </article>
+    </Reveal>
   )
 }

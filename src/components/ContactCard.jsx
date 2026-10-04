@@ -1,6 +1,6 @@
 import ContactForm from './ContactForm'
 import Reveal from './Reveal'
-import { AccentedTitle } from './SectionTitle'
+import SplitText from './SplitText'
 import { LinkedInIcon, MailIcon, WhatsAppIcon } from './icons'
 import { useLang } from '../context/LangContext'
 import { site } from '../site.js'
@@ -18,8 +18,8 @@ export default function ContactCard({ eyebrow, title, accent, sub, heading = 'h2
     <Reveal className="contact-card" scale>
       <div className="contact-info">
         {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-        <Heading className="section-title">
-          <AccentedTitle title={title} accent={accent} />
+        <Heading className="section-title" aria-label={title}>
+          <SplitText title={title} accent={accent} />
         </Heading>
         <p className="section-sub">{sub}</p>
 
