@@ -7,9 +7,9 @@ export const SITE_ORIGIN = 'https://www.groupargous.com'
 export const site = {
   origin: SITE_ORIGIN,
   url: `${SITE_ORIGIN}/`,
-  name: 'ARGO Group',
+  name: 'Group ARGO',
   legalName: 'ARGO Group',
-  alternateNames: ['Argo Group', 'ARGO', 'Group Argo', 'groupargous'],
+  alternateNames: ['ARGO Group', 'ARGO'],
   email: 'info@groupargous.com',
   telephone: '+34685162838',
   telephoneDisplay: '+34 685 162 838',

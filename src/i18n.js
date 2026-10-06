@@ -1,37 +1,37 @@
 export const translations = {
   en: {
     meta: {
-      title: 'ARGO Group | Performance Marketing Agency in Spain & Miami',
+      title: 'Group ARGO | Performance Marketing & AI Systems Partner',
       description:
-        'We scale your business with results-driven marketing: lead generation, paid media creatives, and automation systems. Book a call.',
+        'A growth partner, not an agency: performance marketing, AI systems and creative, built around your business. Book a call.',
       pages: {
         '/': {
-          title: 'ARGO Group | Performance Marketing Agency in Spain & Miami',
+          title: 'Group ARGO | Performance Marketing & AI Systems Partner',
           description:
-            'We scale your business with results-driven marketing: lead generation, paid media creatives, and automation systems. Book a call.',
+            'A growth partner, not an agency: performance marketing, AI systems and creative, built around your business. Book a call.',
         },
         '/about': {
-          title: 'About ARGO Group | Performance Marketing & Automation Agency',
+          title: 'About Group ARGO | Growth Partner for Marketing & AI',
           description:
-            'ARGO Group is a performance marketing and AI automation agency with offices in Barcelona and Miami, serving clients worldwide in English and Spanish.',
+            'Group ARGO is a growth partner for performance marketing, AI systems and brand, working with businesses worldwide from Barcelona and Miami.',
         },
         '/contact': {
-          title: 'Contact ARGO Group | Performance Marketing & Automation',
+          title: 'Contact Group ARGO | Performance Marketing & AI Systems',
           description:
-            'Talk to the ARGO Group team about performance marketing, paid media creative, and AI process automation. We reply within 24 hours.',
+            'Talk to the Group ARGO team about performance marketing, AI systems and creative for your business.',
         },
         '/thank-you': {
-          title: 'Thank You | ARGO Group',
+          title: 'Thank You | Group ARGO',
           description:
             'Thanks for reaching out to ARGO Group. Our team will contact you within 24 hours.',
         },
         '/privacy-policy': {
-          title: 'Privacy Policy | ARGO Group',
+          title: 'Privacy Policy | Group ARGO',
           description:
             'How ARGO Group collects, uses, stores, and protects personal data, and the rights you have over it.',
         },
         '/terms-of-service': {
-          title: 'Terms of Service | ARGO Group',
+          title: 'Terms of Service | Group ARGO',
           description:
             'The terms that govern use of the ARGO Group website and the services we provide.',
         },
