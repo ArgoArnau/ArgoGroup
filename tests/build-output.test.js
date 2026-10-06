@@ -260,7 +260,7 @@ test('robots.txt allows crawling and points at the sitemap', () => {
 })
 
 test('llms.txt and llms-full.txt are published', () => {
-  assert.match(read('llms.txt'), /^# ARGO Group\n\n> /)
+  assert.match(read('llms.txt'), /^# Group ARGO\n\n> /)
   const full = read('llms-full.txt')
   for (const route of routes) {
     assert.ok(full.includes(canonicalFor(route.path)), `llms-full.txt must include ${route.path}`)
