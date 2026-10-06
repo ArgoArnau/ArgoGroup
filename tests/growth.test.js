@@ -1,0 +1,235 @@
+// Checks for the /growth Meta Ads landing: variant resolution, lead scoring,
+// the built pages (self-hosted fonts, no exits, kept out of search) and how
+// they are served. Requires a build first; `npm test` runs one via `pretest`.
+
+import assert from 'node:assert/strict'
+import { readdirSync, readFileSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { after, before, test } from 'node:test'
+import vm from 'node:vm'
+
+import { createSiteServer } from '../scripts/serve.mjs'
+import { about, finalCta, form, hero, method, VARIANT_KEYS, work } from '../src/landing/growth/copy.js'
+import { cleanPhone, emailType, normaliseWebsite } from '../src/landing/shared/fields.js'
+import { CAPI_ENDPOINT, PIXEL_ID } from '../src/landing/shared/tracking.js'
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const read = (...parts) => readFileSync(join(ROOT, ...parts), 'utf8')
+
+// ── Variant resolution (boot.js, inlined in <head>) ────────────────────────
+
+const BOOT = read('src', 'landing', 'growth', 'boot.js')
+
+/** Runs boot.js against a fake page; returns the variant it picked and the session store. */
+function boot(search, session = {}) {
+  const attributes = {}
+  const store = { ...session }
+  const storage = (backing) => ({
+    getItem: (key) => (key in backing ? backing[key] : null),
+    setItem: (key, value) => { backing[key] = String(value) },
+  })
+  vm.runInNewContext(BOOT, {
+    URLSearchParams,
+    window: { location: { search }, sessionStorage: storage(store), localStorage: storage({}), setTimeout: () => {} },
+    document: {
+      documentElement: {
+        setAttribute: (name, value) => { attributes[name] = value },
+        classList: { add: () => {}, remove: () => {} },
+      },
+    },
+  })
+  return { key: attributes['data-variant'], store }
+}
+
+test('each ad lands on its variant through utm_content', () => {
+  const ads = {
+    'g1-order': '1c',
+    'g2-direction': '2',
+    'g3-gaps': '1b',
+    'g4-straight-answer': '1d',
+    'g6-clinic': '3',
+    'g7-leads-that-buy': '4b',
+    'g8-cost-per-customer': '4a',
+  }
+  for (const [utm, key] of Object.entries(ads)) {
+    assert.equal(boot(`?utm_content=${utm}`).key, key, utm)
+  }
+})
+
+test('v and h pick the variant directly and win over utm_content', () => {
+  assert.equal(boot('?v=1&h=a').key, '1a')
+  assert.equal(boot('?v=1&h=d').key, '1d')
+  assert.equal(boot('?v=2').key, '2')
+  assert.equal(boot('?v=3&h=c').key, '3', 'single-headline variants ignore h')
+  assert.equal(boot('?v=4&h=a').key, '4a')
+  assert.equal(boot('?v=4').key, '4b', 'V4 defaults to h=b')
+  assert.equal(boot('?v=1').key, '1b', 'V1 defaults to h=b')
+  assert.equal(boot('?v=4&h=d').key, '4b', 'an h the variant lacks falls back')
+  assert.equal(boot('?v=2&utm_content=g6-clinic').key, '2')
+})
+
+test('no parameters means V1 h=b, unknown values fall back, and the session remembers', () => {
+  assert.equal(boot('').key, '1b')
+  assert.equal(boot('?v=9&utm_content=nope').key, '1b')
+
+  const first = boot('?utm_content=g6-clinic')
+  assert.equal(first.store.argo_growth_variant, '3')
+  assert.equal(boot('', first.store).key, '3', 'a reload without the query keeps the variant')
+  assert.equal(boot('', { argo_growth_variant: '<script>' }).key, '1b', 'garbage in storage is ignored')
+})
+
+test('every variant has a headline and an open question; the rest is shared', () => {
+  const covers = (options, key) => options.filter(([keys]) => keys.split(' ').includes(key)).length
+  for (const key of VARIANT_KEYS) {
+    assert.equal(covers(hero.headlines, key), 1, `${key} headline`)
+    assert.ok(form.openQuestion[key], `${key} open question`)
+  }
+  assert.equal(typeof hero.subtitle, 'string')
+  assert.equal(form.button, finalCta.button)
+})
+
+// ── Form fields ────────────────────────────────────────────────────────────
+
+test('a website is accepted with or without https', () => {
+  assert.equal(normaliseWebsite('acme.nl'), 'https://acme.nl')
+  assert.equal(normaliseWebsite(' https://www.acme.no/ '), 'https://www.acme.no')
+  assert.equal(normaliseWebsite('http://acme.nl/about'), 'http://acme.nl/about')
+  assert.equal(normaliseWebsite('acme'), null)
+  assert.equal(normaliseWebsite(''), null)
+})
+
+test('a WhatsApp number keeps only digits and its leading +', () => {
+  assert.equal(cleanPhone('+31 6 1234 5678'), '+31612345678')
+  assert.equal(cleanPhone('(47) 912-34-567'), '4791234567')
+  assert.equal(cleanPhone(''), '')
+})
+
+test('email type separates free mailboxes from work domains', () => {
+  assert.equal(emailType('anna@gmail.com'), 'free')
+  assert.equal(emailType('Lars@Online.no'), 'free')
+  assert.equal(emailType('anna@acme.nl'), 'work')
+})
+
+// ── Tracking stays off ─────────────────────────────────────────────────────
+
+test('Meta Pixel and CAPI are prepared but switched off', () => {
+  assert.equal(PIXEL_ID, '')
+  assert.equal(CAPI_ENDPOINT, '')
+})
+
+// ── Built pages ────────────────────────────────────────────────────────────
+
+const built = {
+  '/growth': read('dist', 'growth.html'),
+  '/growth/thank-you': read('dist', 'growth', 'thank-you.html'),
+}
+
+test('both pages are prerendered, noindex, and resolve the variant in <head>', () => {
+  for (const [path, html] of Object.entries(built)) {
+    assert.match(html, /<meta name="robots" content="noindex, nofollow" \/>/, `${path} noindex`)
+    const head = html.slice(0, html.indexOf('</head>'))
+    assert.ok(head.includes('argo_growth_variant'), `${path} boot script inlined in <head>`)
+    assert.match(html, /<h1[\s>]/, `${path} H1`)
+  }
+  // Each headline word sits in its own span (it rises on its own), so compare text only.
+  const text = built['/growth'].replace(/<[^>]+>/g, '').replace(/&#x27;/g, "'").replace(/\s+/g, ' ')
+  for (const [, headline] of hero.headlines) assert.ok(text.includes(headline), `headline in HTML: ${headline}`)
+})
+
+test('fonts are self-hosted: nothing is loaded from Google Fonts', () => {
+  const assets = readdirSync(join(ROOT, 'dist', 'assets')).filter((file) => file.startsWith('growth-'))
+  for (const source of [...Object.values(built), ...assets.map((file) => read('dist', 'assets', file))]) {
+    assert.ok(!/fonts\.(googleapis|gstatic)\.com/.test(source))
+  }
+  assert.match(built['/growth'], /\/fonts\/cormorant-garamond-latin-600-normal\.woff2/)
+  assert.match(built['/growth'], /\/fonts\/dm-sans-latin-wght-normal\.woff2/)
+})
+
+test('the only ways out are the form, WhatsApp, email, Privacy and Terms', () => {
+  const allowed = [
+    /^#form$/,
+    /^https:\/\/wa\.me\/34685162838\?text=/,
+    /^mailto:info@groupargous\.com$/,
+    /^https:\/\/www\.groupargous\.com\/(privacy-policy|terms-of-service)$/,
+  ]
+  for (const [path, html] of Object.entries(built)) {
+    const body = html.slice(html.indexOf('<body'))
+    const hrefs = [...body.matchAll(/<a\b[^>]*href="([^"]*)"/g)].map((match) => match[1].replace(/&amp;/g, '&'))
+    assert.ok(hrefs.length > 0, path)
+    for (const href of hrefs) assert.ok(allowed.some((pattern) => pattern.test(href)), `${path} links to ${href}`)
+    assert.ok(!/<nav[\s>]/.test(body), `${path} has no menu`)
+  }
+})
+
+test('the page follows the five-part structure, with the form straight after the hero', () => {
+  const html = built['/growth']
+  const order = ['id="hero"', 'id="form"', 'id="work-title"', 'id="method-title"', 'id="about-title"', 'id="final-title"']
+  const positions = order.map((marker) => html.indexOf(marker))
+  assert.ok(positions.every((at) => at > 0), `all sections present: ${positions}`)
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, 'sections in order')
+
+  assert.equal(hero.points.length, 3)
+  assert.equal(work.items.length, 5)
+  assert.equal(method.steps.length, 4)
+  assert.equal(about.rows.length, 4)
+  assert.equal(html.match(/<form\b/g).length, 1, 'one form on the page')
+  // Nothing under the form's button: the brief asks for none.
+  assert.ok(!html.includes("We'll get in touch to set up your call"))
+  assert.ok(!html.includes('No cost. No sales deck.'))
+})
+
+test('the landing stays out of the sitemap and llms.txt', () => {
+  assert.ok(!read('dist', 'sitemap.xml').includes('/growth'))
+  assert.ok(!read('dist', 'llms.txt').includes('/growth'))
+})
+
+test('banned words and claims appear nowhere in the landing', () => {
+  // Assembled from parts so that searching the project for them stays clean.
+  const banned = [
+    ['writ', 'ten'], ['summ', 'ary'], ['30-min', 'ute'], ['one working ', 'day'],
+    ['minimum ', 'contract'], ['2-day ', 'diagnosis'], ['PRU', 'EBA'], ['CONFIR', 'MAR'],
+    ['unl', 'ock'], ['superch', 'arge'], ['game-ch', 'anger'], ['seam', 'less'],
+    ['cutting-', 'edge'], ['predictable ', 'revenue'], ['dedicated account ', 'manager'],
+  ].map((parts) => parts.join(''))
+
+  const dir = join(ROOT, 'src', 'landing', 'growth')
+  const sources = {
+    ...Object.fromEntries(readdirSync(dir).map((file) => [file, read('src', 'landing', 'growth', file)])),
+    'growth.html': read('growth.html'),
+    'dist/growth.html': built['/growth'],
+    'dist/growth/thank-you.html': built['/growth/thank-you'],
+  }
+  for (const [file, source] of Object.entries(sources)) {
+    for (const word of banned) assert.ok(!source.toLowerCase().includes(word.toLowerCase()), `${file} contains "${word}"`)
+  }
+
+  // "account manager" only where the client's own copy has it.
+  const accountManager = 'account ' + 'manager'
+  const allowed = [about.rows[1][1]]
+  assert.ok(allowed.every((line) => line.includes(accountManager)))
+  const elsewhere = read('src', 'landing', 'growth', 'copy.js').split('\n')
+    .filter((line) => line.includes(accountManager) && !allowed.some((text) => line.includes(text)))
+  assert.deepEqual(elsewhere, [])
+})
+
+// ── Served like Netlify serves it ──────────────────────────────────────────
+
+let server
+let origin
+
+before(async () => {
+  server = createSiteServer()
+  await new Promise((done) => server.listen(0, '127.0.0.1', done))
+  origin = `http://127.0.0.1:${server.address().port}`
+})
+
+after(() => new Promise((done) => server.close(done)))
+
+test('/growth and /growth/thank-you answer 200 directly, with no redirect', async () => {
+  for (const path of ['/growth', '/growth?utm_content=g2-direction', '/growth/thank-you?v=1&h=b']) {
+    const response = await fetch(`${origin}${path}`, { redirect: 'manual', headers: { accept: 'text/html' } })
+    assert.equal(response.status, 200, path)
+    assert.match(response.headers.get('content-type'), /^text\/html/, path)
+  }
+})

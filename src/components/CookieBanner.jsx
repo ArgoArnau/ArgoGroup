@@ -1,17 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
-
-const STORAGE_KEY = 'argo_cookie_consent'
+import { setConsent } from '../lib/consent'
 
 export default function CookieBanner({ showBanner, setShowBanner }) {
   const { t, lang } = useLang()
 
   const choose = (choice) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, choice)
-    } catch {
-      // Private mode or blocked storage: the banner still closes for this visit.
-    }
+    // Saves the choice and tells the pixel (src/lib/pixel.js) straight away.
+    setConsent(choice)
     setShowBanner(false)
   }
 

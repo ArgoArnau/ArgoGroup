@@ -4,6 +4,8 @@ import AnchorLink from './AnchorLink'
 import { SECTIONS } from '../sections.js'
 import { InstagramIcon, LinkedInIcon, WhatsAppIcon } from './icons'
 import { site } from '../site.js'
+import { ArgoSymbol } from './Logo'
+import Reveal from './Reveal'
 
 export default function Footer({ setShowBanner }) {
   const { t } = useLang()
@@ -12,11 +14,16 @@ export default function Footer({ setShowBanner }) {
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
-          <div className="footer-brand">
-            <Link className="brand" to="/" aria-label={site.name}>
-              <span className="brand-name">ARGO</span>
-              <span className="brand-tag">Group</span>
+          <Reveal className="footer-brand">
+            {/* Primary logo, brandbook 01: the symbol, then GROUP over ARGO. */}
+            <Link className="lockup" to="/" aria-label={site.name}>
+              <ArgoSymbol className="lockup-mark" />
+              <span className="lockup-text">
+                <span className="lockup-group">Group</span>
+                <span className="lockup-argo">ARGO</span>
+              </span>
             </Link>
+            <p className="lockup-line">Performance Marketing · AI Automation</p>
             <p className="footer-tagline">{t.footer.tagline}</p>
             <div className="footer-social">
               <a className="social-btn" href={site.sameAs[0]} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -29,9 +36,9 @@ export default function Footer({ setShowBanner }) {
                 <WhatsAppIcon />
               </a>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="footer-col">
+          <Reveal className="footer-col" delay={120}>
             <h4>{t.footer.navTitle}</h4>
             <ul>
               {SECTIONS.map((section) => (
@@ -42,16 +49,16 @@ export default function Footer({ setShowBanner }) {
               <li><Link to="/about">{t.nav.about}</Link></li>
               <li><Link to="/contact">{t.nav.contact}</Link></li>
             </ul>
-          </div>
+          </Reveal>
 
-          <div className="footer-col">
+          <Reveal className="footer-col" delay={240}>
             <h4>{t.footer.contactTitle}</h4>
             <ul>
               <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
               <li><a href={site.whatsapp} target="_blank" rel="noopener noreferrer">{site.telephoneDisplay}</a></li>
               <li><span className="loc">{t.hero.badge}</span></li>
             </ul>
-          </div>
+          </Reveal>
         </div>
 
         <div className="footer-bottom">

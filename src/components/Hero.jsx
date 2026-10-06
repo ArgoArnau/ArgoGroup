@@ -3,6 +3,7 @@ import { useLang } from '../context/LangContext'
 import AnchorLink from './AnchorLink'
 import { ArrowIcon, ChevronDown } from './icons'
 import HeroWaves from './HeroWaves'
+import { SplitWords } from './SplitText'
 
 export default function Hero() {
   const { t } = useLang()
@@ -11,6 +12,7 @@ export default function Hero() {
 
   useParticles(canvasRef)
   useWaveParallax(heroRef)
+  useScrollAway(heroRef)
 
   return (
     <header className="hero" ref={heroRef}>
@@ -20,13 +22,17 @@ export default function Hero() {
 
       <div className="container hero-content">
         <span className="hero-badge hero-in" style={{ '--hero-delay': '0ms' }}>
-          <span className="dot" aria-hidden="true" />
-          <span>{t.hero.badge}</span>
+          {t.hero.badge}
         </span>
 
-        <h1 className="hero-title">{t.hero.headline}</h1>
+        {/* One-line wordmark, brandbook 04: GROUP, a gold hairline, ARGO. */}
+        <h1 className="hero-title">
+          <span className="hero-wm-group">Group</span>
+          <span className="hero-wm-rule" aria-hidden="true" />{' '}
+          <span className="hero-wm-argo">{t.hero.headline}</span>
+        </h1>
 
-        <p className="hero-sub hero-in" style={{ '--hero-delay': '450ms' }}>{t.hero.sub}</p>
+        <p className="hero-sub"><SplitWords text={t.hero.sub} /></p>
         <p className="hero-sub2 hero-in" style={{ '--hero-delay': '560ms' }}>{t.hero.sub2}</p>
 
         <div className="hero-ctas hero-in" style={{ '--hero-delay': '680ms' }}>
@@ -144,6 +150,34 @@ function useParticles(canvasRef) {
       observer.disconnect()
     }
   }, [canvasRef])
+}
+
+/**
+ * As the page leaves the hero, its content sinks back and fades: --hero-scroll
+ * runs 0 -> 1 over the hero's height and argo.css turns it into the motion.
+ */
+function useScrollAway(heroRef) {
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero || prefersReducedMotion()) return
+
+    let frame = null
+    const update = () => {
+      frame = null
+      const progress = Math.min(1, Math.max(0, window.scrollY / hero.offsetHeight))
+      hero.style.setProperty('--hero-scroll', progress.toFixed(3))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [heroRef])
 }
 
 /** The silk ribbons drift a little against the pointer. Fine pointers only. */

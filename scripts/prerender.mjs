@@ -73,6 +73,45 @@ for (const route of routes) {
   documents.push({ path: route.path, markdown })
 }
 
+// ── Meta Ads landings: /growth and /systems ────────────────────────────────
+// Each has its own shell (<name>.html): no site chrome, no Google Fonts,
+// noindex, and deliberately absent from `routes`, so it stays out of the
+// sitemap, llms.txt and the markdown mirror. Its boot script is inlined so
+// the page is right at first paint (growth: the ad variant; both: motion and
+// the cookie choice).
+{
+  const { renderLanding } = await import(pathToFileURL(SSR_ENTRY).href)
+  const attr = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
+
+  for (const name of ['growth', 'systems']) {
+    const { meta } = await load('src', 'landing', name, 'copy.js')
+    // The stylesheet is small; inlining it saves a render-blocking round trip
+    // on the mobile connections the ads send people in on.
+    const template = readFileSync(join(DIST, `${name}.html`), 'utf8')
+      .replace(new RegExp(`<link rel="stylesheet"[^>]*href="(/assets/${name}-[^"]+\\.css)">`), (_, href) =>
+        `<style>${readFileSync(join(DIST, href), 'utf8').trim()}</style>`)
+    const boot = readFileSync(join(ROOT, 'src', 'landing', name, 'boot.js'), 'utf8')
+      .replace(/^\/\/.*\n/gm, '')
+      .trim()
+
+    for (const marker of ['<!--landing-head-->', '<!--landing-boot-->', APP_HTML]) {
+      if (!template.includes(marker)) throw new Error(`${name}.html is missing the ${marker} marker`)
+    }
+    if (!template.includes('<style>')) throw new Error(`${name}.html: stylesheet not found to inline`)
+
+    const pages = [
+      { path: `/${name}`, file: `${name}.html`, ...meta.landing },
+      { path: `/${name}/thank-you`, file: `${name}/thank-you.html`, ...meta.thankYou },
+    ]
+    for (const page of pages) {
+      write(page.file, template
+        .replace('<!--landing-head-->', () => `<title>${attr(page.title)}</title>\n    <meta name="description" content="${attr(page.description)}" />`)
+        .replace('<!--landing-boot-->', () => `<script>${boot}</script>`)
+        .replace(APP_HTML, () => renderLanding(page.path)))
+    }
+  }
+}
+
 // ── sitemap.xml ────────────────────────────────────────────────────────────
 const lastmod = new Date().toISOString().slice(0, 10)
 
@@ -154,21 +193,21 @@ write('404.html', `<!doctype html>
     <title>404 - Page not found | ${site.name}</title>
     <meta name="description" content="That path does not exist on ${site.origin}. Use the page list, sitemap or llms.txt below to find the right URL." />
     <link rel="alternate" type="text/markdown" href="${site.origin}/404.md" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/argo-favicon.ico?v=2" sizes="48x48">
+    <link rel="icon" href="/argo-icon.svg?v=2" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/argo-apple-touch-icon.png?v=2">
     <style>
       :root { color-scheme: dark; }
-      body { margin: 0; background: #1a1a1a; color: #ffffff; font-family: Inter, system-ui, sans-serif; }
+      body { margin: 0; background: #0d0d0d; color: #f2ede4; font-family: Inter, system-ui, sans-serif; }
       main { max-width: 44rem; margin: 0 auto; padding: 6rem 1.5rem; }
-      h1 { font-family: Georgia, Cambria, serif; font-size: clamp(2.25rem, 6vw, 3rem); font-weight: 700; margin: 0 0 1rem; }
-      h2 { font-family: Georgia, Cambria, serif; font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
-      .rule { width: 4rem; height: 2px; background: #d4af37; margin-bottom: 1.5rem; }
-      p { color: #9ca3af; line-height: 1.7; }
-      ul { padding-left: 1.1rem; color: #9ca3af; line-height: 1.9; }
+      h1 { font-family: "Playfair Display", Georgia, Cambria, serif; font-size: clamp(2.25rem, 6vw, 3rem); font-weight: 700; margin: 0 0 1rem; }
+      h2 { font-family: "Playfair Display", Georgia, Cambria, serif; font-size: 1.25rem; margin: 2.5rem 0 0.75rem; }
+      .rule { width: 4rem; height: 1px; background: #d4af37; margin-bottom: 1.5rem; }
+      p { color: #a39f98; line-height: 1.7; }
+      ul { padding-left: 1.1rem; color: #a39f98; line-height: 1.9; }
       a { color: #d4af37; }
-      pre { background: #242424; border: 1px solid #333333; border-radius: 0.75rem; padding: 1.25rem; overflow-x: auto; color: #9ca3af; font-size: 0.8125rem; line-height: 1.7; white-space: pre-wrap; }
-      .btn { display: inline-block; margin-top: 2rem; background: #d4af37; color: #1a1a1a; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 0.25rem; text-decoration: none; }
+      pre { background: #1a1a1a; border: 1px solid #262626; border-radius: 2px; padding: 1.25rem; overflow-x: auto; color: #a39f98; font-size: 0.8125rem; line-height: 1.7; white-space: pre-wrap; }
+      .btn { display: inline-block; margin-top: 2rem; background: #d4af37; color: #0d0d0d; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase; padding: 0.9rem 1.6rem; border-radius: 2px; text-decoration: none; }
     </style>
   </head>
   <body>

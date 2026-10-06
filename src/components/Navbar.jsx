@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import AnchorLink from './AnchorLink'
 import { InstagramIcon, LinkedInIcon } from './icons'
+import { ArgoSymbol } from './Logo'
 import { site } from '../site.js'
 import { SECTIONS } from '../sections.js'
 
@@ -112,8 +113,7 @@ export default function Navbar() {
 function Brand({ onClick }) {
   return (
     <Link className="brand" to="/" aria-label={site.name} onClick={onClick}>
-      <span className="brand-name">ARGO</span>
-      <span className="brand-tag">Group</span>
+      <ArgoSymbol className="brand-symbol" />
     </Link>
   )
 }

@@ -2,9 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- The brandbook monogram. Own filenames on purpose: /favicon.* still
+         belong to the /growth and /systems landings. -->
+    <link rel="icon" href="/argo-favicon.ico?v=2" sizes="48x48">
+    <link rel="icon" href="/argo-icon.svg?v=2" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/argo-apple-touch-icon.png?v=2">
+    <meta name="theme-color" content="#0D0D0D" />
 
     <!-- Display serif + UI sans the design system is built on. Above head-start
          on purpose: everything between the markers is replaced by the SSR head
@@ -35,26 +38,19 @@
          Without JavaScript there is nothing to reveal them, so show them up front. -->
     <noscript>
       <style>
-        [data-reveal] {
+        [data-reveal],
+        [data-reveal] .split-char,
+        .section-head .eyebrow,
+        .section-head .section-sub {
           opacity: 1 !important;
           transform: none !important;
+          filter: none !important;
           transition: none !important;
         }
       </style>
     </noscript>
-    <!-- Meta Pixel -->
-    <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '3872072809596261');
-      fbq('track', 'PageView');
-    </script>
+    <!-- The Meta Pixel is not here on purpose: src/lib/pixel.js loads it only
+         after the visitor accepts cookies. -->
   </head>
   <body>
     <div id="root"><!--app-html--></div>

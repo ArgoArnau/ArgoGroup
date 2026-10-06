@@ -1,0 +1,2 @@
+- Conectar LEAD_WEBHOOK_URL (n8n → CRM) antes de publicar. Sin él, los leads se pierden.
+- Añadir Pixel ID y token de CAPI y activar el tracking.

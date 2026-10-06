@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { SendIcon } from './icons'
+import { track } from '../lib/pixel'
 
 const FORMSPREE_ID = 'mlgoojlw'
 
@@ -72,7 +73,7 @@ export default function ContactForm() {
         body: JSON.stringify(values),
       })
       if (!response.ok) throw new Error(`Formspree responded ${response.status}`)
-      if (typeof window.fbq === 'function') window.fbq('track', 'Lead')
+      track('Lead')
       navigate('/thank-you')
     } catch {
       setSubmitError(f.err_generic)
