@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { captureAttribution, metaIds, newEventId } from '../shared/attribution.js'
-import { cleanPhone, EMAIL_RE, emailType, normaliseWebsite } from '../shared/fields.js'
+import { crmPayload } from '../shared/crm.js'
+import { cleanPhone, EMAIL_RE, normaliseWebsite } from '../shared/fields.js'
 import { sendLead } from '../shared/submit.js'
 import { setTrackingContext, track, trackingActive } from '../shared/tracking.js'
 import { form as copy, PRIVACY_URL, WHATSAPP_URL } from './copy.js'
 
 // One step, typed fields, the same shape as the /growth form so both landings
-// post the same payload to the same webhook (the `landing` field tells them apart).
+// send the same lead to the CRM (shared/crm.js; `servicio` and `formulario`
+// tell them apart).
 const EMPTY = { name: '', email: '', website: '', whatsapp: '', open_answer: '' }
 const ORDER = ['name', 'email', 'website', 'whatsapp', 'open_answer', 'consent']
 // What the progress bar counts: the fields the form cannot be sent without.
@@ -101,23 +103,6 @@ export default function LeadForm() {
     onBlur: blur,
   })
 
-  const hiddenFields = context ? {
-    landing: 'systems',
-    utm_source: context.attribution.utm_source,
-    utm_medium: context.attribution.utm_medium,
-    utm_campaign: context.attribution.utm_campaign,
-    utm_content: context.attribution.utm_content,
-    utm_term: context.attribution.utm_term,
-    fbclid: context.attribution.fbclid,
-    fbc: context.ids.fbc,
-    fbp: context.ids.fbp,
-    event_id: context.eventId,
-    page_url: window.location.href,
-    referrer: context.attribution.referrer,
-    submitted_at: '',
-    email_type: values.email ? emailType(values.email) : '',
-  } : null
-
   const submit = async (event) => {
     event.preventDefault()
     if (status === 'sending') return
@@ -138,18 +123,13 @@ export default function LeadForm() {
 
     // The pixel's _fbp cookie may have appeared since load (consent given).
     const ids = metaIds(context.attribution)
-    const payload = {
-      ...hiddenFields,
-      fbc: ids.fbc,
-      fbp: ids.fbp,
-      submitted_at: new Date().toISOString(),
-      name: values.name.trim(),
-      email: values.email.trim(),
-      website: normaliseWebsite(values.website),
-      whatsapp: cleanPhone(values.whatsapp),
-      open_answer: values.open_answer.trim(),
-      consent: true,
-    }
+    const payload = crmPayload({
+      landing: 'systems',
+      values,
+      context,
+      ids,
+      consentText: copy.consent.join(''),
+    })
 
     setStatus('sending')
     try {
@@ -214,10 +194,6 @@ export default function LeadForm() {
           onChange={(event) => setHoneypot(event.target.value)}
         />
       </div>
-
-      {hiddenFields && Object.entries(hiddenFields).map(([name, value]) => (
-        <input key={name} type="hidden" name={name} value={value} />
-      ))}
 
       <button type="submit" className="btn btn-block btn-boom btn-shine" disabled={status === 'sending'}>
         <span>{status === 'sending' ? copy.sending : copy.button}</span>

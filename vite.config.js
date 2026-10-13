@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   // LEAD_WEBHOOK_URL (n8n → CRM) is read by the /growth form at build time.
   // It is not secret: the browser posts to it, so it ends up in the bundle.
-  envPrefix: ['VITE_', 'LEAD_WEBHOOK_URL'],
+  envPrefix: ['VITE_'],
   build: {
     rollupOptions: {
       input: {

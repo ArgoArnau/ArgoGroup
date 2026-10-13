@@ -4,7 +4,7 @@
 // from an ad and then reload or come back without the query string, the
 // first-touch values are kept.
 
-const PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid']
+const PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid']
 
 const cookie = (name) => {
   const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))

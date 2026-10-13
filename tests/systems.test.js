@@ -10,6 +10,7 @@ import { after, before, test } from 'node:test'
 import vm from 'node:vm'
 
 import { createSiteServer } from '../scripts/serve.mjs'
+import { CRM_FORMS } from '../src/landing/shared/crm.js'
 import { about, finalCta, form, hero, method, work } from '../src/landing/systems/copy.js'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -137,11 +138,8 @@ test('the page follows the five-part structure, with the form straight after the
   assert.equal(form.button, finalCta.button)
   assert.equal(html.match(/<form\b/g).length, 1, 'one form on the page')
   // The form posts as this landing, so the CRM can tell the two apart.
-  const bundle = readdirSync(join(ROOT, 'dist', 'assets'))
-    .filter((file) => file.startsWith('systems-') && file.endsWith('.js'))
-    .map((file) => read('dist', 'assets', file))
-    .join('\n')
-  assert.match(bundle, /landing:["`']systems["`']/, 'landing field in the bundle')
+  assert.match(read('src', 'landing', 'systems', 'LeadForm.jsx'), /crmPayload\(\{\s*landing: 'systems'/, 'the form sends as /systems')
+  assert.deepEqual(CRM_FORMS.systems, { servicio: 'sistemas_ia', formulario: 'landing-sistemas-ia' })
 })
 
 test('the landing stays out of the sitemap and llms.txt', () => {

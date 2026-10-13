@@ -1,2 +1,2 @@
-- Conectar LEAD_WEBHOOK_URL (n8n → CRM) antes de publicar. Sin él, los leads se pierden.
+- Antes de publicar: CRM_LEADS_URL y CRM_ENTRADA_SECRETO en Netlify (secretos). Sin ellos /api/lead responde 503 y el formulario muestra el error.
 - Añadir Pixel ID y token de CAPI y activar el tracking.
