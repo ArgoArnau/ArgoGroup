@@ -121,7 +121,7 @@ export const form = {
   title: finalCta.title,
   sub: finalCta.sub,
   button: CTA,
-  consent: ['I agree to the ', 'Privacy Policy', '.'],
+  consent: ['I have read the ', 'Privacy Policy', ' and agree to be contacted about my request.'],
   sending: 'Sending…',
   failed: ['Something went wrong. Try again, or ', 'message us on WhatsApp', '.'],
   // Not in the brief: needed UI text, pending review before publishing.

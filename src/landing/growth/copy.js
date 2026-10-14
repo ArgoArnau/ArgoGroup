@@ -121,7 +121,7 @@ export const form = {
     email: "Where we'll contact you.",
     website: 'We look at it before we reply.',
   },
-  consent: ['I agree to the ', 'Privacy Policy', '.'],
+  consent: ['I have read the ', 'Privacy Policy', ' and agree to be contacted about my request.'],
   errors: {
     detail: 'Please add a bit more detail.',
     email: "That email doesn't look right.",
