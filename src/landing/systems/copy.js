@@ -13,7 +13,7 @@ export const PRIVACY_URL = 'https://www.groupargous.com/privacy-policy'
 export const TERMS_URL = 'https://www.groupargous.com/terms-of-service'
 
 // The one call to action: form button, phone bar and final CTA.
-export const CTA = 'Book my free discovery call'
+export const CTA = "Let's work together"
 // Not in the brief: the small WhatsApp link under the hero and on the thank-you page.
 export const WHATSAPP_LINK = 'Prefer WhatsApp? Message us →'
 
