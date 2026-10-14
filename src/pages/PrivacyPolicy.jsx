@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { ChevronLeft } from '../components/icons'
 
+const EMAIL = 'info@groupargous.com'
+const Mail = () => <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+
 export default function PrivacyPolicy() {
   const { t } = useLang()
 
@@ -16,7 +19,7 @@ export default function PrivacyPolicy() {
         <div>
           <h1>Privacy Policy</h1>
           <div className="legal-rule" />
-          <p className="legal-updated">Last updated: April 2026</p>
+          <p className="legal-updated">Last updated: October 2026</p>
         </div>
 
         <div>
@@ -25,10 +28,13 @@ export default function PrivacyPolicy() {
           <div>
             <h2>1. Who We Are</h2>
             <p>
-              ARGO Group is a digital marketing and AI automation agency with offices in Barcelona, Spain, and Miami, Florida, USA. We provide performance marketing, workflow automation, AI-powered services, and CRM integration to clients worldwide.
+              Group ARGO is a growth partner for digital marketing and AI systems, working from Barcelona, Spain, and Miami, Florida, USA. We provide performance marketing, websites, CRM and workflow automation, custom systems and AI-powered services to clients worldwide.
             </p>
             <p>
-              For any privacy-related questions or requests, please contact us at: <a href="mailto:info@groupargous.com">info@groupargous.com</a>
+              The controller of your personal data is <span className="legal-term">[PENDING: legal name, tax ID and registered address]</span>, trading as Group ARGO.
+            </p>
+            <p>
+              For any privacy-related questions or requests, please contact us at: <Mail />
             </p>
           </div>
 
@@ -36,77 +42,104 @@ export default function PrivacyPolicy() {
           <div>
             <h2>2. Scope of This Policy</h2>
             <p>
-              This Privacy Policy applies to all visitors of our website and clients who engage with our services. It governs how we collect, use, store, and protect personal data across our digital properties and service delivery systems. Given our international presence, we comply with applicable data protection regulations including the EU General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA).
+              This Privacy Policy applies to visitors of groupargous.com, including our landing pages, and to clients who engage with our services. It explains what personal data we collect, why, on what legal basis, who processes it for us, how long we keep it and what your rights are. We comply with the EU General Data Protection Regulation (GDPR), the Spanish data protection law (LOPDGDD) and, where applicable, US state privacy laws such as the California Consumer Privacy Act (CCPA).
             </p>
           </div>
 
           {/* 3 */}
           <div>
             <h2>3. Data We Collect</h2>
-            <p>We collect personal data in the following ways:</p>
             <ul>
               <li>
-                <span className="legal-term">Contact Form Submissions:</span> When you fill out a form on our website, we collect your name, email address, company name, phone number (if provided), subject, and message content.
+                <span className="legal-term">Contact form:</span> When you fill out the form on our contact page, we collect your name, email address, phone number (if provided), company name, subject and message.
               </li>
               <li>
-                <span className="legal-term">Cookies and Analytics:</span> We use cookies and similar tracking technologies to understand how visitors interact with our website, measure performance, and improve user experience. This may include session data, page views, referral sources, and device information.
+                <span className="legal-term">Landing page forms:</span> When you fill out the form on one of our landing pages, we collect your name, email address, WhatsApp number, company website and your answer about your business. We also record the exact consent text you saw beside the checkbox and when you accepted it.
               </li>
               <li>
-                <span className="legal-term">Client Service Data:</span> As part of delivering our services — including performance marketing campaigns, CRM integrations, and automation workflows — we may process data you share with us relating to your business, customers, and operations.
+                <span className="legal-term">How you reached us:</span> With a landing page form we also record the page you sent it from, the website that referred you (its domain only), the campaign details in the link (UTM parameters), the click identifiers that Meta and Google add to their ad links (fbclid, gclid), which version of the page you saw and, if you accepted cookies, the Meta identifiers described in section 11 (fbc, fbp).
               </li>
               <li>
-                <span className="legal-term">Communication Data:</span> When you communicate with us via email, WhatsApp, or Slack, we retain those communications for service continuity and support purposes.
+                <span className="legal-term">Abuse prevention:</span> To limit repeated submissions, we keep a one-way, salted hash of your IP address for up to 2 days. We never store the IP address itself.
+              </li>
+              <li>
+                <span className="legal-term">Cookies:</span> Only if you accept them, the Meta Pixel and related cookies described in section 11.
+              </li>
+              <li>
+                <span className="legal-term">Client service data:</span> As part of delivering our services, including advertising campaigns, CRM integrations and automation workflows, we may process data you share with us about your business, customers and operations.
+              </li>
+              <li>
+                <span className="legal-term">Communication data:</span> When you communicate with us via email, WhatsApp or Slack, we keep those communications for service continuity and support.
               </li>
             </ul>
           </div>
 
           {/* 4 */}
           <div>
-            <h2>4. How We Use Your Data</h2>
+            <h2>4. How We Use Your Data and Why We May</h2>
             <ul>
-              <li>To respond to your inquiries and provide our services</li>
-              <li>To manage client accounts and deliver contracted marketing and automation services</li>
-              <li>To analyze website performance and improve our digital experience</li>
-              <li>To send relevant communications about our services (only with your consent)</li>
-              <li>To comply with legal obligations and enforce our agreements</li>
+              <li>
+                <span className="legal-term">To answer your request:</span> review your business, contact you and, if it makes sense, prepare a proposal. Legal basis: steps taken at your request before entering into a contract (GDPR Art. 6(1)(b)).
+              </li>
+              <li>
+                <span className="legal-term">To deliver our services:</span> manage client accounts and the contracted work. Legal basis: performance of a contract (Art. 6(1)(b)).
+              </li>
+              <li>
+                <span className="legal-term">To measure our advertising:</span> know which ads bring people to our pages and which of them become clients, through the Meta Pixel and the Meta Conversions API. Legal basis: your consent (Art. 6(1)(a)), which you can withdraw at any time.
+              </li>
+              <li>
+                <span className="legal-term">To keep our forms safe:</span> stop spam and repeated submissions. Legal basis: our legitimate interest in protecting our systems (Art. 6(1)(f)).
+              </li>
+              <li>
+                <span className="legal-term">To send you news about our services:</span> only if you have asked for it. Legal basis: your consent (Art. 6(1)(a)).
+              </li>
+              <li>
+                <span className="legal-term">To meet legal obligations:</span> for example, tax and accounting records. Legal basis: legal obligation (Art. 6(1)(c)).
+              </li>
             </ul>
+            <p>We do not sell your personal data.</p>
           </div>
 
           {/* 5 */}
           <div>
-            <h2>5. Third-Party Tools and Service Providers</h2>
+            <h2>5. Who Processes Your Data for Us</h2>
             <p>
-              We use third-party platforms to operate our business and deliver services. These fall into the following categories:
+              We use the following service providers. Each processes data on our behalf, under its own data processing terms, and receives only what it needs:
             </p>
             <ul>
-              <li><span className="legal-term">CRM Platforms:</span> Tools such as HubSpot and Pipedrive to manage leads and client data</li>
-              <li><span className="legal-term">Analytics Tools:</span> Platforms used to track website traffic and campaign performance</li>
-              <li><span className="legal-term">Email and Communication Tools:</span> Services used to manage client communications and automated email sequences</li>
-              <li><span className="legal-term">Automation Platforms:</span> Tools including n8n and Make used to build and run workflow automations</li>
-              <li><span className="legal-term">Advertising Platforms:</span> Meta Ads, Google Ads, TikTok Ads, and LinkedIn Ads, through which campaign data is processed</li>
-              <li><span className="legal-term">AI Tools:</span> Artificial intelligence platforms used in service delivery, content generation, and data processing</li>
+              <li><span className="legal-term">Website hosting:</span> Netlify, which hosts groupargous.com and passes landing page form submissions to our CRM</li>
+              <li><span className="legal-term">Our CRM:</span> our own internal platform, hosted on Vercel, with its database on Supabase. Only the Group ARGO partners can access it</li>
+              <li><span className="legal-term">Contact form:</span> Formspree, which receives submissions from our contact page</li>
+              <li><span className="legal-term">Advertising:</span> Meta (Facebook and Instagram) for the Pixel and the Conversions API, only with your consent; and the ad platforms we run campaigns on (Meta Ads, Google Ads, TikTok Ads and LinkedIn Ads)</li>
+              <li><span className="legal-term">Email and communication tools:</span> services we use to talk to you and our clients</li>
+              <li><span className="legal-term">Automation and AI tools:</span> platforms such as n8n and Make, and AI services, used to run our workflows and in service delivery</li>
+              <li><span className="legal-term">Client CRMs:</span> tools such as HubSpot and Pipedrive, when we work inside a client's own system</li>
             </ul>
-            <p>
-              Each of these providers has their own privacy policies and data processing terms. We only share the minimum data necessary for service delivery.
-            </p>
           </div>
 
           {/* 6 */}
           <div>
             <h2>6. AI and Automation Disclosure</h2>
             <p>
-              ARGO Group uses artificial intelligence and automated systems as part of our service delivery. This includes AI-powered content generation, lead scoring, personalized messaging, and workflow automation. Data processed through these systems is handled in accordance with this Privacy Policy and applicable data protection laws.
+              Group ARGO uses artificial intelligence and automated systems as part of our work. This includes AI-powered content generation, help with reviewing and prioritising incoming requests, personalized messaging and workflow automation. Data processed through these systems is handled in accordance with this Privacy Policy and applicable data protection laws.
             </p>
             <p>
-              Where automated decision-making may have a significant effect on you or your business, we will inform you and provide the opportunity to request human review.
+              We do not take decisions with legal or similarly significant effects about you by automated means alone. A person at Group ARGO reviews every request before we reply.
             </p>
           </div>
 
           {/* 7 */}
           <div>
             <h2>7. Data Retention</h2>
+            <ul>
+              <li><span className="legal-term">Requests from our forms:</span> while we are in conversation with you. If we close your request without working together, it is deleted automatically 12 months after we close it.</li>
+              <li><span className="legal-term">Contact page submissions:</span> up to 24 months.</li>
+              <li><span className="legal-term">Clients:</span> for the duration of the engagement and up to 3 years afterwards, or longer where the law requires it (for example, invoices).</li>
+              <li><span className="legal-term">IP address hash:</span> up to 2 days.</li>
+              <li><span className="legal-term">Cookies:</span> see section 11.</li>
+            </ul>
             <p>
-              We retain personal data only for as long as necessary to fulfill the purposes outlined in this policy, or as required by applicable law. Contact form data is retained for up to 24 months. Client service data is retained for the duration of the engagement and up to 3 years thereafter, unless otherwise agreed.
+              When we delete a record we keep only the date and the reason for the deletion, with no personal data.
             </p>
           </div>
 
@@ -114,7 +147,7 @@ export default function PrivacyPolicy() {
           <div>
             <h2>8. International Data Transfers</h2>
             <p>
-              As a company operating in both Spain (EU) and the USA, your data may be transferred between these jurisdictions. For EU users, any transfer of personal data outside the European Economic Area (EEA) is conducted under appropriate safeguards, including Standard Contractual Clauses (SCCs) where applicable.
+              We work from Spain and the USA, and some of our providers are based in the United States. When personal data of EU users is transferred outside the European Economic Area (EEA), we rely on the safeguards each provider offers, such as the EU–US Data Privacy Framework or the European Commission's Standard Contractual Clauses (SCCs).
             </p>
           </div>
 
@@ -129,15 +162,18 @@ export default function PrivacyPolicy() {
               <li><span className="legal-term">Right to Restriction:</span> Request that we limit the processing of your data</li>
               <li><span className="legal-term">Right to Data Portability:</span> Receive your data in a structured, machine-readable format</li>
               <li><span className="legal-term">Right to Object:</span> Object to processing based on legitimate interests or for direct marketing</li>
-              <li><span className="legal-term">Right to Withdraw Consent:</span> Withdraw consent at any time where processing is based on consent</li>
+              <li><span className="legal-term">Right to Withdraw Consent:</span> Withdraw consent at any time where processing is based on consent, without affecting what was done before</li>
             </ul>
+            <p>
+              To exercise them, write to <Mail />. We will reply within one month. If you are not satisfied with our answer, you can file a complaint with the Spanish Data Protection Agency (Agencia Española de Protección de Datos, <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>) or with the data protection authority of your country.
+            </p>
           </div>
 
           {/* 10 */}
           <div>
             <h2>10. Your Rights (US Users)</h2>
             <p>
-              Depending on your state of residence, you may have the right to access, correct, or delete the personal information we hold about you. You may also have the right to opt out of certain data processing activities. To make any such request, contact us at <a href="mailto:info@groupargous.com">info@groupargous.com</a> and we will respond within 30 days.
+              Depending on your state of residence, you may have the right to access, correct, or delete the personal information we hold about you, and to opt out of certain processing, including the use of your data for targeted advertising. To make any such request, contact us at <Mail /> and we will respond within 30 days.
             </p>
           </div>
 
@@ -145,7 +181,14 @@ export default function PrivacyPolicy() {
           <div>
             <h2>11. Cookies</h2>
             <p>
-              Our website uses cookies to enhance your browsing experience. These include essential cookies required for the site to function, as well as analytics cookies that help us understand usage. You may control cookie preferences through your browser settings. Note that disabling certain cookies may affect site functionality.
+              When you first visit, a banner asks whether you accept cookies. Until you accept, we set no advertising cookies and send nothing to Meta.
+            </p>
+            <ul>
+              <li><span className="legal-term">Always:</span> your cookie choice, stored in your browser so we do not ask again, and, on our landing pages, the campaign details of your visit, kept in your browser only for that visit.</li>
+              <li><span className="legal-term">Only if you accept:</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API).</li>
+            </ul>
+            <p>
+              You can change your choice at any time with the "Cookies" link at the bottom of every page, or by clearing your browser's data for this site. Meta's own use of this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
             </p>
           </div>
 
@@ -153,7 +196,7 @@ export default function PrivacyPolicy() {
           <div>
             <h2>12. Security</h2>
             <p>
-              We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, loss, or disclosure. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
+              We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, loss, or disclosure: access to our CRM is limited to the Group ARGO partners, and our forms reach it only through an authenticated connection. However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
             </p>
           </div>
 
@@ -172,10 +215,10 @@ export default function PrivacyPolicy() {
               To exercise any of your rights, or if you have questions or concerns about this Privacy Policy, please contact us at:
             </p>
             <div className="legal-card">
-              <p className="legal-term">ARGO Group</p>
+              <p className="legal-term">Group ARGO</p>
               <p>Barcelona, Spain · Miami, Florida, USA</p>
               <p>
-                Email: <a href="mailto:info@groupargous.com">info@groupargous.com</a>
+                Email: <Mail />
               </p>
             </div>
           </div>
