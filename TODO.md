@@ -1,2 +1,2 @@
 - Antes de publicar: CRM_LEADS_URL y CRM_ENTRADA_SECRETO en Netlify (secretos). Sin ellos /api/lead responde 503 y el formulario muestra el error.
-- Añadir Pixel ID y token de CAPI y activar el tracking.
+- Tracking: META_PIXEL_ID y META_CAPI_TOKEN en Netlify (secretos). Sin ellos /api/event no envía nada a Meta.

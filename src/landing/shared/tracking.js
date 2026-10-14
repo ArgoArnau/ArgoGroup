@@ -1,13 +1,9 @@
 // Meta Pixel + Conversions API for the paid landings (/growth, /systems).
-// PREPARED, SWITCHED OFF.
 //
-// With PIXEL_ID empty nothing loads and no request leaves the page, whatever
-// the visitor chooses on the cookie banner. To switch on (see TODO.md):
-//   1. Set PIXEL_ID below.
-//   2. Set META_PIXEL_ID and META_CAPI_TOKEN in Netlify, then set
-//      CAPI_ENDPOINT below to '/.netlify/functions/meta-capi'.
-// Even then nothing runs until the visitor presses Accept: every event checks
-// consent first and is dropped, not queued, without it.
+// Nothing runs until the visitor presses Accept on the cookie banner: every
+// event checks consent first and is dropped, not queued, without it. The
+// server half is netlify/functions/meta-capi.js (/api/event); without
+// META_PIXEL_ID and META_CAPI_TOKEN in Netlify it sends nothing to Meta.
 //
 // Pixel and CAPI receive the same event_id for each event, so Meta keeps one.
 //
@@ -18,8 +14,9 @@
 import { hasConsent, onConsentChange } from '../../lib/consent.js'
 import { newEventId } from './attribution.js'
 
-export const PIXEL_ID = ''
-export const CAPI_ENDPOINT = ''
+// The same Pixel as the main site (src/lib/pixel.js): one per domain.
+export const PIXEL_ID = '3872072809596261'
+export const CAPI_ENDPOINT = '/api/event'
 
 const STANDARD = new Set(['PageView', 'ViewContent', 'Lead', 'Contact'])
 
