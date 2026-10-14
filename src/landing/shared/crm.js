@@ -27,9 +27,7 @@ export function crmPayload({ landing, values, context, ids, consentText, variant
     nombre: values.name.trim(),
     email: values.email.trim(),
     telefono: cleanPhone(values.whatsapp),
-    // The CRM has no column for the website yet (0020): until then it opens
-    // the message, so it is not lost.
-    mensaje: website ? `Website: ${website}\n\n${openAnswer}` : openAnswer,
+    mensaje: openAnswer,
     servicio,
     consentimiento: true,
     consentimiento_texto: consentText,
@@ -50,8 +48,9 @@ export function crmPayload({ landing, values, context, ids, consentText, variant
     gclid: orNothing(attribution.gclid),
     // The CRM's trap field: always empty from a person (the form stops bots first).
     web: '',
-    // Not read by the CRM yet; kept for the 0020 columns so nothing changes
-    // here when they arrive. fbp exists only after cookie consent.
+    // From 0020: the website fills the lead's «Web» (never `web`, the trap
+    // field); the variant and Meta's ids are kept per entry, for the
+    // Conversions API later. fbp exists only after cookie consent.
     sitio_web: orNothing(website),
     variante: orNothing(variant),
     fbc: orNothing(ids.fbc),

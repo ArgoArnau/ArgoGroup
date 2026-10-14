@@ -32,8 +32,8 @@ test('each landing sends the CRM contract, with its own service and form', () =>
   assert.equal(growth.fbclid, 'abc')
   assert.equal(growth.variante, '1b')
   assert.equal(growth.fbp, undefined, 'no fbp without consent')
-  // Until the CRM has a column for it, the website opens the message.
-  assert.equal(growth.mensaje, 'Website: https://acme.com\n\nWe need more qualified leads.')
+  // The website has its own field (0020); the message is the answer alone.
+  assert.equal(growth.mensaje, 'We need more qualified leads.')
   assert.equal(growth.sitio_web, 'https://acme.com')
 
   const systems = crmPayload({ landing: 'systems', values, context, ids: {}, consentText: 'x' })
