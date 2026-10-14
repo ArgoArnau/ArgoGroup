@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Shell for the /systems Meta Ads landing and its thank-you page.
+         scripts/prerender.mjs fills the markers below. Paid-traffic pages:
+         kept out of search, the sitemap and llms.txt. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <!--landing-head-->
+    <meta name="theme-color" content="#171510" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <!-- Self-hosted fonts only: no request to Google Fonts (GDPR). -->
+    <link rel="preload" href="/fonts/cormorant-garamond-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/dm-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Motion and cookie state before first paint; see src/landing/systems/boot.js. -->
+    <!--landing-boot-->
+  </head>
+  <body>
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/landing/systems/main.jsx"></script>
+  </body>
+</html>
