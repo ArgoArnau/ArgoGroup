@@ -31,10 +31,7 @@ export default function PrivacyPolicy() {
               Group ARGO is a growth partner for digital marketing and AI systems, working from Barcelona, Spain, and Miami, Florida, USA. We provide performance marketing, websites, CRM and workflow automation, custom systems and AI-powered services to clients worldwide.
             </p>
             <p>
-              The controller of your personal data is <span className="legal-term">[PENDING: legal name, tax ID and registered address]</span>, trading as Group ARGO.
-            </p>
-            <p>
-              For any privacy-related questions or requests, please contact us at: <Mail />
+              Group ARGO is responsible for the personal data described in this policy. For any privacy-related questions or requests, please contact us at: <Mail />
             </p>
           </div>
 
