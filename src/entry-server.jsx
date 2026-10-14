@@ -14,6 +14,8 @@ import Home from './pages/Home.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx'
 import ThankYou from './pages/ThankYou.jsx'
+import { GrowthPage, GrowthThankYou } from './landing/growth/GrowthPage.jsx'
+import { SystemsPage, SystemsThankYou } from './landing/systems/SystemsPage.jsx'
 
 const noop = () => {}
 
@@ -45,6 +47,26 @@ export function renderRoute(url) {
     </StrictMode>,
   )
   return { html, helmet: helmetContext.helmet }
+}
+
+// The Meta Ads landings and their thank-you pages. Separate from the site:
+// own HTML shell each (<name>.html), no router, no shared chrome.
+const LANDINGS = {
+  growth: { page: GrowthPage, thankYou: GrowthThankYou },
+  systems: { page: SystemsPage, thankYou: SystemsThankYou },
+}
+
+/** '/growth' → the landing, '/growth/thank-you' → its thank-you page. */
+export function renderLanding(url) {
+  const [, name, thanks] = url.match(/^\/([a-z]+)(\/thank-you)?$/) || []
+  const landing = LANDINGS[name]
+  if (!landing) throw new Error(`No landing for ${url}`)
+  const Page = thanks ? landing.thankYou : landing.page
+  return renderToString(
+    <StrictMode>
+      <Page />
+    </StrictMode>,
+  )
 }
 
 /** Just the page body, with no chrome — the input for HTML-to-markdown. */

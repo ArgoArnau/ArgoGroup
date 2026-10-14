@@ -73,6 +73,45 @@ for (const route of routes) {
   documents.push({ path: route.path, markdown })
 }
 
+// ── Meta Ads landings: /growth and /systems ────────────────────────────────
+// Each has its own shell (<name>.html): no site chrome, no Google Fonts,
+// noindex, and deliberately absent from `routes`, so it stays out of the
+// sitemap, llms.txt and the markdown mirror. Its boot script is inlined so
+// the page is right at first paint (growth: the ad variant; both: motion and
+// the cookie choice).
+{
+  const { renderLanding } = await import(pathToFileURL(SSR_ENTRY).href)
+  const attr = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
+
+  for (const name of ['growth', 'systems']) {
+    const { meta } = await load('src', 'landing', name, 'copy.js')
+    // The stylesheet is small; inlining it saves a render-blocking round trip
+    // on the mobile connections the ads send people in on.
+    const template = readFileSync(join(DIST, `${name}.html`), 'utf8')
+      .replace(new RegExp(`<link rel="stylesheet"[^>]*href="(/assets/${name}-[^"]+\\.css)">`), (_, href) =>
+        `<style>${readFileSync(join(DIST, href), 'utf8').trim()}</style>`)
+    const boot = readFileSync(join(ROOT, 'src', 'landing', name, 'boot.js'), 'utf8')
+      .replace(/^\/\/.*\n/gm, '')
+      .trim()
+
+    for (const marker of ['<!--landing-head-->', '<!--landing-boot-->', APP_HTML]) {
+      if (!template.includes(marker)) throw new Error(`${name}.html is missing the ${marker} marker`)
+    }
+    if (!template.includes('<style>')) throw new Error(`${name}.html: stylesheet not found to inline`)
+
+    const pages = [
+      { path: `/${name}`, file: `${name}.html`, ...meta.landing },
+      { path: `/${name}/thank-you`, file: `${name}/thank-you.html`, ...meta.thankYou },
+    ]
+    for (const page of pages) {
+      write(page.file, template
+        .replace('<!--landing-head-->', () => `<title>${attr(page.title)}</title>\n    <meta name="description" content="${attr(page.description)}" />`)
+        .replace('<!--landing-boot-->', () => `<script>${boot}</script>`)
+        .replace(APP_HTML, () => renderLanding(page.path)))
+    }
+  }
+}
+
 // ── sitemap.xml ────────────────────────────────────────────────────────────
 const lastmod = new Date().toISOString().slice(0, 10)
 
