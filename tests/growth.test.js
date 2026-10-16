@@ -111,11 +111,12 @@ test('email type separates free mailboxes from work domains', () => {
   assert.equal(emailType('anna@acme.nl'), 'work')
 })
 
-// ── Tracking stays off ─────────────────────────────────────────────────────
+// ── Tracking: the site's Pixel, the server half on this domain ─────────────
 
-test('Meta Pixel and CAPI are prepared but switched off', () => {
-  assert.equal(PIXEL_ID, '')
-  assert.equal(CAPI_ENDPOINT, '')
+test('Meta Pixel and CAPI point at the site Pixel and the own /api/event', async () => {
+  const { PIXEL_ID: SITE_PIXEL } = await import('../src/lib/pixel.js')
+  assert.equal(PIXEL_ID, SITE_PIXEL)
+  assert.equal(CAPI_ENDPOINT, '/api/event')
 })
 
 // ── Built pages ────────────────────────────────────────────────────────────
