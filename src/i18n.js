@@ -25,6 +25,11 @@ export const translations = {
           description:
             'Thanks for reaching out to ARGO Group. Our team will contact you within 24 hours.',
         },
+        '/cookie-policy': {
+          title: 'Cookie Policy | Group ARGO',
+          description:
+            'The cookies and browser storage Group ARGO uses, what each one does, how long it lasts and how to change your choice.',
+        },
         '/privacy-policy': {
           title: 'Privacy Policy | Group ARGO',
           description:
@@ -319,10 +324,9 @@ export const translations = {
       subject:     'Subject',
       message:     'Message',
       send:        'Send Message',
-      consent:     'I agree to the',
+      consent:     'I have read the',
       privacyLink: 'Privacy Policy',
-      andText:     'and',
-      termsLink:   'Terms of Service',
+      consentEnd:  'and agree to be contacted about my request.',
       ph_name:     'John Doe',
       ph_email:    'john@example.com',
       ph_phone:    '+1 (555) 000-0000',
@@ -331,7 +335,8 @@ export const translations = {
       ph_message:  'Tell us about your business...',
       err_required: 'This field is required.',
       err_email:    'Please enter a valid email address.',
-      err_consent:  'You must accept the privacy policy.',
+      err_phone:    'That phone number does not look right.',
+      err_consent:  'Please confirm you have read the Privacy Policy.',
       err_generic:  'Something went wrong. Please try again or email us directly.',
     },
     thankYou: {
@@ -346,6 +351,8 @@ export const translations = {
       copy:         '© 2026 ARGO Group. All rights reserved.',
       privacy:      'Privacy Policy',
       terms:        'Terms of Service',
+      cookies:      'Cookie Policy',
+      cookieSettings: 'Cookie Settings',
     },
   },
 
@@ -374,6 +381,11 @@ export const translations = {
           title: 'Gracias | ARGO Group',
           description:
             'Gracias por contactar con ARGO Group. Nuestro equipo se pondrá en contacto en 24 horas.',
+        },
+        '/cookie-policy': {
+          title: 'Política de Cookies | ARGO Group',
+          description:
+            'Las cookies y el almacenamiento del navegador que usa ARGO Group, para qué sirve cada uno, cuánto dura y cómo cambiar tu elección.',
         },
         '/privacy-policy': {
           title: 'Política de Privacidad | ARGO Group',
@@ -665,10 +677,9 @@ export const translations = {
       subject:     'Asunto',
       message:     'Mensaje',
       send:        'Enviar Mensaje',
-      consent:     'Acepto la',
+      consent:     'He leído la',
       privacyLink: 'Política de Privacidad',
-      andText:     'y los',
-      termsLink:   'Términos de Servicio',
+      consentEnd:  'y acepto que me contactéis sobre mi solicitud.',
       ph_name:     'Juan García',
       ph_email:    'juan@ejemplo.com',
       ph_phone:    '+34 600 000 000',
@@ -677,7 +688,8 @@ export const translations = {
       ph_message:  'Cuéntanos sobre tu proyecto...',
       err_required: 'Este campo es obligatorio.',
       err_email:    'Introduce un correo electrónico válido.',
-      err_consent:  'Debes aceptar la política de privacidad.',
+      err_phone:    'Ese teléfono no parece correcto.',
+      err_consent:  'Confirma que has leído la Política de Privacidad.',
       err_generic:  'Algo ha ido mal. Inténtalo de nuevo o escríbenos directamente por email.',
     },
     thankYou: {
@@ -692,6 +704,8 @@ export const translations = {
       copy:         '© 2026 ARGO. Todos los derechos reservados.',
       privacy:      'Política de Privacidad',
       terms:        'Términos de Servicio',
+      cookies:      'Política de Cookies',
+      cookieSettings: 'Configurar cookies',
     },
   },
 }

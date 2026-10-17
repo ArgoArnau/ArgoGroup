@@ -1141,7 +1141,12 @@ ul, ol { list-style: none; }
 }
 
 .contact-info .section-title { font-size: clamp(1.9rem, 4vw, 2.8rem); }
-.contact-channels { margin-top: 2rem; display: grid; gap: 0.85rem; }
+/* The heading stays level with the form's top; the channels sit centred in
+   the space left below it, so the column balances the taller form. Stacked,
+   they simply follow. */
+.contact-info { display: flex; flex-direction: column; }
+.contact-info .section-sub { margin-bottom: 2rem; }
+.contact-channels { margin-block: auto; display: grid; gap: 0.85rem; }
 .channel {
   display: flex;
   align-items: center;
@@ -1204,6 +1209,8 @@ ul, ol { list-style: none; }
 .form-field textarea { min-height: 120px; resize: vertical; }
 .form-field input::placeholder,
 .form-field textarea::placeholder { color: #625e58; }
+/* The bot trap: out of view and out of the tab order. */
+.form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-field input:focus,
 .form-field textarea:focus {
   outline: none;
@@ -1235,6 +1242,12 @@ ul, ol { list-style: none; }
 }
 .form-consent a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 .form-consent a:hover { color: var(--gold-light); }
+/* Unticked on send: the message shows on its own line, the box turns red. */
+.form-consent { flex-wrap: wrap; }
+.form-consent label { flex: 1 1 0; min-width: 0; }
+.form-consent .field-error { flex-basis: 100%; padding-left: calc(18px + 0.7rem); }
+.form-consent.has-error .field-error { display: block; }
+.form-consent.has-error input { outline: 1px solid #e0655a; outline-offset: 2px; }
 
 .form-submit { grid-column: 1 / -1; }
 .form-submit .btn { width: 100%; }
