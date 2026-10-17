@@ -2,8 +2,17 @@
 // Shared by the navbar, the mobile menu and the footer so the three can never
 // drift apart.
 export const SECTIONS = [
-  { id: 'servicios', key: 'services' },
-  { id: 'proceso', key: 'method' },
-  { id: 'por-que-argo', key: 'why' },
+  { id: 'services', key: 'services' },
+  { id: 'how-we-operate', key: 'method' },
+  { id: 'why-argo', key: 'why' },
   { id: 'faq', key: 'faq' },
 ]
+
+// The anchors before they were in English (until 2026-10). Links already
+// shared with them still land on the right section (ScrollToTop.jsx).
+export const OLD_ANCHORS = {
+  servicios: 'services',
+  proceso: 'how-we-operate',
+  'por-que-argo': 'why-argo',
+  contacto: 'contact',
+}

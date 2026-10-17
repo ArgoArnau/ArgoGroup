@@ -20,7 +20,7 @@ export default function Services() {
   const services = t.services.items
 
   return (
-    <section className="section services" id="servicios">
+    <section className="section services" id="services">
       <div className="container">
         <SectionTitle
           eyebrow={t.services.eyebrow}

@@ -10,7 +10,7 @@ export default function WhyArgo() {
   const { t } = useLang()
 
   return (
-    <section className="section why" id="por-que-argo">
+    <section className="section why" id="why-argo">
       <div className="container">
         <div className="why-grid">
           <div>

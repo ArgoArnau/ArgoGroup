@@ -6,7 +6,7 @@ export default function Methodology() {
   const { t } = useLang()
 
   return (
-    <section className="section method" id="proceso">
+    <section className="section method" id="how-we-operate">
       <div className="container">
         <SectionTitle
           center
