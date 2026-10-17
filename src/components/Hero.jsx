@@ -36,11 +36,11 @@ export default function Hero() {
         <p className="hero-sub2 hero-in" style={{ '--hero-delay': '560ms' }}>{t.hero.sub2}</p>
 
         <div className="hero-ctas hero-in" style={{ '--hero-delay': '680ms' }}>
-          <AnchorLink id="contacto" className="btn btn-gold">
+          <AnchorLink id="contact" className="btn btn-gold">
             <span>{t.hero.cta1}</span>
             <ArrowIcon />
           </AnchorLink>
-          <AnchorLink id="servicios" className="btn btn-ghost">{t.hero.cta2}</AnchorLink>
+          <AnchorLink id="services" className="btn btn-ghost">{t.hero.cta2}</AnchorLink>
         </div>
 
         <div className="hero-stats">

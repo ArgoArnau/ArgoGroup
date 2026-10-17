@@ -6,7 +6,7 @@ export default function Contact() {
   const c = t.homeContact
 
   return (
-    <section className="section contact" id="contacto">
+    <section className="section contact" id="contact">
       <div className="container">
         <ContactCard eyebrow={c.eyebrow} title={c.title} accent={c.accent} sub={c.sub} />
       </div>

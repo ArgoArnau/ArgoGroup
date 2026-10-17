@@ -77,7 +77,7 @@ export default function Navbar() {
               <InstagramIcon />
             </a>
             <LangToggle lang={lang} setLang={setLang} />
-            <AnchorLink id="contacto" className="btn btn-gold">
+            <AnchorLink id="contact" className="btn btn-gold">
               {t.nav.cta}
             </AnchorLink>
             <button
@@ -103,7 +103,7 @@ export default function Navbar() {
         <Link className="nav-link" to="/contact" onClick={closeMenu}>{t.nav.contact}</Link>
         <div className="mobile-menu-footer">
           <LangToggle lang={lang} setLang={setLang} />
-          <AnchorLink id="contacto" className="btn btn-gold" onNavigate={closeMenu}>{t.nav.cta}</AnchorLink>
+          <AnchorLink id="contact" className="btn btn-gold" onNavigate={closeMenu}>{t.nav.cta}</AnchorLink>
         </div>
       </div>
     </>
