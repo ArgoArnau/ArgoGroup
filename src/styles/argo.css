@@ -1141,11 +1141,12 @@ ul, ol { list-style: none; }
 }
 
 .contact-info .section-title { font-size: clamp(1.9rem, 4vw, 2.8rem); }
-/* The channels sit at the foot of the column, level with the form's button;
-   the heading stays level with the form's top. Stacked, they simply follow. */
+/* The heading stays level with the form's top; the channels sit centred in
+   the space left below it, so the column balances the taller form. Stacked,
+   they simply follow. */
 .contact-info { display: flex; flex-direction: column; }
 .contact-info .section-sub { margin-bottom: 2rem; }
-.contact-channels { margin-top: auto; display: grid; gap: 0.85rem; }
+.contact-channels { margin-block: auto; display: grid; gap: 0.85rem; }
 .channel {
   display: flex;
   align-items: center;
