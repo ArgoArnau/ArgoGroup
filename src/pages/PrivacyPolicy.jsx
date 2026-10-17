@@ -48,13 +48,13 @@ export default function PrivacyPolicy() {
             <h2>3. Data We Collect</h2>
             <ul>
               <li>
-                <span className="legal-term">Contact form:</span> When you fill out the form on our contact page, we collect your name, email address, phone number (if provided), company name, subject and message.
+                <span className="legal-term">Contact form:</span> When you fill out the form on our contact page, we collect your name, email address, phone number and company name (if provided), your company website (if provided), what you need help with and your message. We also record the exact consent text you saw beside the checkbox and when you accepted it.
               </li>
               <li>
                 <span className="legal-term">Landing page forms:</span> When you fill out the form on one of our landing pages, we collect your name, email address, WhatsApp number, company website and your answer about your business. We also record the exact consent text you saw beside the checkbox and when you accepted it.
               </li>
               <li>
-                <span className="legal-term">How you reached us:</span> With a landing page form we also record the page you sent it from, the website that referred you (its domain only), the campaign details in the link (UTM parameters), the click identifiers that Meta and Google add to their ad links (fbclid, gclid), which version of the page you saw and, if you accepted cookies, the Meta identifiers described in section 11 (fbc, fbp).
+                <span className="legal-term">How you reached us:</span> With any of our forms we also record the page you sent it from, the website that referred you (its domain only), the campaign details in the link (UTM parameters), the click identifiers that Meta and Google add to their ad links (fbclid, gclid), on our landing pages which version of the page you saw and, if you accepted cookies, the Meta identifiers described in section 11 (fbc, fbp).
               </li>
               <li>
                 <span className="legal-term">Abuse prevention:</span> To limit repeated submissions, we keep a one-way, salted hash of your IP address for up to 2 days. We never store the IP address itself.
@@ -104,9 +104,8 @@ export default function PrivacyPolicy() {
               We use the following service providers. Each processes data on our behalf, under its own data processing terms, and receives only what it needs:
             </p>
             <ul>
-              <li><span className="legal-term">Website hosting:</span> Netlify, which hosts groupargous.com and passes landing page form submissions to our CRM</li>
+              <li><span className="legal-term">Website hosting:</span> Netlify, which hosts groupargous.com and passes our forms' submissions to our CRM</li>
               <li><span className="legal-term">Our CRM:</span> our own internal platform, hosted on Vercel, with its database on Supabase. Only the Group ARGO partners can access it</li>
-              <li><span className="legal-term">Contact form:</span> Formspree, which receives submissions from our contact page</li>
               <li><span className="legal-term">Advertising:</span> Meta (Facebook and Instagram) for the Pixel and the Conversions API, only with your consent; and the ad platforms we run campaigns on (Meta Ads, Google Ads, TikTok Ads and LinkedIn Ads)</li>
               <li><span className="legal-term">Email and communication tools:</span> services we use to talk to you and our clients</li>
               <li><span className="legal-term">Automation and AI tools:</span> platforms such as n8n and Make, and AI services, used to run our workflows and in service delivery</li>
@@ -130,7 +129,6 @@ export default function PrivacyPolicy() {
             <h2>7. Data Retention</h2>
             <ul>
               <li><span className="legal-term">Requests from our forms:</span> while we are in conversation with you. If we close your request without working together, it is deleted automatically 12 months after we close it.</li>
-              <li><span className="legal-term">Contact page submissions:</span> up to 24 months.</li>
               <li><span className="legal-term">Clients:</span> for the duration of the engagement and up to 3 years afterwards, or longer where the law requires it (for example, invoices).</li>
               <li><span className="legal-term">IP address hash:</span> up to 2 days.</li>
               <li><span className="legal-term">Cookies:</span> see section 11.</li>

@@ -1,34 +1,61 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { SendIcon } from './icons'
 import { track } from '../lib/pixel'
-
-const FORMSPREE_ID = 'mlgoojlw'
+import { newEventId } from '../landing/shared/attribution.js'
+import { cleanPhone, normaliseWebsite } from '../landing/shared/fields.js'
+import { sendLead } from '../landing/shared/submit.js'
 
 // Required fields, in the order the form reads. Kept in step with the field
 // list published to agents in src/content/markdown.js.
-const REQUIRED = ['name', 'email', 'subject', 'message']
+const REQUIRED = ['name', 'email', 'service', 'message']
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const EMPTY = { name: '', email: '', phone: '', company: '', subject: '', message: '' }
+const EMPTY = { name: '', email: '', phone: '', company: '', website: '', service: '', message: '' }
+
+// The CRM's service values (argo-planning, /api/leads); labels in i18n.js.
+const SERVICES = ['marketing_digital', 'sistemas_ia', 'ambos', 'otro']
+
+// Under this, a send is a bot; the CRM drops it too. Same as the landings.
+const MIN_FILL_MS = 3000
+
+const ATTRIBUTION = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid']
+
+const cookie = (name) => {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))
+  return match ? decodeURIComponent(match[1]) : undefined
+}
 
 export default function ContactForm() {
   const navigate = useNavigate()
-  const { t } = useLang()
+  const { t, lang } = useLang()
   const f = t.contactForm
 
   const [values, setValues] = useState(EMPTY)
   const [agreed, setAgreed] = useState(false)
+  const [trap, setTrap] = useState('')
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
   const [submitError, setSubmitError] = useState(null)
+  // When the form appeared and an id for this visit's send (a double click
+  // counts once in the CRM). Client only.
+  const opened = useRef(null)
+
+  useEffect(() => {
+    opened.current = { at: Date.now(), id: newEventId() }
+  }, [])
 
   const errorFor = (name, value = values[name], consent = agreed) => {
     if (name === 'consent') return consent ? null : f.err_consent
     if (REQUIRED.includes(name) && !value.trim()) return f.err_required
     if (name === 'email' && value.trim() && !EMAIL.test(value.trim())) return f.err_email
+    if (name === 'website' && value.trim() && !normaliseWebsite(value)) return f.err_website
+    if (name === 'phone' && value.trim()) {
+      const digits = cleanPhone(value).replace('+', '').length
+      if (digits < 6 || digits > 20) return f.err_phone
+    }
     return null
   }
 
@@ -60,20 +87,49 @@ export default function ContactForm() {
     }
     setErrors(found)
     if (Object.keys(found).length > 0) {
-      document.querySelector('.form-field.has-error input, .form-field.has-error textarea')?.focus()
+      document.querySelector('.form-field.has-error input, .form-field.has-error select, .form-field.has-error textarea')?.focus()
       return
+    }
+
+    // Bots fill the hidden field or send faster than a person can type: they
+    // see the thank-you page and nothing is sent.
+    if (trap || !opened.current || Date.now() - opened.current.at < MIN_FILL_MS) {
+      navigate('/thank-you')
+      return
+    }
+
+    // The campaign details come from this page's own link only; nothing is
+    // stored in the browser for it.
+    const params = new URLSearchParams(window.location.search)
+    const website = normaliseWebsite(values.website)
+    const lead = {
+      nombre: values.name.trim(),
+      email: values.email.trim(),
+      telefono: cleanPhone(values.phone) || undefined,
+      empresa: values.company.trim() || undefined,
+      sitio_web: website || undefined,
+      servicio: values.service,
+      mensaje: values.message.trim(),
+      consentimiento: true,
+      consentimiento_texto: `${f.consent} ${f.privacyLink} ${f.consentEnd}`,
+      formulario: 'web-contacto',
+      abierto_en: opened.current.at,
+      id_envio: opened.current.id,
+      idioma: lang,
+      pagina: window.location.href,
+      referrer: document.referrer || undefined,
+      ...Object.fromEntries(ATTRIBUTION.map((name) => [name, params.get(name) || undefined])),
+      // Only there if the visitor accepted cookies (the Meta Pixel sets them).
+      fbc: cookie('_fbc'),
+      fbp: cookie('_fbp'),
+      web: '',
     }
 
     setLoading(true)
     setSubmitError(null)
     try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(values),
-      })
-      if (!response.ok) throw new Error(`Formspree responded ${response.status}`)
-      track('Lead')
+      const delivered = await sendLead(lead)
+      if (delivered) track('Lead')
       navigate('/thank-you')
     } catch {
       setSubmitError(f.err_generic)
@@ -97,8 +153,15 @@ export default function ContactForm() {
       <Field label={f.email} type="email" autoComplete="email" inputMode="email" required {...fieldProps('email')} />
       <Field label={f.phone} type="tel" autoComplete="tel" inputMode="tel" {...fieldProps('phone')} />
       <Field label={f.company} type="text" autoComplete="organization" {...fieldProps('company')} />
-      <Field label={f.subject} type="text" full required {...fieldProps('subject')} />
+      <Field label={f.website} type="text" inputMode="url" autoComplete="url" full {...fieldProps('website')} />
+      <Field label={f.service} full required select options={SERVICES.map((value) => [value, f.services[value]])} {...fieldProps('service')} />
       <Field label={f.message} textarea full required {...fieldProps('message')} />
+
+      {/* Invisible to people and assistive tech; bots fill it in. */}
+      <div className="form-trap" aria-hidden="true">
+        <label htmlFor="f-company_url">Company URL</label>
+        <input id="f-company_url" name="company_url" type="text" tabIndex={-1} autoComplete="off" value={trap} onChange={(event) => setTrap(event.target.value)} />
+      </div>
 
       <div className={errors.consent ? 'form-consent has-error' : 'form-consent'}>
         <input id="f-consent" name="consent" type="checkbox" checked={agreed} onChange={handleConsent} />
@@ -121,10 +184,25 @@ export default function ContactForm() {
   )
 }
 
-function Field({ label, name, error, full, required, textarea, ...rest }) {
+function Field({ label, name, error, full, required, textarea, select, options, placeholder, ...rest }) {
   const id = `f-${name}`
   const className = ['form-field', full && 'full', error && 'has-error'].filter(Boolean).join(' ')
   const control = { id, name, required, 'aria-invalid': error ? true : undefined, ...rest }
+  const invalid = error ? 'invalid' : undefined
+
+  let input
+  if (select) {
+    input = (
+      <select {...control} className={[invalid, !rest.value && 'empty'].filter(Boolean).join(' ') || undefined}>
+        <option value="" disabled>{placeholder}</option>
+        {options.map(([value, text]) => <option key={value} value={value}>{text}</option>)}
+      </select>
+    )
+  } else if (textarea) {
+    input = <textarea {...control} placeholder={placeholder} className={invalid} />
+  } else {
+    input = <input {...control} placeholder={placeholder} className={invalid} />
+  }
 
   return (
     <div className={className}>
@@ -132,9 +210,7 @@ function Field({ label, name, error, full, required, textarea, ...rest }) {
         <span>{label}</span>
         {required && <span className="req" aria-hidden="true"> *</span>}
       </label>
-      {textarea
-        ? <textarea {...control} className={error ? 'invalid' : undefined} />
-        : <input {...control} className={error ? 'invalid' : undefined} />}
+      {input}
       <span className="field-error" role="alert">{error}</span>
     </div>
   )

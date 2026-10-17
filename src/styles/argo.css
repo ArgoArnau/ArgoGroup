@@ -1186,6 +1186,7 @@ ul, ol { list-style: none; }
 }
 .form-field label .req { color: var(--gold); }
 .form-field input,
+.form-field select,
 .form-field textarea {
   width: 100%;
   background: var(--bg);
@@ -1204,13 +1205,29 @@ ul, ol { list-style: none; }
 .form-field textarea { min-height: 120px; resize: vertical; }
 .form-field input::placeholder,
 .form-field textarea::placeholder { color: #625e58; }
+/* The service picker: same field, its own arrow, placeholder colour until chosen. */
+.form-field select {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-soft) 50%), linear-gradient(135deg, var(--text-soft) 50%, transparent 50%);
+  background-position: calc(100% - 1.25rem) 50%, calc(100% - 0.95rem) 50%;
+  background-size: 0.32rem 0.32rem;
+  background-repeat: no-repeat;
+}
+.form-field select.empty { color: #625e58; }
+.form-field select option { color: var(--text); background: var(--bg); }
+/* The bot trap: out of view and out of the tab order. */
+.form-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-field input:focus,
+.form-field select:focus,
 .form-field textarea:focus {
   outline: none;
   border-color: var(--gold);
   box-shadow: 0 0 0 3px var(--gold-15);
 }
 .form-field input.invalid,
+.form-field select.invalid,
 .form-field textarea.invalid { border-color: #e0655a; }
 .field-error {
   display: none;
@@ -1235,6 +1252,12 @@ ul, ol { list-style: none; }
 }
 .form-consent a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 .form-consent a:hover { color: var(--gold-light); }
+/* Unticked on send: the message shows on its own line, the box turns red. */
+.form-consent { flex-wrap: wrap; }
+.form-consent label { flex: 1 1 0; min-width: 0; }
+.form-consent .field-error { flex-basis: 100%; padding-left: calc(18px + 0.7rem); }
+.form-consent.has-error .field-error { display: block; }
+.form-consent.has-error input { outline: 1px solid #e0655a; outline-offset: 2px; }
 
 .form-submit { grid-column: 1 / -1; }
 .form-submit .btn { width: 100%; }

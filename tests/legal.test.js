@@ -42,3 +42,10 @@ test('the cookie policy is published, in the sitemap and linked from every page 
     assert.ok(read(path).includes('href="/cookie-policy"'), `${path} links to the cookie policy`)
   }
 })
+
+test('the contact form sends to this site, not to Formspree', () => {
+  const assets = walk(join(DIST, 'assets')).filter((file) => file.endsWith('.js')).map((file) => readFileSync(file, 'utf8')).join('\n')
+  assert.ok(!/formspree/i.test(assets), 'no Formspree in the bundle')
+  assert.ok(!/formspree/i.test(read('privacy-policy.html')), 'no Formspree in the privacy policy')
+  assert.ok(assets.includes('web-contacto'), 'the contact form posts as web-contacto')
+})
