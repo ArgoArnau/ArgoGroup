@@ -100,7 +100,7 @@ function contactBody(t) {
       `- ${f.company}`,
       `- ${f.subject} (required)`,
       `- ${f.message} (required)`,
-      `- Consent to the [${f.privacyLink}](${canonicalFor('/privacy-policy')}) and [${f.termsLink}](${canonicalFor('/terms-of-service')}) (required)`,
+      `- ${f.consent} [${f.privacyLink}](${canonicalFor('/privacy-policy')}) ${f.consentEnd} (required)`,
     ].join('\n'),
   ]
 }
@@ -240,7 +240,7 @@ export function agentInstructions(lang = 'en') {
     '',
     '## How to make contact',
     '',
-    `- Contact form: ${canonicalFor('/contact')} — fields: ${f.name} (required), ${f.email} (required), ${f.phone}, ${f.company}, ${f.subject} (required), ${f.message} (required), and consent to the privacy policy and terms.`,
+    `- Contact form: ${canonicalFor('/contact')} — fields: ${f.name} (required), ${f.email} (required), ${f.phone}, ${f.company}, ${f.subject} (required), ${f.message} (required), and a checkbox confirming the privacy policy has been read.`,
     `- Email: ${site.email}`,
     `- WhatsApp: ${site.whatsapp} (${site.telephoneDisplay})`,
     ...site.sameAs.map((url) => `- ${url.includes('linkedin') ? 'LinkedIn' : 'Instagram'}: ${url}`),

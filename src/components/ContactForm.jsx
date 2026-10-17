@@ -105,8 +105,7 @@ export default function ContactForm() {
         <label htmlFor="f-consent">
           {f.consent}{' '}
           <Link to="/privacy-policy">{f.privacyLink}</Link>{' '}
-          {f.andText}{' '}
-          <Link to="/terms-of-service">{f.termsLink}</Link>
+          {f.consentEnd}
         </label>
         <span className="field-error" role="alert">{errors.consent}</span>
       </div>
