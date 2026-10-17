@@ -48,7 +48,7 @@ export default function PrivacyPolicy() {
             <h2>3. Data We Collect</h2>
             <ul>
               <li>
-                <span className="legal-term">Contact form:</span> When you fill out the form on our contact page, we collect your name, email address, phone number and company name (if provided), your company website (if provided), what you need help with and your message. We also record the exact consent text you saw beside the checkbox and when you accepted it.
+                <span className="legal-term">Contact form:</span> When you fill out the form on our contact page, we collect your name, email address, phone number and company name (if provided), subject and message. We also record the exact consent text you saw beside the checkbox and when you accepted it.
               </li>
               <li>
                 <span className="legal-term">Landing page forms:</span> When you fill out the form on one of our landing pages, we collect your name, email address, WhatsApp number, company website and your answer about your business. We also record the exact consent text you saw beside the checkbox and when you accepted it.

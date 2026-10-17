@@ -4,19 +4,16 @@ import { useLang } from '../context/LangContext'
 import { SendIcon } from './icons'
 import { track } from '../lib/pixel'
 import { newEventId } from '../landing/shared/attribution.js'
-import { cleanPhone, normaliseWebsite } from '../landing/shared/fields.js'
+import { cleanPhone } from '../landing/shared/fields.js'
 import { sendLead } from '../landing/shared/submit.js'
 
 // Required fields, in the order the form reads. Kept in step with the field
 // list published to agents in src/content/markdown.js.
-const REQUIRED = ['name', 'email', 'service', 'message']
+const REQUIRED = ['name', 'email', 'subject', 'message']
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-const EMPTY = { name: '', email: '', phone: '', company: '', website: '', service: '', message: '' }
-
-// The CRM's service values (argo-planning, /api/leads); labels in i18n.js.
-const SERVICES = ['marketing_digital', 'sistemas_ia', 'ambos', 'otro']
+const EMPTY = { name: '', email: '', phone: '', company: '', subject: '', message: '' }
 
 // Under this, a send is a bot; the CRM drops it too. Same as the landings.
 const MIN_FILL_MS = 3000
@@ -51,7 +48,6 @@ export default function ContactForm() {
     if (name === 'consent') return consent ? null : f.err_consent
     if (REQUIRED.includes(name) && !value.trim()) return f.err_required
     if (name === 'email' && value.trim() && !EMAIL.test(value.trim())) return f.err_email
-    if (name === 'website' && value.trim() && !normaliseWebsite(value)) return f.err_website
     if (name === 'phone' && value.trim()) {
       const digits = cleanPhone(value).replace('+', '').length
       if (digits < 6 || digits > 20) return f.err_phone
@@ -87,7 +83,7 @@ export default function ContactForm() {
     }
     setErrors(found)
     if (Object.keys(found).length > 0) {
-      document.querySelector('.form-field.has-error input, .form-field.has-error select, .form-field.has-error textarea')?.focus()
+      document.querySelector('.form-field.has-error input, .form-field.has-error textarea')?.focus()
       return
     }
 
@@ -101,15 +97,15 @@ export default function ContactForm() {
     // The campaign details come from this page's own link only; nothing is
     // stored in the browser for it.
     const params = new URLSearchParams(window.location.search)
-    const website = normaliseWebsite(values.website)
     const lead = {
       nombre: values.name.trim(),
       email: values.email.trim(),
       telefono: cleanPhone(values.phone) || undefined,
       empresa: values.company.trim() || undefined,
-      sitio_web: website || undefined,
-      servicio: values.service,
-      mensaje: values.message.trim(),
+      // The form does not ask which service; the CRM needs one. The subject
+      // has no field of its own there, so it opens the message.
+      servicio: 'otro',
+      mensaje: `${f.subject}: ${values.subject.trim()}\n\n${values.message.trim()}`,
       consentimiento: true,
       consentimiento_texto: `${f.consent} ${f.privacyLink} ${f.consentEnd}`,
       formulario: 'web-contacto',
@@ -153,8 +149,7 @@ export default function ContactForm() {
       <Field label={f.email} type="email" autoComplete="email" inputMode="email" required {...fieldProps('email')} />
       <Field label={f.phone} type="tel" autoComplete="tel" inputMode="tel" {...fieldProps('phone')} />
       <Field label={f.company} type="text" autoComplete="organization" {...fieldProps('company')} />
-      <Field label={f.website} type="text" inputMode="url" autoComplete="url" full {...fieldProps('website')} />
-      <Field label={f.service} full required select options={SERVICES.map((value) => [value, f.services[value]])} {...fieldProps('service')} />
+      <Field label={f.subject} type="text" full required {...fieldProps('subject')} />
       <Field label={f.message} textarea full required {...fieldProps('message')} />
 
       {/* Invisible to people and assistive tech; bots fill it in. */}
@@ -184,25 +179,10 @@ export default function ContactForm() {
   )
 }
 
-function Field({ label, name, error, full, required, textarea, select, options, placeholder, ...rest }) {
+function Field({ label, name, error, full, required, textarea, ...rest }) {
   const id = `f-${name}`
   const className = ['form-field', full && 'full', error && 'has-error'].filter(Boolean).join(' ')
   const control = { id, name, required, 'aria-invalid': error ? true : undefined, ...rest }
-  const invalid = error ? 'invalid' : undefined
-
-  let input
-  if (select) {
-    input = (
-      <select {...control} className={[invalid, !rest.value && 'empty'].filter(Boolean).join(' ') || undefined}>
-        <option value="" disabled>{placeholder}</option>
-        {options.map(([value, text]) => <option key={value} value={value}>{text}</option>)}
-      </select>
-    )
-  } else if (textarea) {
-    input = <textarea {...control} placeholder={placeholder} className={invalid} />
-  } else {
-    input = <input {...control} placeholder={placeholder} className={invalid} />
-  }
 
   return (
     <div className={className}>
@@ -210,7 +190,9 @@ function Field({ label, name, error, full, required, textarea, select, options, 
         <span>{label}</span>
         {required && <span className="req" aria-hidden="true"> *</span>}
       </label>
-      {input}
+      {textarea
+        ? <textarea {...control} className={error ? 'invalid' : undefined} />
+        : <input {...control} className={error ? 'invalid' : undefined} />}
       <span className="field-error" role="alert">{error}</span>
     </div>
   )
