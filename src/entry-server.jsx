@@ -12,6 +12,7 @@ import About from './pages/About.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import Home from './pages/Home.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import CookiePolicy from './pages/CookiePolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx'
 import ThankYou from './pages/ThankYou.jsx'
 import { GrowthPage, GrowthThankYou } from './landing/growth/GrowthPage.jsx'
@@ -25,6 +26,7 @@ const PAGES = {
   '/contact': ContactPage,
   '/thank-you': ThankYou,
   '/privacy-policy': PrivacyPolicy,
+  '/cookie-policy': CookiePolicy,
   '/terms-of-service': TermsOfService,
 }
 

@@ -115,6 +115,7 @@ const PAGE_TYPES = {
   '/contact': { type: 'ContactPage' },
   '/thank-you': { type: 'WebPage' },
   '/privacy-policy': { type: 'WebPage' },
+  '/cookie-policy': { type: 'WebPage' },
   '/terms-of-service': { type: 'WebPage' },
 }
 

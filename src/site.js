@@ -35,6 +35,7 @@ export const routes = [
   { path: '/about', slug: 'about', sitemap: true, changefreq: 'monthly', priority: '0.8' },
   { path: '/contact', slug: 'contact', sitemap: true, changefreq: 'monthly', priority: '0.9' },
   { path: '/privacy-policy', slug: 'privacy-policy', sitemap: true, changefreq: 'yearly', priority: '0.3' },
+  { path: '/cookie-policy', slug: 'cookie-policy', sitemap: true, changefreq: 'yearly', priority: '0.3' },
   { path: '/terms-of-service', slug: 'terms-of-service', sitemap: true, changefreq: 'yearly', priority: '0.3' },
   // Post-conversion confirmation page: reachable, but not a search entry point.
   { path: '/thank-you', slug: 'thank-you', sitemap: false, changefreq: 'yearly', priority: '0.1' },

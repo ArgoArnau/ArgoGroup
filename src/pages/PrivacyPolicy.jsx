@@ -185,7 +185,7 @@ export default function PrivacyPolicy() {
               <li><span className="legal-term">Only if you accept:</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API).</li>
             </ul>
             <p>
-              You can change your choice at any time with the "Cookies" link at the bottom of every page, or by clearing your browser's data for this site. Meta's own use of this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
+              You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Every cookie and stored item, with its purpose and duration, is listed in our <Link to="/cookie-policy">Cookie Policy</Link>. Meta's own use of this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
             </p>
           </div>
 

@@ -66,8 +66,9 @@ export default function Footer({ setShowBanner }) {
           <div className="footer-legal">
             <Link to="/privacy-policy">{t.footer.privacy}</Link>
             <Link to="/terms-of-service">{t.footer.terms}</Link>
+            <Link to="/cookie-policy">{t.footer.cookies}</Link>
             {/* Consent is revocable: this reopens the banner. */}
-            <button type="button" onClick={() => setShowBanner(true)}>Cookies</button>
+            <button type="button" onClick={() => setShowBanner(true)}>{t.footer.cookieSettings}</button>
           </div>
         </div>
       </div>

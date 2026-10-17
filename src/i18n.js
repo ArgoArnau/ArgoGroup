@@ -25,6 +25,11 @@ export const translations = {
           description:
             'Thanks for reaching out to ARGO Group. Our team will contact you within 24 hours.',
         },
+        '/cookie-policy': {
+          title: 'Cookie Policy | Group ARGO',
+          description:
+            'The cookies and browser storage Group ARGO uses, what each one does, how long it lasts and how to change your choice.',
+        },
         '/privacy-policy': {
           title: 'Privacy Policy | Group ARGO',
           description:
@@ -346,6 +351,8 @@ export const translations = {
       copy:         '© 2026 ARGO Group. All rights reserved.',
       privacy:      'Privacy Policy',
       terms:        'Terms of Service',
+      cookies:      'Cookie Policy',
+      cookieSettings: 'Cookie Settings',
     },
   },
 
@@ -374,6 +381,11 @@ export const translations = {
           title: 'Gracias | ARGO Group',
           description:
             'Gracias por contactar con ARGO Group. Nuestro equipo se pondrá en contacto en 24 horas.',
+        },
+        '/cookie-policy': {
+          title: 'Política de Cookies | ARGO Group',
+          description:
+            'Las cookies y el almacenamiento del navegador que usa ARGO Group, para qué sirve cada uno, cuánto dura y cómo cambiar tu elección.',
         },
         '/privacy-policy': {
           title: 'Política de Privacidad | ARGO Group',
@@ -692,6 +704,8 @@ export const translations = {
       copy:         '© 2026 ARGO. Todos los derechos reservados.',
       privacy:      'Política de Privacidad',
       terms:        'Términos de Servicio',
+      cookies:      'Política de Cookies',
+      cookieSettings: 'Configurar cookies',
     },
   },
 }

@@ -13,6 +13,7 @@ import About from './pages/About'
 import ContactPage from './pages/ContactPage'
 import ThankYou from './pages/ThankYou'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import CookiePolicy from './pages/CookiePolicy'
 import TermsOfService from './pages/TermsOfService'
 import { getConsent } from './lib/consent'
 import { initPixel } from './lib/pixel'
@@ -37,6 +38,7 @@ export function AppLayout({ showBanner, setShowBanner }) {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
       </Routes>
       <Footer setShowBanner={setShowBanner} />

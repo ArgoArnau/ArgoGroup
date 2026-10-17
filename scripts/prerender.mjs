@@ -162,6 +162,7 @@ const notFoundMarkdown = [
   `- [About](${canonicalFor('/about')}) - who ${site.name} is, offices, and how it works`,
   `- [Contact](${canonicalFor('/contact')}) - reach the team, reply within 24 hours`,
   `- [Privacy Policy](${canonicalFor('/privacy-policy')})`,
+  `- [Cookie Policy](${canonicalFor('/cookie-policy')})`,
   `- [Terms of Service](${canonicalFor('/terms-of-service')})`,
   '',
   '## Machine-readable index',
@@ -221,6 +222,7 @@ write('404.html', `<!doctype html>
         <li><a href="/">Home</a> - what ${site.name} does</li>
         <li><a href="/contact">Contact</a> - reach the team, reply within 24 hours</li>
         <li><a href="/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/cookie-policy">Cookie Policy</a></li>
         <li><a href="/terms-of-service">Terms of Service</a></li>
       </ul>
 
