@@ -16,13 +16,15 @@ export default function CookieBanner({ showBanner, setShowBanner }) {
   const copy = lang === 'es'
     ? {
         title: 'Usamos cookies',
-        body: 'ARGO Group usa cookies para mejorar tu experiencia, analizar el tráfico del sitio y apoyar nuestras acciones de marketing. Al aceptar, consientes su uso. Más detalles en nuestra',
+        // Lo que de verdad hay detrás: solo el Píxel de Meta (src/lib/pixel.js).
+        body: 'Usamos el Píxel de Meta para medir qué anuncios nos traen visitas. No se activa nada hasta que aceptas. Más detalles en nuestra',
         accept: 'Aceptar',
         decline: 'Rechazar',
       }
     : {
         title: 'We use cookies',
-        body: 'ARGO Group uses cookies to improve your experience, analyze site traffic, and support our marketing efforts. By accepting, you consent to their use. Learn more in our',
+        // What is really behind it: the Meta Pixel only (src/lib/pixel.js).
+        body: 'We use the Meta Pixel to measure which ads bring people here. Nothing is set unless you accept. Learn more in our',
         accept: 'Accept',
         decline: 'Decline',
       }
@@ -33,10 +35,11 @@ export default function CookieBanner({ showBanner, setShowBanner }) {
         <h2>{copy.title}</h2>
         <p>
           {copy.body}{' '}
-          <Link to="/privacy-policy">{t.footer.privacy}</Link>.
+          <Link to="/cookie-policy">{t.footer.cookies}</Link>.
         </p>
         <div className="cookie-actions">
-          <button className="btn btn-gold" type="button" onClick={() => choose('accepted')}>{copy.accept}</button>
+          {/* Same style for both: declining is as easy and as visible as accepting. */}
+          <button className="btn btn-ghost" type="button" onClick={() => choose('accepted')}>{copy.accept}</button>
           <button className="btn btn-ghost" type="button" onClick={() => choose('declined')}>{copy.decline}</button>
         </div>
       </div>
