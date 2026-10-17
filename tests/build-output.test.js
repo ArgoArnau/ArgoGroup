@@ -230,7 +230,7 @@ test('legal markdown is generated from the rendered page, not a stub', () => {
   const privacy = read('privacy-policy.md')
   assert.ok(privacy.includes('## 1. Who We Are'), 'privacy policy sections must be converted')
   assert.ok(privacy.includes('GDPR'), 'privacy policy body must be present')
-  assert.ok(read('terms-of-service.md').includes('## 2. Services'))
+  assert.ok(read('terms-of-service.md').includes('## 2. These Terms and Your Agreement'))
 })
 
 // ── 4. Machine-readable index ──────────────────────────────────────────────
