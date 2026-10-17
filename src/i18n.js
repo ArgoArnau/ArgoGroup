@@ -38,7 +38,7 @@ export const translations = {
         '/terms-of-service': {
           title: 'Terms of Service | Group ARGO',
           description:
-            'The terms that govern use of the ARGO Group website and the services we provide.',
+            'The terms for using the Group ARGO website and for the services we provide, and how they relate to your signed agreement.',
         },
       },
     },

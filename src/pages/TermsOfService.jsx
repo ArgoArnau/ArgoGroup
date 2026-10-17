@@ -2,6 +2,13 @@ import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { ChevronLeft } from '../components/icons'
 
+const EMAIL = 'info@groupargous.com'
+const Mail = () => <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+
+// Kept in step with the client agreements (ARGO Universe,
+// 05-clientes/contratos/plantillas: ES, EU and US). Duration, notice, billing,
+// payment and portfolio use are chosen per client there, so these Terms
+// defer to the signed agreement and only give the fallback.
 export default function TermsOfService() {
   const { t } = useLang()
 
@@ -16,7 +23,7 @@ export default function TermsOfService() {
         <div>
           <h1>Terms of Service</h1>
           <div className="legal-rule" />
-          <p className="legal-updated">Last updated: April 2026</p>
+          <p className="legal-updated">Last updated: October 2026</p>
         </div>
 
         <div>
@@ -25,221 +32,197 @@ export default function TermsOfService() {
           <div>
             <h2>1. About These Terms</h2>
             <p>
-              These Terms of Service ("Terms") govern the relationship between ARGO Group ("ARGO," "we," "us," or "our") and any individual or entity ("Client," "you," or "your") that engages ARGO for services. By accessing our website or engaging our services, you agree to be bound by these Terms.
+              Group ARGO ("ARGO", "we", "us" or "our") is a growth partner for digital marketing and AI systems, working from Barcelona, Spain, and Miami, Florida, USA.
             </p>
             <p>
-              ARGO Group operates as a digital marketing and AI automation agency with offices in Barcelona, Spain, and Miami, Florida, USA.
+              These Terms have three parts. Part A applies to anyone using groupargous.com. Part B applies to the companies and people who engage our services ("Client", "you" or "your"). Part C applies to both.
             </p>
           </div>
 
           {/* 2 */}
           <div>
-            <h2>2. Services</h2>
+            <h2>2. These Terms and Your Agreement</h2>
             <p>
-              ARGO Group provides performance marketing, paid media management, workflow automation, AI-powered services, and CRM integration. The specific scope of services for each engagement is defined in a separate proposal or service agreement.
-            </p>
-            <p>
-              ARGO reserves the right to use artificial intelligence tools, automated systems, and third-party platforms as part of its service delivery process.
+              Every engagement is defined in a proposal and a signed services agreement. If anything in these Terms conflicts with your signed agreement, the agreement prevails. These Terms apply to an engagement only for what the agreement does not cover.
             </p>
           </div>
 
+          <p className="eyebrow legal-part">Part A · Using our website</p>
+
           {/* 3 */}
           <div>
-            <h2>3. Engagement Model</h2>
+            <h2>3. Our Content</h2>
             <p>
-              All engagements operate on a month-to-month basis. There are no long-term contracts or minimum commitment periods unless otherwise agreed in writing.
+              The texts, design, logos and other content on this website belong to Group ARGO or are used with permission. You may read them, link to them and share them for your own information. Copying or reusing them for commercial purposes needs our written permission.
             </p>
           </div>
 
           {/* 4 */}
           <div>
-            <h2>4. Billing & Payment</h2>
-
-            <h3>4.1 Billing Cycle</h3>
+            <h2>4. Information on This Website</h2>
             <p>
-              Service fees are billed on a monthly basis. Invoices are issued and charges are processed between the 1st and 3rd day of each calendar month for that month's services.
-            </p>
-
-            <h3>4.2 Pro-Rated Billing Upon Cancellation</h3>
-            <p>
-              If a Client cancels services mid-month, billing will be calculated on a pro-rated basis up to the effective cancellation date. The Client is responsible for paying only for the days of service received within that billing period.
-            </p>
-            <p className="legal-note">
-              Example: if services are cancelled on the 20th of the month, the Client is billed for 20 days of service proportional to the monthly fee.
-            </p>
-
-            <h3>4.3 Payment Terms</h3>
-            <p>
-              Invoices are due upon receipt. ARGO reserves the right to suspend services for accounts with outstanding unpaid balances.
+              What we publish here describes how we work and is general information. It is not an offer: what we do for a client, and on what terms, is set in their proposal and agreement. We keep the website accurate, but its content may change without notice.
             </p>
           </div>
 
           {/* 5 */}
           <div>
-            <h2>5. Cancellation Policy</h2>
-
-            <h3>5.1 Client Cancellation</h3>
+            <h2>5. Using the Website Fairly</h2>
             <p>
-              Clients may cancel services at any time by providing 30 days' written notice to <a href="mailto:info@groupargous.com">info@groupargous.com</a>. The effective cancellation date will be determined from the date the written notice is received.
-            </p>
-
-            <h3>5.2 Pro-Rated Final Invoice</h3>
-            <p>
-              Upon cancellation, the Client will receive a final invoice calculated on a pro-rated basis from the first day of the final billing month to the effective cancellation date.
-            </p>
-
-            <h3>5.3 Work in Progress</h3>
-            <p>
-              Any work in progress at the time of cancellation will be delivered to the Client in its current state. ARGO does not guarantee completion of projects initiated after the cancellation notice is received.
-            </p>
-
-            <h3>5.4 ARGO-Initiated Cancellation</h3>
-            <p>
-              ARGO reserves the right to terminate a client engagement at any time with 30 days' written notice, or immediately in cases of breach of these Terms, non-payment, or conduct deemed harmful to ARGO or its personnel.
+              Please do not send our forms false information or someone else's details, try to disrupt or overload the website, or use it for anything unlawful. We may block requests that do.
             </p>
           </div>
 
           {/* 6 */}
           <div>
-            <h2>6. No Guarantee of Results</h2>
+            <h2>6. Links to Other Websites</h2>
             <p>
-              ARGO does not guarantee specific outcomes, including but not limited to leads generated, revenue growth, return on investment (ROI), search engine rankings, audience reach, or ad performance metrics. Results depend on multiple external factors outside ARGO's control, including platform algorithm changes, market conditions, client-side variables, and the nature of the Client's business.
+              Some links take you to other websites, such as LinkedIn, Instagram or WhatsApp. We do not control them and are not responsible for their content or their privacy practices.
             </p>
           </div>
 
           {/* 7 */}
           <div>
-            <h2>7. AI & Automation Disclosure</h2>
+            <h2>7. Your Personal Data</h2>
             <p>
-              ARGO integrates artificial intelligence tools and automated systems into its workflows as part of standard service delivery. By engaging ARGO Group's services, the Client acknowledges and accepts this practice. ARGO Group makes no representations that AI-generated content or automated outputs are error-free or will meet any specific standard, and retains editorial oversight over all deliverables.
+              How we handle the personal data you share through this website is explained in our <Link to="/privacy-policy">Privacy Policy</Link>, and the cookies we use in our <Link to="/cookie-policy">Cookie Policy</Link>.
             </p>
           </div>
 
+          <p className="eyebrow legal-part">Part B · Our services</p>
+
           {/* 8 */}
           <div>
-            <h2>8. Client Responsibilities</h2>
-            <p>The Client agrees to:</p>
-            <ul>
-              <li>Provide accurate, complete, and up-to-date information relevant to the engagement</li>
-              <li>Respond to requests for feedback, approvals, or assets in a timely manner</li>
-              <li>Grant ARGO Group necessary access to platforms, accounts, and tools required to deliver services</li>
-              <li>Notify ARGO Group promptly of any changes that may affect the engagement</li>
-            </ul>
+            <h2>8. Services</h2>
             <p>
-              ARGO Group is not liable for delays, underperformance, or suboptimal results caused by the Client's failure to meet these responsibilities.
+              Group ARGO provides digital marketing (strategy, brand and creative, paid media, websites and SEO, content and email) and AI systems (internal platforms, custom applications, CRM and workflow automation). The scope of each engagement is set in its proposal and agreement.
+            </p>
+            <p>
+              We use artificial intelligence tools, automated systems and third-party platforms as part of how we deliver our work.
             </p>
           </div>
 
           {/* 9 */}
           <div>
-            <h2>9. Intellectual Property</h2>
-
-            <h3>9.1 Client Ownership</h3>
+            <h2>9. Duration, Notice and Cancellation</h2>
             <p>
-              All original work created by ARGO Group specifically for a Client — including ad creatives, copy, automation workflows, and reports — becomes the Client's property upon receipt of full payment for the relevant period.
+              How long an engagement runs, whether it has a minimum term and how much notice either side gives to end it are set in the agreement. Where the agreement does not say:
             </p>
-
-            <h3>9.2 ARGO Group Portfolio Rights</h3>
-            <p>
-              ARGO Group retains the right to reference and display work completed for Clients in its portfolio, case studies, and marketing materials. If a Client wishes to restrict this use, they must submit a written request to <a href="mailto:info@groupargous.com">info@groupargous.com</a>, and ARGO Group will honor the request on a case-by-case basis.
-            </p>
-
-            <h3>9.3 Pre-Existing IP</h3>
-            <p>
-              Any tools, frameworks, templates, or methodologies developed by ARGO Group prior to or independently of the Client engagement remain the sole property of ARGO Group.
-            </p>
+            <ul>
+              <li>The engagement runs month to month, with no minimum term.</li>
+              <li>Either party may end it with 30 days' written notice to the other (for us, at <Mail />). Services continue as normal during the notice period.</li>
+              <li>The final invoice covers the services provided up to the end date, pro-rated by day.</li>
+              <li>Work in progress at the end date is delivered to the Client in its current state.</li>
+              <li>Either party may end the engagement at once if the other seriously breaches it, including non-payment, and does not put it right within the time the agreement gives.</li>
+            </ul>
           </div>
 
           {/* 10 */}
           <div>
-            <h2>10. Confidentiality</h2>
+            <h2>10. Billing and Payment</h2>
             <p>
-              Both parties agree to keep confidential any proprietary or sensitive information shared during the engagement. This obligation survives the termination of the relationship for a period of two (2) years.
+              Fees, when invoices are issued and when they are due are set in the agreement. If an invoice remains unpaid after the notice period the agreement sets for non-payment, we may suspend the services until it is paid.
             </p>
           </div>
 
           {/* 11 */}
           <div>
-            <h2>11. Limitation of Liability</h2>
+            <h2>11. No Guarantee of Results</h2>
             <p>
-              To the fullest extent permitted by law, ARGO Group's total liability to the Client for any claim arising out of or related to these Terms or the services provided shall not exceed the total fees paid by the Client in the most recent billing period.
-            </p>
-            <p>
-              ARGO Group is not liable for indirect, incidental, consequential, or punitive damages, including loss of profits, loss of data, or business interruption, regardless of the cause.
+              We do not guarantee specific outcomes, including leads, sales, revenue, return on investment, search rankings, reach or ad performance. Results depend on factors outside our control, such as platform and algorithm changes, market conditions, and decisions and information on the Client's side.
             </p>
           </div>
 
           {/* 12 */}
           <div>
-            <h2>12. Data Protection & Privacy</h2>
-
-            <h3>12.1 General</h3>
+            <h2>12. AI and Automation</h2>
             <p>
-              ARGO Group collects and processes personal data in connection with the delivery of its services. By engaging ARGO Group, you consent to such processing in accordance with this section.
-            </p>
-
-            <h3>12.2 EU/EEA Clients — GDPR Compliance</h3>
-            <p>
-              For Clients based in the European Union or European Economic Area, ARGO processes personal data in compliance with the General Data Protection Regulation (GDPR) (EU) 2016/679. Clients have the right to access, rectify, erase, restrict, or port their personal data, and to lodge a complaint with a supervisory authority. To exercise any of these rights, contact <a href="mailto:info@groupargous.com">info@groupargous.com</a>.
-            </p>
-
-            <h3>12.3 Data Shared by Clients</h3>
-            <p>
-              Any personal data shared by the Client with ARGO Group (such as customer lists, CRM data, or ad audience information) must be provided in compliance with applicable data protection laws. The Client warrants that they have obtained all necessary consents to share such data.
-            </p>
-
-            <h3>12.4 Third-Party Platforms</h3>
-            <p>
-              ARGO Group uses third-party platforms and tools in the delivery of its services. These platforms operate under their own privacy and data policies. ARGO Group is not responsible for the data practices of third-party providers.
+              AI tools and automated systems are part of our standard way of working. We review what they produce before it is delivered, but we do not represent that AI-generated content or automated outputs are free of errors.
             </p>
           </div>
 
           {/* 13 */}
           <div>
-            <h2>13. Governing Law & Dispute Resolution</h2>
-
-            <h3>13.1 Primary Governing Law</h3>
+            <h2>13. Client Responsibilities</h2>
+            <p>The Client agrees to:</p>
+            <ul>
+              <li>Provide accurate, complete and up-to-date information for the engagement</li>
+              <li>Answer requests for feedback, approvals or assets in reasonable time</li>
+              <li>Give us the access to platforms, accounts and tools the work requires</li>
+              <li>Tell us promptly about changes that may affect the engagement</li>
+            </ul>
             <p>
-              These Terms are governed by and construed in accordance with the laws of the State of Florida, United States of America, without regard to its conflict of law provisions.
-            </p>
-
-            <h3>13.2 EU Consumer Protection</h3>
-            <p>
-              Notwithstanding the above, Clients based in the European Union retain the benefit of any mandatory consumer protection provisions applicable under the laws of their country of residence that cannot be excluded by contract.
-            </p>
-
-            <h3>13.3 Dispute Resolution</h3>
-            <p>
-              In the event of a dispute, both parties agree to first attempt resolution through good-faith negotiation. If unresolved within 30 days, disputes shall be submitted to the competent courts of Miami-Dade County, Florida, unless EU mandatory law requires otherwise.
+              We are not responsible for delays or results affected by these responsibilities not being met.
             </p>
           </div>
 
           {/* 14 */}
           <div>
-            <h2>14. Changes to These Terms</h2>
-            <p>
-              ARGO Group reserves the right to modify these Terms at any time. Active Clients will be notified of material changes at least 30 days in advance via email. Continued use of ARGO Group's services after the effective date of the updated Terms constitutes acceptance of the changes.
-            </p>
+            <h2>14. Intellectual Property</h2>
+            <ul>
+              <li><span className="legal-term">Your work:</span> original work we create specifically for the Client, such as ad creatives, copy, automations and reports, becomes the Client's property once the fees for the period in which it was created are paid.</li>
+              <li><span className="legal-term">Our tools:</span> the tools, frameworks, templates and methods we developed before or independently of the engagement remain ours. Where they are part of what we deliver, the Client may use them for that delivery.</li>
+              <li><span className="legal-term">Portfolio:</span> whether we may show the work or name the Client in our portfolio and case studies is set in the agreement. If it does not say, only with the Client's written permission.</li>
+            </ul>
           </div>
 
           {/* 15 */}
           <div>
-            <h2>15. Entire Agreement</h2>
+            <h2>15. Confidentiality</h2>
             <p>
-              These Terms, together with any applicable service proposal or agreement, constitute the entire agreement between the parties and supersede all prior representations, discussions, or understandings.
+              Both parties keep confidential the non-public information the other shares during the engagement, for as long as the agreement sets or, if it does not say, for two (2) years after the engagement ends.
             </p>
           </div>
 
           {/* 16 */}
           <div>
-            <h2>16. Contact</h2>
-            <p>For questions regarding these Terms, please contact:</p>
+            <h2>16. Data Protection</h2>
+            <ul>
+              <li><span className="legal-term">Your customers' data:</span> when the Client shares personal data of its own customers or contacts with us (for example CRM records or advertising audiences), the Client is the controller and we process that data only on the Client's instructions, as its processor, under the data processing terms of the agreement (GDPR Article 28 and, in the United States, the applicable state laws). The Client confirms it has a lawful basis to share it.</li>
+              <li><span className="legal-term">Your own contact details:</span> how we handle the details of the people we work with is explained in our <Link to="/privacy-policy">Privacy Policy</Link>.</li>
+              <li><span className="legal-term">Third-party platforms:</span> the platforms used in the work, such as advertising networks, operate under their own terms and policies.</li>
+            </ul>
+          </div>
+
+          {/* 17 */}
+          <div>
+            <h2>17. Limitation of Liability</h2>
+            <p>
+              To the extent permitted by law, and unless the agreement says otherwise, our total liability to the Client for any claim related to the services is limited to the fees the Client paid for the most recent billing period, and we are not liable for indirect or consequential losses such as lost profits, lost data or business interruption. Nothing in these Terms limits liability that the law does not allow to be limited, such as for fraud or wilful misconduct.
+            </p>
+          </div>
+
+          <p className="eyebrow legal-part">Part C · General</p>
+
+          {/* 18 */}
+          <div>
+            <h2>18. Governing Law and Disputes</h2>
+            <p>
+              Where the agreement does not say otherwise: for Clients based in the European Union or the European Economic Area, these Terms are governed by Spanish law and disputes go to the courts of Barcelona, Spain; for everyone else, they are governed by the laws of the State of Florida and disputes go to the courts of Miami-Dade County, Florida.
+            </p>
+            <p>
+              Before any legal action, both parties will try in good faith to resolve the disagreement by direct negotiation for fifteen (15) business days from written notice of it. Any mandatory consumer protection that applies to you under the law of your country is not affected.
+            </p>
+          </div>
+
+          {/* 19 */}
+          <div>
+            <h2>19. Changes to These Terms</h2>
+            <p>
+              We may update these Terms, and the "Last updated" date at the top of this page will show when. An update does not change a signed agreement: that only changes when both parties agree in writing.
+            </p>
+          </div>
+
+          {/* 20 */}
+          <div>
+            <h2>20. Contact</h2>
+            <p>For questions about these Terms, please contact us at:</p>
             <div className="legal-card">
-              <p className="legal-term">ARGO Group</p>
-              <p>
-                Email: <a href="mailto:info@groupargous.com">info@groupargous.com</a>
-              </p>
+              <p className="legal-term">Group ARGO</p>
               <p>Barcelona, Spain · Miami, Florida, USA</p>
+              <p>
+                Email: <Mail />
+              </p>
             </div>
           </div>
 

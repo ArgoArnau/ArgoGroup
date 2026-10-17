@@ -1488,6 +1488,8 @@ ul, ol { list-style: none; }
 }
 
 /* ---------- Página legal ---------- */
+/* Part labels in the terms of service: an eyebrow between numbered sections. */
+.legal-page .legal-part { display: flex; margin: 3rem 0 0.5rem; }
 .legal-page { padding-top: 130px; padding-bottom: 5rem; max-width: 50rem; }
 .legal-page h1 {
   font-family: var(--font-display);
