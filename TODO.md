@@ -1,2 +1,3 @@
 - Antes de publicar: CRM_LEADS_URL y CRM_ENTRADA_SECRETO en Netlify (secretos). Sin ellos /api/lead responde 503 y el formulario muestra el error.
-- Tracking: META_PIXEL_ID y META_CAPI_TOKEN en Netlify (secretos). Sin ellos /api/event no envía nada a Meta.
+- Tracking: META_PIXEL_ID y META_CAPI_TOKEN en Netlify (secretos). Sin ellos /api/event no envía nada a Meta y /api/lead no envía el Lead (el lead sí llega al CRM).
+- Lead de Meta: lo envía /api/lead desde el servidor, solo con consentimiento (banner o casilla opcional del formulario), con email/teléfono/nombre/país en SHA-256. Probar en un Deploy Preview con META_TEST_EVENT_CODE (Events Manager → Test events).

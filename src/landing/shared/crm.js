@@ -4,7 +4,7 @@
 // Both landings send the same shape; `servicio` and `formulario` tell them
 // apart in the CRM.
 
-import { cleanPhone, normaliseWebsite } from './fields.js'
+import { cleanPhone, companyOrWebsite } from './fields.js'
 
 export const CRM_FORMS = {
   growth: { servicio: 'marketing_digital', formulario: 'landing-marketing-digital' },
@@ -19,7 +19,9 @@ const orNothing = (value) => value || undefined
  */
 export function crmPayload({ landing, values, context, ids, consentText, variant }) {
   const { servicio, formulario } = CRM_FORMS[landing]
-  const website = normaliseWebsite(values.website)
+  // Both optional: the field takes a company name or a website, and the open
+  // answer may be empty (the CRM accepts `mensaje` missing).
+  const { website, company } = companyOrWebsite(values.website)
   const openAnswer = values.open_answer.trim()
   const { attribution } = context
 
@@ -27,7 +29,8 @@ export function crmPayload({ landing, values, context, ids, consentText, variant
     nombre: values.name.trim(),
     email: values.email.trim(),
     telefono: cleanPhone(values.whatsapp),
-    mensaje: openAnswer,
+    empresa: orNothing(company),
+    mensaje: orNothing(openAnswer),
     servicio,
     consentimiento: true,
     consentimiento_texto: consentText,
@@ -49,8 +52,8 @@ export function crmPayload({ landing, values, context, ids, consentText, variant
     // The CRM's trap field: always empty from a person (the form stops bots first).
     web: '',
     // From 0020: the website fills the lead's «Web» (never `web`, the trap
-    // field); the variant and Meta's ids are kept per entry, for the
-    // Conversions API later. fbp exists only after cookie consent.
+    // field), only when it is a URL; the variant and Meta's ids are kept per
+    // entry, for the Conversions API later. fbp exists only after cookie consent.
     sitio_web: orNothing(website),
     variante: orNothing(variant),
     fbc: orNothing(ids.fbc),

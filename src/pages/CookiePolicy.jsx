@@ -91,7 +91,7 @@ export default function CookiePolicy() {
           <div>
             <h2>2. Your Choice</h2>
             <p>
-              On your first visit, a banner asks whether you accept cookies. Until you accept, we set no advertising cookies and send nothing to Meta. If you decline, nothing changes: the site works the same.
+              On your first visit, a banner asks whether you accept cookies. On our landing pages, the form also offers an optional box to accept them when you send it; ticking it is the same choice as Accept on the banner. Until you accept, we set no advertising cookies and send nothing to Meta. If you decline, nothing changes: the site works the same.
             </p>
             <p>
               You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Withdrawing your consent does not affect what was done before.
@@ -109,7 +109,7 @@ export default function CookiePolicy() {
               ))}
             </ul>
             <p>
-              When you accept, the Meta Pixel also tells Meta which of our pages you visit and whether you send a form, and we may send the same events to Meta from our own servers (Meta Conversions API). If you are logged in to Facebook or Instagram, Meta may also read or set its own cookies on its own domains. How Meta uses this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
+              When you accept, the Meta Pixel also tells Meta which of our pages you visit and whether you send a form, and we may send the same events to Meta from our own servers (Meta Conversions API). For a form sent from a landing page, that server event carries your email address, phone number, name and country as one-way SHA-256 hashes, never in readable form, as described in our <Link to="/privacy-policy">Privacy Policy</Link>. If you are logged in to Facebook or Instagram, Meta may also read or set its own cookies on its own domains. How Meta uses this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
             </p>
           </div>
 

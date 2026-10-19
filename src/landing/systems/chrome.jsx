@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import BrandSymbol from './BrandSymbol.jsx'
-import { chrome, CTA, PRIVACY_URL, TERMS_URL, WHATSAPP_LINK, WHATSAPP_URL } from './copy.js'
+import { chrome, CTA, PRIVACY_URL, TERMS_URL, WHATSAPP_URL } from './copy.js'
 
 /**
  * Every CTA leads to the one form. It is a link to #form so it still works
@@ -17,7 +17,7 @@ export function CtaButton({ children = CTA, className = '', onOpen }) {
 }
 
 /** Chat bubble with a handset: reads as WhatsApp without using its logo file. */
-function WhatsAppIcon() {
+export function WhatsAppIcon() {
   return (
     <svg className="wa-icon" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false">
       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -26,11 +26,20 @@ function WhatsAppIcon() {
   )
 }
 
-export function WhatsAppLink({ className = '' }) {
+/**
+ * "BARCELONA · MIAMI" as a flight route: a thin gold line between the two,
+ * with a light that travels from one city to the other (css .route). Screen
+ * readers get the plain text.
+ */
+function Cities() {
+  const [from, to] = chrome.cities.split(' · ')
   return (
-    <a className={`wa-link ${className}`} href={WHATSAPP_URL} target="_blank" rel="noopener">
-      {WHATSAPP_LINK}
-    </a>
+    <span className="cities">
+      {from}
+      <span className="route" aria-hidden="true"><i /></span>
+      <span className="sr-only"> · </span>
+      {to}
+    </span>
   )
 }
 
@@ -39,7 +48,7 @@ export function TopBar() {
     <header className="topbar">
       <div className="wrap topbar-inner">
         <BrandSymbol className="logo-symbol" title={chrome.logo} />
-        <span className="cities">{chrome.cities}</span>
+        <Cities />
       </div>
     </header>
   )

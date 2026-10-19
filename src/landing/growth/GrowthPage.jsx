@@ -1,25 +1,58 @@
-import { CtaButton, Dock, Footer, TopBar, WhatsAppLink } from './chrome.jsx'
-import { about, finalCta, hero, method, thankYou, WHATSAPP_URL, work } from './copy.js'
+import { SYMBOL_H, SYMBOL_PATH, SYMBOL_W } from './BrandSymbol.jsx'
+import { CtaButton, Dock, Footer, TopBar, WhatsAppIcon } from './chrome.jsx'
+import { about, finalCta, hero, method, thankYou, WHATSAPP_LINK, WHATSAPP_URL, work } from './copy.js'
 import FormPanel from './FormPanel.jsx'
+import ThankYou from '../shared/ThankYou.jsx'
 import Ticker from './Ticker.jsx'
 import WorkList from './WorkList.jsx'
 import { useCookieBanner } from '../shared/useCookieBanner.js'
 import { useFormPanel } from '../shared/useFormPanel.js'
 import { useReveal } from '../shared/useReveal.js'
+import { scrollToForm } from '../shared/scrollToForm.js'
 
 const pad = (n) => String(n).padStart(2, '0')
 
 /**
  * One span per word, so each can rise out of its own mask (growth.css, .w).
- * Words from `goldFrom` on are set in gold.
+ * Words from `goldFrom` on are set in gold; with `wideTail` they show on wide
+ * screens only (the narrow hero moves them above the form).
  */
-function Words({ text, goldFrom = Infinity }) {
+function Words({ text, goldFrom = Infinity, wideTail = false }) {
   return text.split(' ').map((word, index) => (
     // The space sits outside the clipped span, or it would be trimmed away.
-    <span key={index}>
+    <span key={index} className={wideTail && index >= goldFrom ? 'only-wide' : undefined}>
       <span className={index >= goldFrom ? 'w gold' : 'w'} style={{ '--i': index }}><span>{word}</span></span>{' '}
     </span>
   ))
+}
+
+// The default headline (1b) is the long one: on narrow screens the hero
+// keeps its first sentence, and its gold sentence moves above the form
+// (copy.js, hero.narrow).
+const SPLIT = '1b'
+const splitText = hero.headlines.find(([keys]) => keys === SPLIT)[1]
+const SPLIT_TAIL = splitText.slice(splitText.lastIndexOf('. ') + 2)
+
+/** The three differentiators. */
+function Points({ className = '' }) {
+  return (
+    <ul className={className ? `points ${className}` : 'points'}>
+      {hero.points.map(([title, line], index) => (
+        <li key={title} style={{ '--i': index }}>
+          <strong>{title}</strong> {line}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+
+function Arrow() {
+  return (
+    <svg className="btn-arrow" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
 }
 
 /** Gold from `count` words before the end. */
@@ -32,7 +65,7 @@ function Headline({ options }) {
     const goldFrom = lastStop > 0 ? text.slice(0, lastStop + 1).split(' ').length : Infinity
     return (
       <span key={keys} className="vx" data-show={keys}>
-        <Words text={text} goldFrom={goldFrom} />
+        <Words text={text} goldFrom={goldFrom} wideTail={keys === SPLIT} />
       </span>
     )
   })
@@ -44,6 +77,7 @@ function Headline({ options }) {
  * client's own (copy.js).
  *
  *   1. Hero + form     the ad's headline, three differentiators, the form
+ *                      (phones: a shorter hero, a button down to the form)
  *   2. What we work on five areas, a line on each
  *   3. Method          decide first, four steps, the clinic as proof
  *   4. Who we are      how we work, Barcelona · Miami
@@ -66,20 +100,31 @@ export function GrowthPage() {
         {/* 1 · Hero */}
         <section id="hero" className="hero tone-dark">
           <div className="wrap content">
-            <p className="eyebrow">{hero.eyebrow}</p>
+            {/* Wide screens: the brief's hero. Phones and portrait tablets:
+                shorter, with a button down to the form (hero.narrow). */}
+            <p className="eyebrow">
+              <span className="only-wide">{hero.eyebrow}</span>
+              <span className="only-narrow">{hero.narrow.eyebrow}</span>
+            </p>
             <h1 className="hero-title"><Headline options={hero.headlines} /></h1>
-            <p className="hero-sub">{hero.subtitle}</p>
-            <ul className="points">
-              {hero.points.map(([title, line], index) => (
-                <li key={title} style={{ '--i': index }}>
-                  <strong>{title}</strong> {line}
-                </li>
-              ))}
-            </ul>
+            <p className="hero-sub only-wide">{hero.subtitle}</p>
+            <p className="hero-sub only-narrow">{hero.narrow.subtitle}</p>
+            <Points className="only-wide" />
+            <div className="hero-cta only-narrow">
+              <a className="btn btn-boom" href="#form" onClick={scrollToForm}>{hero.narrow.button}<Arrow /></a>
+              <a className="wa-link" href={WHATSAPP_URL} target="_blank" rel="noopener">{hero.narrow.whatsapp}</a>
+            </div>
           </div>
         </section>
 
-        <FormPanel sheetOpen={sheetOpen} onClose={closeForm} />
+        <FormPanel sheetOpen={sheetOpen} onClose={closeForm}>
+          {/* Phones and portrait tablets: what left the hero, just above the
+              form (the 1b gold sentence shows for 1b only, growth.css). */}
+          <div className="form-intro only-narrow">
+            <p className="moved-line">{SPLIT_TAIL}</p>
+            <Points />
+          </div>
+        </FormPanel>
 
         <Ticker items={work.items.map(([title]) => title)} />
 
@@ -157,33 +202,17 @@ export function GrowthPage() {
 /** /growth/thank-you. Same bar and style, no navigation, no calendar. */
 export function GrowthThankYou() {
   const cookies = useCookieBanner()
+  // No scroll reveals here; it tells boot.js the page script ran, so motion stays on.
+  useReveal()
 
   return (
     <>
       <TopBar />
-      <main id="main" className="thanks tone-light">
-        <div className="wrap narrow">
-          <h1 className="hero-title">{thankYou.title}</h1>
-          <p className="hero-sub">{thankYou.sub}</p>
-
-          <h2 className="thanks-h">{thankYou.stepsTitle}</h2>
-          <ol className="timeline compact">
-            {thankYou.steps.map((step, index) => (
-              <li key={step}>
-                <span className="num" aria-hidden="true">{index + 1}</span>
-                <p>{step}</p>
-              </li>
-            ))}
-          </ol>
-
-          <div className="ready">
-            <h2 className="thanks-h">{thankYou.readyTitle}</h2>
-            <p>{thankYou.ready}</p>
-          </div>
-
-          <WhatsAppLink />
-        </div>
-      </main>
+      <ThankYou
+        copy={thankYou}
+        symbol={{ path: SYMBOL_PATH, width: SYMBOL_W, height: SYMBOL_H }}
+        whatsapp={{ url: WHATSAPP_URL, label: WHATSAPP_LINK, icon: <WhatsAppIcon /> }}
+      />
       <div className="tone-dark">
         <Footer onCookies={cookies.reopen} />
       </div>
