@@ -8,6 +8,7 @@ import WorkList from './WorkList.jsx'
 import { useCookieBanner } from '../shared/useCookieBanner.js'
 import { useFormPanel } from '../shared/useFormPanel.js'
 import { useReveal } from '../shared/useReveal.js'
+import { usePauseOffscreen } from '../shared/usePauseOffscreen.js'
 import { scrollToForm } from '../shared/scrollToForm.js'
 
 const pad = (n) => String(n).padStart(2, '0')
@@ -90,6 +91,7 @@ export function GrowthPage() {
   const cookies = useCookieBanner()
   const { sheetOpen, openForm, closeForm } = useFormPanel()
   useReveal()
+  usePauseOffscreen()
 
   return (
     <>
