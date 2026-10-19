@@ -1,6 +1,7 @@
 import { useCookieBanner } from '../shared/useCookieBanner.js'
 import { useFormPanel } from '../shared/useFormPanel.js'
 import { useReveal } from '../shared/useReveal.js'
+import { usePauseOffscreen } from '../shared/usePauseOffscreen.js'
 import { scrollToForm } from '../shared/scrollToForm.js'
 import ThankYou from '../shared/ThankYou.jsx'
 import { SYMBOL_H, SYMBOL_PATH, SYMBOL_W } from './BrandSymbol.jsx'
@@ -88,6 +89,7 @@ export function SystemsPage() {
   const cookies = useCookieBanner()
   const { sheetOpen, openForm, closeForm } = useFormPanel()
   useReveal()
+  usePauseOffscreen()
 
   return (
     <>

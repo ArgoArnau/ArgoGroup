@@ -11,7 +11,7 @@ export default function Ticker({ items }) {
     </ul>
   )
   return (
-    <div className="ticker">
+    <div className="ticker" data-loop="">
       <div className="ticker-mask">
         <div className="ticker-track">
           {row(false)}

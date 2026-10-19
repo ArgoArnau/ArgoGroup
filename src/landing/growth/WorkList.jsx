@@ -57,7 +57,7 @@ export default function WorkList({ items }) {
 
   return (
     <div className="work-wrap">
-      <div ref={blobRef} className="work-blob" aria-hidden="true">
+      <div ref={blobRef} className="work-blob" aria-hidden="true" data-loop="">
         <span className="work-blob-shape">
           <span key={active} className="work-blob-num">{pad(active + 1)}</span>
         </span>

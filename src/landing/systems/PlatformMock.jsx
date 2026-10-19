@@ -5,12 +5,14 @@
  * figures anywhere, as the brief asks (copy.js, work.mock). The animation (systems.css, "Mock") starts when the figure
  * scrolls into view: the deals arrive column by column, one deal is live,
  * the activity feed moves through its entries and a light sweeps the board.
+ * The loops pause while it is off screen (usePauseOffscreen.js); phones get
+ * the arrival only, without the loops.
  * Decorative, so hidden from assistive technology.
  */
 export default function PlatformMock({ mock }) {
   const { company, menu, active, search, view, tabs, columns, deals, feed } = mock
   return (
-    <figure className="mock" data-reveal="" aria-hidden="true">
+    <figure className="mock" data-reveal="" data-loop="" aria-hidden="true">
       <div className="mock-bar">
         <span className="mock-dots"><i /><i /><i /></span>
         <span className="mock-company">{company}</span>
