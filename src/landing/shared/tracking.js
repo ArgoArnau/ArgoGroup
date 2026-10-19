@@ -9,7 +9,12 @@
 //
 // Events: PageView and ViewContent on load, Scroll50 once at half the page,
 // FormStart when someone first clicks into the form, Lead on a
-// successful send, Contact on any WhatsApp link.
+// successful send, Contact on any WhatsApp link. PageView, ViewContent, Lead
+// and Contact are Meta's standard events (the campaign optimises for Lead);
+// Scroll50 and FormStart are custom, the "C" in Meta Pixel Helper.
+//
+// The Lead's server half is not sent from here: netlify/functions/lead.js
+// sends it once the CRM has taken the request (SERVER_SENT below).
 
 import { hasConsent, onConsentChange } from '../../lib/consent.js'
 import { newEventId } from './attribution.js'
@@ -19,6 +24,8 @@ export const PIXEL_ID = '3872072809596261'
 export const CAPI_ENDPOINT = '/api/event'
 
 const STANDARD = new Set(['PageView', 'ViewContent', 'Lead', 'Contact'])
+// Events whose Conversions API half the server sends itself (/api/lead).
+const SERVER_SENT = new Set(['Lead'])
 
 let loaded = false
 let context = { fbc: '', fbp: '' }
@@ -71,7 +78,7 @@ export function track(name, params = {}, eventId = newEventId()) {
   if (!enabled()) return eventId
   loadPixel()
   window.fbq(STANDARD.has(name) ? 'track' : 'trackCustom', name, params, { eventID: eventId })
-  sendCapi(name, eventId, params)
+  if (!SERVER_SENT.has(name)) sendCapi(name, eventId, params)
   return eventId
 }
 

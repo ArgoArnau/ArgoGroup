@@ -30,6 +30,21 @@ export function normaliseWebsite(raw) {
   }
 }
 
+// The CRM's limit for `empresa` (argo-planning, lib/crm-web.ts).
+const MAX_COMPANY = 200
+
+/**
+ * The "Company or website" field: a website when it looks like one ("acme.com",
+ * "https://acme.com"), else a company name ("Acme Clinic"). They go to different
+ * CRM fields, because `sitio_web` must be an http(s) URL or the CRM answers 400.
+ */
+export function companyOrWebsite(raw) {
+  const website = normaliseWebsite(raw)
+  if (website) return { website, company: null }
+  const company = raw.trim().slice(0, MAX_COMPANY)
+  return { website: null, company: company || null }
+}
+
 /** Keeps digits and a leading +, so the CRM gets "+31612345678". */
 export function cleanPhone(raw) {
   const value = raw.trim()

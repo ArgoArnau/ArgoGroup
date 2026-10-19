@@ -41,6 +41,35 @@ test('each landing sends the CRM contract, with its own service and form', () =>
   assert.equal(systems.variante, undefined)
 })
 
+test('company or website: a URL goes to sitio_web, a name to empresa, never both', () => {
+  const send = (website) => crmPayload({ landing: 'growth', values: { ...values, website }, context, ids: {}, consentText: 'x' })
+
+  for (const url of ['acme.com', 'https://acme.com', 'http://www.acme.nl/about']) {
+    const payload = send(url)
+    assert.match(payload.sitio_web, /^https?:\/\//, `${url} is a website`)
+    assert.equal(payload.empresa, undefined)
+  }
+
+  // A name must never reach sitio_web: the CRM answers 400 to anything but an http(s) URL.
+  for (const name of ['Acme Clinic', 'acme', 'Smith & Co.']) {
+    const payload = send(` ${name} `)
+    assert.equal(payload.empresa, name, `${name} is a company`)
+    assert.equal(payload.sitio_web, undefined)
+  }
+  assert.equal(send('x'.repeat(300)).empresa.length, 200, 'within the CRM limit for empresa')
+})
+
+test('only name, email and WhatsApp: no empresa, sitio_web or mensaje in the lead', () => {
+  const bare = { name: 'Lola', email: 'lola@argo.test', website: '  ', whatsapp: '+34 600 000 101', open_answer: '' }
+  for (const landing of ['growth', 'systems']) {
+    const payload = crmPayload({ landing, values: bare, context, ids: {}, consentText: 'x' })
+    assert.deepEqual([payload.empresa, payload.sitio_web, payload.mensaje], [undefined, undefined, undefined], landing)
+    assert.deepEqual([payload.nombre, payload.email, payload.telefono], ['Lola', 'lola@argo.test', '+34600000101'])
+    // No minimum length any more: one word is a message.
+    assert.equal(crmPayload({ landing, values: { ...bare, open_answer: ' Hi ' }, context, ids: {}, consentText: 'x' }).mensaje, 'Hi')
+  }
+})
+
 test('the lead fits the contract limits', () => {
   const payload = crmPayload({ landing: 'growth', values, context, ids: {}, consentText: 'I agree.' })
   assert.match(payload.formulario, /^[a-z0-9-]{1,100}$/)
@@ -135,4 +164,115 @@ test('a login wall or an unreachable CRM becomes 503, never a false ok', async (
 
   globalThis.fetch = async () => { throw new TypeError('fetch failed') }
   assert.equal((await lead(post({}), {})).status, 503)
+})
+
+// ---------- The Meta Lead, sent from the server ----------
+
+const { createHash } = await import('node:crypto')
+const sha = (value) => createHash('sha256').update(value).digest('hex')
+const META_ENV = ['META_PIXEL_ID', 'META_CAPI_TOKEN', 'META_TEST_EVENT_CODE']
+const landingLead = () => crmPayload({ landing: 'growth', values, context, ids: { fbc: 'fb.1.x.abc', fbp: 'fb.1.1.123' }, consentText: 'I agree.', variant: '1b' })
+const withConsent = { 'X-Argo-Meta-Consent': '1', 'User-Agent': 'test-agent' }
+const metaCalls = () => calls.filter((call) => call.url.startsWith('https://graph.facebook.com/'))
+
+afterEach(() => {
+  for (const name of META_ENV) delete process.env[name]
+})
+
+const enableMeta = () => {
+  process.env.META_PIXEL_ID = '123'
+  process.env.META_CAPI_TOKEN = 'test-token'
+}
+
+test('with Meta consent, a lead the CRM took becomes a server Lead with hashed contact data', async () => {
+  enableMeta()
+  const pending = []
+  const response = await lead(post(landingLead(), withConsent), { ip: '203.0.113.7', geo: { country: { code: 'NL' } }, waitUntil: (job) => pending.push(job) })
+  assert.equal(response.status, 200)
+  assert.equal(pending.length, 1, 'Meta is sent after the answer, through waitUntil')
+  await Promise.all(pending)
+
+  assert.equal(calls[0].url, 'https://crm.example/api/leads', 'the CRM first')
+  const [meta] = metaCalls()
+  assert.equal(meta.url, 'https://graph.facebook.com/v21.0/123/events')
+  const body = JSON.parse(meta.init.body)
+  assert.equal(body.access_token, 'test-token')
+  const [sent] = body.data
+  assert.equal(sent.event_name, 'Lead')
+  assert.equal(sent.event_id, context.eventId, 'the same id as the Pixel Lead, so Meta keeps one')
+  assert.equal(sent.action_source, 'website')
+  assert.equal(sent.event_source_url, 'https://www.groupargous.com/growth?utm_source=facebook&fbclid=abc')
+  assert.deepEqual(sent.user_data.em, [sha('lola@argo.test')])
+  assert.deepEqual(sent.user_data.ph, [sha('34600000101')])
+  assert.deepEqual(sent.user_data.fn, [sha('lola')])
+  assert.equal(sent.user_data.ln, undefined, 'one word: no last name')
+  assert.deepEqual(sent.user_data.country, [sha('nl')])
+  assert.equal(sent.user_data.client_ip_address, '203.0.113.7')
+  assert.equal(sent.user_data.client_user_agent, 'test-agent')
+  assert.equal(sent.user_data.fbc, 'fb.1.x.abc')
+  assert.equal(sent.user_data.fbp, 'fb.1.1.123')
+  assert.deepEqual(sent.custom_data, { content_category: 'growth', variant: '1b' })
+  assert.ok(!meta.init.body.includes('lola@argo.test'), 'no readable email reaches Meta')
+  assert.ok(!meta.init.body.includes('600000101'), 'no readable phone reaches Meta')
+})
+
+test('the systems landing sends its own category, and a full name splits into first and last', async () => {
+  enableMeta()
+  const payload = crmPayload({ landing: 'systems', values: { ...values, name: 'Lola  de la Vega' }, context, ids: {}, consentText: 'x' })
+  await lead(post(payload, withConsent), {})
+  const [sent] = JSON.parse(metaCalls()[0].init.body).data
+  assert.deepEqual(sent.custom_data, { content_category: 'systems' })
+  assert.deepEqual(sent.user_data.fn, [sha('lola')])
+  assert.deepEqual(sent.user_data.ln, [sha('vega')])
+})
+
+test('without Meta consent, nothing goes to Meta', async () => {
+  enableMeta()
+  const response = await lead(post(landingLead(), { 'User-Agent': 'test-agent' }), {})
+  assert.equal(response.status, 200)
+  assert.equal(calls.length, 1)
+  assert.equal(metaCalls().length, 0)
+})
+
+test('no Meta Lead for a lead the CRM refused, for other forms, or without the Meta settings', async () => {
+  enableMeta()
+  reply = () => new Response(JSON.stringify({ ok: false, error: 'limite' }), { status: 429 })
+  await lead(post(landingLead(), withConsent), {})
+  assert.equal(metaCalls().length, 0, 'refused by the CRM')
+
+  reply = () => new Response(JSON.stringify({ ok: true }), { status: 200 })
+  await lead(post({ ...landingLead(), formulario: 'web-contacto' }, withConsent), {})
+  await lead(post({ ...landingLead(), pagina: 'https://evil.example/growth' }, withConsent), {})
+  await lead(post({ ...landingLead(), id_envio: 'x' }, withConsent), {})
+  assert.equal(metaCalls().length, 0, 'not a landing lead we can vouch for')
+
+  delete process.env.META_CAPI_TOKEN
+  await lead(post(landingLead(), withConsent), {})
+  assert.equal(metaCalls().length, 0, 'not configured')
+})
+
+test('a Meta failure never reaches the visitor', async () => {
+  enableMeta()
+  const realReply = reply
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url, init })
+    if (url.startsWith('https://graph.facebook.com/')) throw new TypeError('fetch failed')
+    return realReply()
+  }
+  const response = await lead(post(landingLead(), withConsent), {})
+  assert.equal(response.status, 200)
+  assert.deepEqual(await response.json(), { ok: true })
+  assert.equal(metaCalls().length, 1)
+})
+
+test('the page asks /api/lead for the Meta Lead with a header, never in the CRM body', async () => {
+  const { sendLead } = await import('../src/landing/shared/submit.js')
+  const payload = landingLead()
+  await sendLead(payload, { metaConsent: true })
+  await sendLead(payload)
+  const [withIt, without] = calls
+  assert.equal(withIt.url, '/api/lead')
+  assert.equal(withIt.init.headers['X-Argo-Meta-Consent'], '1')
+  assert.equal(without.init.headers['X-Argo-Meta-Consent'], undefined)
+  assert.equal(withIt.init.body, JSON.stringify(payload), 'the body is the CRM contract, unchanged')
 })

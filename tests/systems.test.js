@@ -142,6 +142,47 @@ test('the page follows the five-part structure, with the form straight after the
   assert.deepEqual(CRM_FORMS.systems, { servicio: 'sistemas_ia', formulario: 'landing-sistemas-ia' })
 })
 
+test('only name, email, WhatsApp and the consent are required on the form', () => {
+  const html = built['/systems']
+  for (const name of ['name', 'email', 'whatsapp']) {
+    assert.match(html, new RegExp(`id="f-${name}"[^>]*aria-required="true"`), `${name} is required`)
+  }
+  for (const name of ['website', 'open_answer']) {
+    assert.doesNotMatch(html, new RegExp(`id="f-${name}"[^>]*aria-required`), `${name} is optional`)
+  }
+  assert.equal(html.match(/class="optional"/g)?.length, 2, 'the two optional fields say so')
+  assert.equal(form.added.website, 'Company or website')
+  assert.ok(!('errDetail' in form.added), 'no minimum length for the open answer')
+  const source = read('src', 'landing', 'systems', 'LeadForm.jsx')
+  assert.match(source, /const REQUIRED = \['name', 'email', 'whatsapp', 'consent'\]/, 'the progress bar counts only those')
+})
+
+test('phones get the shorter hero; wide screens keep the brief', () => {
+  const html = built['/systems']
+  const text = textOf(html)
+  for (const line of [hero.headline, hero.subtitle, hero.narrow.subtitle, hero.narrow.button]) {
+    assert.ok(text.includes(line), `in the page: ${line}`)
+  }
+  assert.match(html, /class="hero-cta only-narrow"><a class="btn btn-boom" href="#form">/, 'the phone button goes down to the form')
+  assert.match(html, /class="form-intro only-narrow"><p class="form-intro-line">Stronger, faster, and yours\.<\/p>/, 'gold sentence above the form')
+  assert.match(html, /class="hero-sub only-wide"/, 'the brief subtitle stays for wide screens')
+})
+
+test('the thank-you page: shared design, styles inlined, the new first step', () => {
+  const html = built['/systems/thank-you']
+  assert.ok(!/<link rel="stylesheet"/.test(html), 'no stylesheet request: thank-you.css is inside the inlined one')
+  assert.ok(html.includes('class="seal"') && html.includes('thanks-halo'), 'markup and styles of shared/ThankYou')
+  assert.equal(html.match(/class="journey-num"/g)?.length, 3, 'three steps')
+  assert.ok(!html.includes('thanks-ready') && !html.includes('Useful to have ready'), 'no "useful to have ready" box')
+  assert.ok(html.includes('We review what you sent us.'), 'step 1 no longer promises a website review')
+})
+
+test('the optional Meta box is never in the prerendered page: the browser adds it only without consent', () => {
+  assert.ok(!built['/systems'].includes('meta_consent'), 'not rendered on the server')
+  assert.ok(built['/systems'].includes('name="consent"'), 'the required consent is')
+  assert.match(form.added.metaConsent, /^Optional:/)
+})
+
 test('the landing stays out of the sitemap and llms.txt', () => {
   assert.ok(!read('dist', 'sitemap.xml').includes('/systems'))
   assert.ok(!read('dist', 'llms.txt').includes('/systems'))

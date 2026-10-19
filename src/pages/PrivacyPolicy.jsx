@@ -176,11 +176,11 @@ export default function PrivacyPolicy() {
           <div>
             <h2>11. Cookies</h2>
             <p>
-              When you first visit, a banner asks whether you accept cookies. Until you accept, we set no advertising cookies and send nothing to Meta.
+              When you first visit, a banner asks whether you accept cookies. On our landing pages, the form also offers an optional box to accept them when you send it. Until you accept, we set no advertising cookies and send nothing to Meta.
             </p>
             <ul>
               <li><span className="legal-term">Always:</span> your cookie choice, stored in your browser so we do not ask again, and, on our landing pages, the campaign details of your visit, kept in your browser only for that visit.</li>
-              <li><span className="legal-term">Only if you accept:</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API).</li>
+              <li><span className="legal-term">Only if you accept:</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API). When you send one of our landing page forms after accepting, our server tells Meta about it together with your email address, phone number, name and country, converted into one-way codes (SHA-256 hashes) so Meta can match your request to the ad you saw. These details never reach Meta in readable form.</li>
             </ul>
             <p>
               You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Every cookie and stored item, with its purpose and duration, is listed in our <Link to="/cookie-policy">Cookie Policy</Link>. Meta's own use of this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.

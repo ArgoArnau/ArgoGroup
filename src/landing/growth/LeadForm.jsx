@@ -3,17 +3,22 @@ import { captureAttribution, metaIds, newEventId } from '../shared/attribution.j
 import { Vary } from './chrome.jsx'
 import { form as copy, PRIVACY_URL, WHATSAPP_URL } from './copy.js'
 import { crmPayload } from '../shared/crm.js'
-import { cleanPhone, EMAIL_RE, normaliseWebsite } from '../shared/fields.js'
+import { cleanPhone, EMAIL_RE } from '../shared/fields.js'
 import { sendLead } from '../shared/submit.js'
 import { setTrackingContext, track, trackingActive } from '../shared/tracking.js'
+import { useMetaConsentBox } from '../shared/useMetaConsentBox.js'
 import { thankYouUrl, useVariantKey } from './variant.js'
 
 // One step, typed fields, the same shape as the contact form on the main site.
 // Sent to the CRM through /api/lead (shared/crm.js, shared/submit.js).
 const EMPTY = { name: '', email: '', website: '', whatsapp: '', open_answer: '' }
-const ORDER = ['name', 'email', 'website', 'whatsapp', 'open_answer', 'consent']
+// The fields that can stop the form, in screen order. Company or website and
+// the open question are optional and never do.
+const ORDER = ['name', 'email', 'whatsapp', 'consent']
 // What the progress bar counts: the fields the form cannot be sent without.
-const REQUIRED = ['name', 'email', 'website', 'whatsapp', 'open_answer', 'consent']
+const REQUIRED = ['name', 'email', 'whatsapp', 'consent']
+// The CRM's limit for `mensaje` (argo-planning, lib/crm-web.ts).
+const MAX_ANSWER = 5000
 const MIN_FILL_MS = 3000
 
 // The open question per variant, grouped like the hero's text so CSS can show
@@ -29,15 +34,13 @@ function errorFor(name, values) {
   switch (name) {
     case 'name': return values.name.trim() ? null : copy.added.errName
     case 'email': return EMAIL_RE.test(values.email.trim()) ? null : copy.errors.email
-    case 'website': return normaliseWebsite(values.website) ? null : copy.added.errWebsite
     case 'whatsapp': return cleanPhone(values.whatsapp).replace('+', '').length >= 8 ? null : copy.added.errWhatsapp
-    case 'open_answer': return values.open_answer.trim().length >= 15 ? null : copy.errors.detail
     case 'consent': return values.consent ? null : copy.added.errConsent
     default: return null
   }
 }
 
-function Field({ name, label, required, help, error, textarea, ...rest }) {
+function Field({ name, label, required, help, error, textarea, more, ...rest }) {
   const id = `f-${name}`
   const describedBy = [help && `${id}-help`, error && `${id}-error`].filter(Boolean).join(' ') || undefined
   const control = {
@@ -50,7 +53,7 @@ function Field({ name, label, required, help, error, textarea, ...rest }) {
     ...rest,
   }
   return (
-    <div className={textarea ? 'field full' : 'field'}>
+    <div className={['field', textarea && 'full', more && 'field-more'].filter(Boolean).join(' ')}>
       <label className="field-label" htmlFor={id}>
         {label}
         {required
@@ -72,6 +75,9 @@ export default function LeadForm() {
   const [context, setContext] = useState(null)
   const [honeypot, setHoneypot] = useState('')
   const [started, setStarted] = useState(false)
+  // The optional fields (company, the open question) wait behind a link.
+  const [more, setMore] = useState(false)
+  const metaBox = useMetaConsentBox()
   const formRef = useRef(null)
 
   // Attribution and the lead's event_id exist only in the browser.
@@ -144,8 +150,10 @@ export default function LeadForm() {
     })
 
     setStatus('sending')
+    // The optional Meta box, if ticked, counts from here: Pixel and server Lead.
+    const metaConsent = metaBox.commit()
     try {
-      const delivered = await sendLead(payload)
+      const delivered = await sendLead(payload, { metaConsent })
       if (delivered) {
         track('Lead', { content_category: 'growth', variant: variantKey }, context.eventId)
         // Give the pixel a moment to send before the page unloads.
@@ -157,8 +165,14 @@ export default function LeadForm() {
     }
   }
 
+  // Shows company and the open question, and puts the cursor in the first.
+  const openMore = () => {
+    setMore(true)
+    requestAnimationFrame(() => formRef.current?.querySelector('[name="website"]')?.focus())
+  }
+
   return (
-    <form ref={formRef} className="lead-form" onSubmit={submit} noValidate data-started={started ? 'true' : undefined}>
+    <form ref={formRef} className="lead-form" onSubmit={submit} noValidate data-started={started ? 'true' : undefined} data-more={more ? 'true' : undefined}>
       {/* Fills as the required fields become valid. Decorative: the fields say the rest. */}
       <div className="form-progress" aria-hidden="true">
         <span style={{ '--p': REQUIRED.filter((name) => !errorFor(name, values)).length / REQUIRED.length }} />
@@ -166,9 +180,13 @@ export default function LeadForm() {
       <div className="form-grid">
         <Field label={copy.added.name} required autoComplete="name" placeholder={copy.added.phName} {...fieldProps('name')} />
         <Field label={copy.added.email} required type="email" inputMode="email" autoComplete="email" placeholder={copy.added.phEmail} help={copy.help.email} {...fieldProps('email')} />
-        <Field label={copy.added.website} required inputMode="url" autoComplete="url" placeholder={copy.added.phWebsite} help={copy.help.website} {...fieldProps('website')} />
         <Field label={copy.added.whatsapp} required type="tel" inputMode="tel" autoComplete="tel" placeholder={copy.added.phWhatsapp} {...fieldProps('whatsapp')} />
-        <Field label={<Vary options={QUESTIONS} />} required textarea placeholder={copy.placeholder} {...fieldProps('open_answer')} />
+        {!more && (
+          <button type="button" className="more-toggle linklike" onClick={openMore}>{copy.added.more}</button>
+        )}
+        {/* Plain text, not inputMode="url": a company name needs the space bar. */}
+        <Field label={copy.added.website} more autoComplete="organization" placeholder={copy.added.phWebsite} help={copy.help.website} {...fieldProps('website')} />
+        <Field label={<Vary options={QUESTIONS} />} more textarea maxLength={MAX_ANSWER} placeholder={copy.placeholder} {...fieldProps('open_answer')} />
       </div>
 
       <div className="field">
@@ -189,6 +207,21 @@ export default function LeadForm() {
         </label>
         {errors.consent && <p className="field-error" id="f-consent-error">{errors.consent}</p>}
       </div>
+
+      {/* Optional, unticked: only for visitors who have not accepted cookies. */}
+      {metaBox.visible && (
+        <div className="field">
+          <label className="consent consent-optional">
+            <input
+              type="checkbox"
+              name="meta_consent"
+              checked={metaBox.checked}
+              onChange={(event) => metaBox.setChecked(event.target.checked)}
+            />
+            <span>{copy.added.metaConsent}</span>
+          </label>
+        </div>
+      )}
 
       {/* Honeypot: invisible to people and assistive tech, irresistible to bots. */}
       <div className="hp" aria-hidden="true">

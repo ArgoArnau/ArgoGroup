@@ -28,6 +28,16 @@ export const hero = {
     ['Systems, not demos.', 'Built to run your business every day.'],
     ['Always improving.', 'We track every system and optimize it as your business grows.'],
   ],
+  // Not in the brief, pending review: the shorter first screen on phones and
+  // tablets (proposal of 2026-10-19: keep the style, cut the words). Wide
+  // screens keep the brief's text above. On narrow screens the headline loses
+  // its gold sentence, which moves above the form with the points.
+  narrow: {
+    subtitle: 'Internal platforms, custom apps and AI, built around how your team already works.',
+    // Same on /growth: the one button of the phone hero, and the link under it.
+    button: "Let's start working together",
+    whatsapp: 'or message us on WhatsApp',
+  },
 }
 
 // Section 2 · What we build.
@@ -128,25 +138,27 @@ export const form = {
   added: {
     name: 'Name',
     email: 'Email',
-    website: 'Company website',
+    website: 'Company or website',
     whatsapp: 'WhatsApp',
     question: 'How does your company work today, and where does it slow down?',
     optional: '(optional)',
+    // The link under WhatsApp that shows company and the open question.
+    more: '+ Add company and details (optional)',
     phName: 'Your name',
     phEmail: 'you@company.com',
-    phWebsite: 'company.com',
+    phWebsite: 'Acme Group or acme.com',
     phWhatsapp: '+34 600 000 000',
     placeholder: 'e.g. 40 people, orders by email, stock in a spreadsheet, invoices in the accounting tool, nobody sees the whole picture.',
     help: {
       email: "Where we'll contact you.",
-      website: 'We look at it before we reply.',
+      website: "Your company's name or its website, whichever is easier.",
     },
     errName: 'Please add your name.',
     errEmail: "That email doesn't look right.",
-    errWebsite: "That website doesn't look right.",
     errWhatsapp: 'Please add your WhatsApp number.',
-    errDetail: 'Please add a bit more detail.',
     errConsent: 'Please accept the Privacy Policy to continue.',
+    // Optional box under the consent, only shown while cookies are not accepted.
+    metaConsent: 'Optional: accept Meta cookies so we can see which ad brought you here. You can change this any time under Cookies.',
   },
 }
 
@@ -165,11 +177,14 @@ export const chrome = {
 // Not in the brief: the page after the form is sent. Reuses the /growth
 // thank-you text, minus its marketing-specific block, pending review.
 export const thankYou = {
+  // Not in the brief, pending review: the line above the title.
+  eyebrow: 'Request received',
   title: "We've got your details.",
   sub: "The person who replies is the person who'll look at your business.",
   stepsTitle: 'What happens now:',
   steps: [
-    'We review your answers and your website.',
+    // Was "your answers and your website": both are optional on the form now.
+    'We review what you sent us.',
     'We get in touch to set up your free discovery call, within two working days.',
     'If it makes sense to work together, we design your proposal, with phases and budget.',
   ],

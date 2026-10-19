@@ -10,16 +10,96 @@
 // Contract: 01-captacion/plataforma/cambios/crm-entrada-web/contrato-formulario.md
 // in the ARGO Universe.
 //
+// The Meta Lead. When the CRM takes the request AND the visitor has accepted
+// Meta's cookies (on the banner or with the optional box on the form, which
+// the page reports as `X-Argo-Meta-Consent: 1`), this function sends the Lead
+// to Meta's Conversions API itself, with the same event_id as the Pixel's
+// Lead (id_envio) so Meta keeps one. From the server it no longer depends on
+// the page staying open, an ad blocker or the Pixel having loaded, and it
+// carries the email, phone, name and country as SHA-256 hashes, which is what
+// lets Meta match the lead to the ad. Without that consent nothing goes to
+// Meta (privacy policy, section 11). It runs after the answer is on its way
+// (context.waitUntil): the visitor never waits for Meta, and a Meta failure
+// never turns into a form error.
+//
 // Environment (Netlify → Site configuration → Environment variables, marked
 // secret; never in the code: this repo is public):
 //   CRM_LEADS_URL                     the CRM route, production or a preview's
 //   CRM_ENTRADA_SECRETO               the same key as in argo-planning's Vercel
 //   VERCEL_AUTOMATION_BYPASS_SECRET   only to reach a protected Vercel preview
-// Without the first two it answers 503 and sends nothing. Logs carry no
+//   META_PIXEL_ID, META_CAPI_TOKEN    for the Meta Lead (netlify/lib/meta.js)
+// Without the first two it answers 503 and sends nothing; without the Meta
+// pair the lead still reaches the CRM and nothing goes to Meta. Logs carry no
 // personal data: status codes and error names only.
+
+import { host, metaConfigured, postToMeta, sha256, shortText } from '../lib/meta.js'
 
 const MAX_BODY = 16 * 1024
 const TIMEOUT_MS = 10_000
+
+// Only the two paid landings send a Meta Lead, each with its own category.
+const META_CATEGORY = {
+  'landing-marketing-digital': 'growth',
+  'landing-sistemas-ia': 'systems',
+}
+
+/** Meta's normalisation: trimmed, lowercase; phones as digits with country code. */
+const hashed = (value) => (value ? [sha256(value)] : undefined)
+const lower = (value) => (typeof value === 'string' ? value.trim().toLowerCase() : '')
+
+/**
+ * The Lead as Meta's Conversions API expects it, from the CRM body the form
+ * sent. Null when the body is not a landing lead we can vouch for.
+ */
+export function metaLead(lead, request, context) {
+  const category = META_CATEGORY[lead?.formulario]
+  if (!category) return null
+  if (typeof lead.id_envio !== 'string' || !/^[A-Za-z0-9-]{8,64}$/.test(lead.id_envio)) return null
+  // The page the lead was sent from, on this site only.
+  if (host(lead.pagina) !== host(request.url)) return null
+
+  const email = lower(lead.email)
+  const phone = typeof lead.telefono === 'string' ? lead.telefono.replace(/\D/g, '') : ''
+  const names = lower(lead.nombre).split(/\s+/).filter(Boolean)
+  const country = lower(context?.geo?.country?.code)
+  const variant = typeof lead.variante === 'string' && /^[a-z0-9]{1,4}$/.test(lead.variante) ? lead.variante : undefined
+
+  return {
+    event_name: 'Lead',
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: lead.id_envio,
+    action_source: 'website',
+    event_source_url: lead.pagina,
+    user_data: {
+      em: hashed(email.includes('@') ? email : ''),
+      ph: hashed(phone.length >= 8 ? phone : ''),
+      fn: hashed(names[0]),
+      ln: hashed(names.length > 1 ? names[names.length - 1] : ''),
+      country: hashed(/^[a-z]{2}$/.test(country) ? country : ''),
+      client_ip_address: context?.ip || request.headers.get('x-nf-client-connection-ip') || undefined,
+      client_user_agent: shortText(request.headers.get('user-agent')),
+      fbc: shortText(lead.fbc),
+      fbp: shortText(lead.fbp),
+    },
+    custom_data: variant ? { content_category: category, variant } : { content_category: category },
+  }
+}
+
+/** Sends the Lead to Meta without holding up the answer to the visitor. */
+async function reportLead(body, request, context) {
+  if (request.headers.get('x-argo-meta-consent') !== '1' || !metaConfigured()) return
+  let lead
+  try {
+    lead = JSON.parse(body)
+  } catch {
+    return
+  }
+  const event = metaLead(lead, request, context)
+  if (!event) return
+  const job = postToMeta(event)
+  if (typeof context?.waitUntil === 'function') context.waitUntil(job)
+  else await job
+}
 
 const answer = (status, body) => new Response(JSON.stringify(body), {
   status,
@@ -87,6 +167,8 @@ export default async (request, context) => {
       return unavailable()
     }
     if (!result.ok) console.warn(`[lead] CRM said ${response.status} ${result.error ?? ''}`)
+    // Only a lead the CRM really took counts as a Lead in Meta.
+    if (response.ok && result.ok) await reportLead(body, request, context)
     return answer(response.status, result)
   } catch (error) {
     console.warn(`[lead] could not reach the CRM: ${error?.name ?? 'error'}`)

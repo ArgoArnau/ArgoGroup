@@ -41,7 +41,7 @@ function CardFrame({ cardRef }) {
  *   and the last CTA open the same form as a bottom sheet; the slot keeps its
  *   height while it is out, so the page under the sheet does not move.
  */
-export default function FormPanel({ sheetOpen, onClose }) {
+export default function FormPanel({ sheetOpen, onClose, children }) {
   const slotRef = useRef(null)
   const stageRef = useRef(null)
   const cardRef = useRef(null)
@@ -91,6 +91,10 @@ export default function FormPanel({ sheetOpen, onClose }) {
   return (
     <aside id="form" ref={slotRef} className="form-slot" aria-labelledby="form-title" style={holdHeight ? { height: holdHeight } : undefined}>
       {sheetOpen && <div className="sheet-backdrop" onClick={onClose} aria-hidden="true" />}
+      {/* Anything the page puts above the card (phones: the hero's points). */}
+      {children}
+      {/* Wide screens: a screen-tall sticky box that centres the card (css .form-sticky). */}
+      <div className="form-sticky">
       <div ref={stageRef} className="form-stage" onPointerMove={tilt} onPointerLeave={untilt}>
       <div
         ref={cardRef}
@@ -107,6 +111,7 @@ export default function FormPanel({ sheetOpen, onClose }) {
         <h2 id="form-title" className="form-title">{form.title}</h2>
         <p className="form-sub">{form.sub}</p>
         <LeadForm />
+      </div>
       </div>
       </div>
     </aside>

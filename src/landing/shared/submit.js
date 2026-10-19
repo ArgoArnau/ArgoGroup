@@ -8,17 +8,25 @@
 
 export const LEAD_ENDPOINT = '/api/lead'
 
-export const reviewMode = () => import.meta.env.DEV || window.location.protocol === 'file:'
+// `?.`: import.meta.env exists only under Vite; plain Node (the tests) has none.
+export const reviewMode = () => Boolean(import.meta.env?.DEV) || window.location.protocol === 'file:'
 
-/** Resolves true when the CRM took the lead, false in review mode; throws on failure. */
-export async function sendLead(payload) {
+/**
+ * Resolves true when the CRM took the lead, false in review mode; throws on
+ * failure. `metaConsent`: the visitor accepted Meta's cookies, so /api/lead
+ * also sends the Lead to Meta from the server (netlify/functions/lead.js). It
+ * travels as a header, not in the body, because the body goes to the CRM as is.
+ */
+export async function sendLead(payload, { metaConsent = false } = {}) {
   if (reviewMode()) {
-    console.warn('Review mode: the lead is not sent')
+    console.warn(`Review mode: the lead is not sent (Meta consent: ${metaConsent ? 'yes' : 'no'})`)
     return false
   }
+  const headers = { 'Content-Type': 'application/json' }
+  if (metaConsent) headers['X-Argo-Meta-Consent'] = '1'
   const response = await fetch(LEAD_ENDPOINT, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(payload),
   })
   if (!response.ok) throw new Error(`Lead endpoint responded ${response.status}`)

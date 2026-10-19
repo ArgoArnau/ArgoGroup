@@ -29,7 +29,7 @@ afterEach(() => {
 })
 
 const event = (overrides = {}) => ({
-  event_name: 'Lead',
+  event_name: 'Contact',
   event_id: '6f1c2a3b-0000-4000-8000-000000000001',
   event_source_url: `${SITE}/growth?utm_source=facebook`,
   custom_data: { content_category: 'growth', variant: '1b' },
@@ -55,7 +55,7 @@ test('it sends the event to Meta with the IP, the user agent and the shared even
   assert.ok(!calls[0].url.includes('test-token'), 'the token never goes in the URL')
   assert.equal(calls[0].body.access_token, 'test-token')
   const [sent] = calls[0].body.data
-  assert.equal(sent.event_name, 'Lead')
+  assert.equal(sent.event_name, 'Contact')
   assert.equal(sent.event_id, '6f1c2a3b-0000-4000-8000-000000000001')
   assert.equal(sent.action_source, 'website')
   assert.equal(sent.user_data.client_ip_address, '203.0.113.7')
@@ -80,6 +80,8 @@ test('without the Pixel or the token it contacts nobody', async () => {
 test('it refuses other sites, other events, odd ids and pages from elsewhere', async () => {
   assert.equal((await relay(post(event(), { Origin: 'https://evil.example' }), {})).status, 403)
   assert.equal((await relay(post(event({ event_name: 'Purchase' })), {})).status, 400)
+  // The Lead's server half comes from /api/lead only, so it is never counted twice.
+  assert.equal((await relay(post(event({ event_name: 'Lead' })), {})).status, 400)
   assert.equal((await relay(post(event({ event_id: 'x' })), {})).status, 400)
   assert.equal((await relay(post(event({ event_source_url: 'https://evil.example/growth' })), {})).status, 400)
   assert.equal((await relay(post('not json'), {})).status, 400)

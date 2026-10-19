@@ -1,0 +1,339 @@
+/* The thank-you page (shared/ThankYou.jsx), for /growth and /systems.
+   @import-ed at the top of each landing's own stylesheet, whose tokens,
+   .hero-title word masks and keyframes (rise, word-up, gold-sheen) it
+   reuses. Being first, it loses ties: the rules that override .hero-title
+   carry .thanks to outrank it.
+
+   Dark like the landing's hero, so the page reads as the same place: a seal
+   that draws itself, the title, then the three steps joined by a line along
+   which the gold jumps from number to number. */
+
+.thanks {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100svh - 44px);
+  padding: 48px 0 104px;
+}
+
+/* A warm halo behind the seal. */
+.thanks::before {
+  content: '';
+  position: absolute;
+  top: -220px;
+  left: 50%;
+  width: 820px;
+  height: 820px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(196, 169, 85, 0.2), rgba(196, 169, 85, 0));
+  pointer-events: none;
+}
+
+/* .thanks first: .wrap (later in the landing's stylesheet) sets max-width too. */
+.thanks .thanks-wrap { position: relative; max-width: 960px; }
+
+/* ---------- Head ---------- */
+.thanks-head { max-width: 42rem; margin: 0 auto; text-align: center; }
+
+.seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 28px;
+}
+
+.seal svg { display: block; overflow: visible; }
+
+/* Rotated so the ring starts drawing from the top. */
+.seal-ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.seal-ring circle { fill: none; stroke: var(--argo-gold); stroke-width: 1.5; }
+
+.seal-mark { width: 54px; height: auto; }
+.seal-mark path { fill: var(--argo-gold); stroke: var(--argo-gold); stroke-width: 8; }
+
+.thanks-eyebrow,
+.thanks-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.thanks-eyebrow { color: var(--argo-gold); }
+.thanks-label { color: var(--on-dark-muted); }
+
+.thanks .thanks-title { margin-top: 14px; font-size: clamp(2.625rem, 10vw, 4.5rem); }
+.thanks-sub { margin-top: 18px; font-size: 1.0625rem; line-height: 1.5; color: #cfc9ba; }
+
+/* ---------- The three steps ----------
+   Phones: a column, the line running down between the numbers.
+   Wider: three columns, the line running across. Each step draws the
+   stretch of line to the next number (::after over a faint ::before). */
+.thanks-next { margin-top: 64px; }
+
+.journey {
+  --dot: 48px;
+  --gap: 28px;
+  display: grid;
+  gap: var(--gap);
+  margin-top: 24px;
+}
+
+.journey li {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--dot) 1fr;
+  column-gap: 18px;
+  align-items: start;
+}
+
+.journey li:not(:last-child)::before,
+.journey li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--dot) / 2);
+  top: calc(var(--dot) / 2);
+  bottom: calc(-1 * (var(--gap) + var(--dot) / 2));
+  width: 1px;
+  background: var(--line-dark);
+}
+
+.journey li:not(:last-child)::after { background: var(--argo-gold); transform-origin: top; }
+
+.journey-num {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--dot);
+  height: var(--dot);
+  border: 1px solid var(--argo-gold);
+  border-radius: 50%;
+  background: var(--argo-black);
+  color: var(--argo-gold);
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
+}
+
+/* Step 1 is the one under way. */
+.journey li[data-current] .journey-num { background: var(--argo-gold); color: var(--argo-black); }
+
+.journey p { padding-top: 11px; color: var(--on-dark); }
+
+/* ---------- WhatsApp ----------
+   The page's one action, as a real button in WhatsApp's green (the same
+   shade as the floating button, which this page hides: one is enough). */
+.thanks-actions { display: flex; justify-content: center; margin-top: 48px; }
+
+.thanks-wa {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 26px 0 20px;
+  border-radius: 999px;
+  background: #1a9e4e;
+  color: #fff;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 16px 36px -14px rgba(26, 158, 78, 0.85), 0 2px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 250ms var(--ease), background-color 250ms ease;
+}
+
+.thanks-wa span { white-space: nowrap; }
+.thanks-wa:hover { background: #168a44; transform: translateY(-2px); }
+
+/* Phones: one line, so the arrow never ends up alone below. */
+@media (max-width: 419px) {
+  .thanks-wa { gap: 8px; padding: 0 20px 0 16px; font-size: 0.9375rem; }
+}
+.thanks-wa .wa-icon { flex: none; }
+
+.thanks-wa::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.thanks ~ .dock .wa-float { display: none; }
+
+/* ---------- Wider screens ---------- */
+/* Tight on purpose: on a laptop the WhatsApp button should sit above the
+   fold, clear of the cookie bar. */
+@media (min-width: 768px) {
+  .thanks { padding: 88px 0 120px; }
+  .seal { width: 88px; height: 88px; margin-bottom: 16px; }
+  .seal-mark { width: 46px; }
+  .thanks .thanks-title { margin-top: 10px; }
+  .thanks-sub { margin-top: 12px; font-size: 1.1875rem; }
+  .thanks-next { margin-top: 40px; }
+  .thanks-actions { margin-top: 44px; }
+
+  /* Each step centred in its column, so the row sits under the centred
+     title: the line runs from the middle of the first column to the middle
+     of the last. */
+  .thanks-next .thanks-label { text-align: center; }
+  .journey { --gap: 40px; grid-template-columns: repeat(3, 1fr); margin-top: 20px; }
+  .journey li { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .journey p { padding-top: 20px; max-width: 17rem; }
+
+  .journey li:not(:last-child)::before,
+  .journey li:not(:last-child)::after {
+    top: calc(var(--dot) / 2);
+    bottom: auto;
+    left: 50%;
+    width: calc(100% + var(--gap));
+    height: 1px;
+  }
+
+  .journey li:not(:last-child)::after { transform-origin: left; }
+}
+
+/* Short laptop screens (1366×768 and the like): tighter still, so WhatsApp
+   stays above the cookie bar. */
+@media (min-width: 1024px) and (max-height: 860px) {
+  /* Wider, so each step fits in two lines rather than three. */
+  .thanks .thanks-wrap { max-width: 1120px; }
+  .seal { width: 64px; height: 64px; margin-bottom: 10px; }
+  .seal-mark { width: 34px; }
+  .thanks .thanks-title { margin-top: 6px; font-size: 3.25rem; }
+  .thanks-sub { margin-top: 8px; font-size: 1.0625rem; }
+  .thanks-next { margin-top: 28px; }
+  .journey { --dot: 42px; margin-top: 14px; }
+  .journey p { padding-top: 14px; max-width: 21rem; }
+  .thanks-actions { margin-top: 28px; }
+}
+
+/* Very short (under 700 px visible): a smaller seal and closer blocks. */
+@media (min-width: 1024px) and (max-height: 700px) {
+  .seal { width: 52px; height: 52px; margin-bottom: 8px; }
+  .seal-mark { width: 28px; }
+  .thanks .thanks-title { font-size: 3rem; }
+  .thanks-next { margin-top: 16px; }
+  .thanks-actions { margin-top: 18px; }
+}
+
+/* ---------- Motion (html.motion only, see boot.js) ----------
+   0 s the seal draws · 0.65 s the title rises · 1.4 s step 1 takes the
+   gold, and every 1.1 s it jumps to the next along the line (1 → 2 → 3,
+   then round again) · 2.6 s WhatsApp. Without motion,
+   step 1 simply stays gold. */
+@keyframes thanks-stroke {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes thanks-fill {
+  from { fill-opacity: 0; }
+  to { fill-opacity: 1; }
+}
+
+@keyframes thanks-halo {
+  from { opacity: 0; transform: translateX(-50%) scale(0.6); }
+  to { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+@keyframes thanks-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* The gold that jumps 1 → 2 → 3: each number holds it for a third of the
+   loop (pop, pulse), then hands it on. Staggered by a third, so exactly one
+   is gold at a time. The first loop also brings each number in (it starts
+   hidden, see below). */
+@keyframes thanks-hop {
+  0% {
+    opacity: 1;
+    transform: scale(0.7);
+    background: var(--argo-gold);
+    color: var(--argo-black);
+    box-shadow: 0 0 0 0 rgba(196, 169, 85, 0.6);
+  }
+  5% { transform: scale(1.16); }
+  11% { transform: none; }
+  28% { background: var(--argo-gold); color: var(--argo-black); box-shadow: 0 0 0 16px rgba(196, 169, 85, 0); }
+  33.3%, 100% {
+    opacity: 1;
+    transform: none;
+    background: var(--argo-black);
+    color: var(--argo-gold);
+    box-shadow: 0 0 0 0 rgba(196, 169, 85, 0);
+  }
+}
+
+@keyframes thanks-run-y {
+  from { transform: scaleY(0); }
+  to { transform: none; }
+}
+
+@keyframes thanks-run-x {
+  from { transform: scaleX(0); }
+  to { transform: none; }
+}
+
+@keyframes thanks-pulse-green {
+  from { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+  to { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+}
+
+html.motion .thanks::before {
+  animation:
+    thanks-halo 1400ms var(--ease) both,
+    thanks-breathe 6s ease-in-out 1400ms infinite;
+}
+
+html.motion .seal-ring circle { stroke-dasharray: 1; animation: thanks-stroke 1100ms var(--ease) both; }
+
+html.motion .seal-mark path {
+  stroke-dasharray: 1;
+  animation:
+    thanks-stroke 1400ms ease-in-out 250ms both,
+    thanks-fill 600ms ease 1300ms both;
+}
+
+html.motion .thanks-eyebrow,
+html.motion .thanks-sub,
+html.motion .thanks-label,
+html.motion .journey p,
+html.motion .thanks-actions { animation: rise 700ms var(--ease) both; }
+
+html.motion .thanks-eyebrow { animation-delay: 450ms; }
+html.motion .thanks .thanks-title .w > span { animation-delay: calc(650ms + var(--i, 0) * 60ms); }
+html.motion .thanks .thanks-title .gold > span {
+  animation:
+    word-up 900ms var(--ease) calc(650ms + var(--i, 0) * 60ms) both,
+    gold-sheen 5200ms ease-in-out calc(1500ms + var(--i, 0) * 110ms) infinite;
+}
+html.motion .thanks-sub { animation-delay: 1050ms; }
+html.motion .thanks-label { animation-delay: 1250ms; }
+
+/* Hidden until its first turn (no fill-mode: the delay shows the base style),
+   then the loop: 3.3 s, a third each, number i first at 1.4 s + i × 1.1 s. */
+html.motion .journey-num {
+  opacity: 0;
+  animation: thanks-hop 3300ms ease-out infinite;
+  animation-delay: calc(1400ms + var(--i, 0) * 1100ms);
+}
+html.motion .journey p { animation-delay: calc(1450ms + var(--i, 0) * 1100ms); }
+/* Each stretch of line runs while its number is gold and reaches the next
+   one just as it takes the gold. */
+html.motion .journey li:not(:last-child)::after {
+  animation: thanks-run-y 900ms var(--ease) both;
+  animation-delay: calc(1600ms + var(--i, 0) * 1100ms);
+}
+
+html.motion .thanks-actions { animation-delay: 2600ms; }
+html.motion .thanks-wa::before { animation: thanks-pulse-green 2.6s ease-out 3500ms infinite; }
+
+@media (min-width: 768px) {
+  html.motion .journey li:not(:last-child)::after { animation-name: thanks-run-x; }
+}

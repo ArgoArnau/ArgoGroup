@@ -40,6 +40,18 @@ export const hero = {
     ['Direct access.', 'Talk to the team. Meet when it matters.'],
     ['Measured in revenue.', 'Customers, not clicks.'],
   ],
+  // Not in the brief, pending review: the shorter first screen on phones and
+  // tablets in portrait, below 1024px (proposal of 2026-10-19: keep the style,
+  // cut the words). Wide screens keep the brief's hero above. On narrow
+  // screens the 1b headline keeps its first sentence; its gold sentence and
+  // the points move just above the form, and a gold button leads down to it.
+  narrow: {
+    eyebrow: 'ARGO · YOUR GROWTH PARTNER',
+    subtitle: 'Brand, ads, website and CRM run by one team. Measured in customers, not leads.',
+    // Same on /systems: the one button of the phone hero.
+    button: "Let's start working together",
+    whatsapp: 'or message us on WhatsApp',
+  },
 }
 
 // Section 2 · What we work on.
@@ -119,11 +131,10 @@ export const form = {
   placeholder: 'e.g. B2B clinic, Meta Ads €3k/month, leads go to a shared inbox, no CRM.',
   help: {
     email: "Where we'll contact you.",
-    website: 'We look at it before we reply.',
+    website: "Your company's name or its website, whichever is easier.",
   },
   consent: ['I have read the ', 'Privacy Policy', ' and agree to be contacted about my request.'],
   errors: {
-    detail: 'Please add a bit more detail.',
     email: "That email doesn't look right.",
   },
   sending: 'Sending…',
@@ -132,17 +143,20 @@ export const form = {
   added: {
     name: 'Name',
     email: 'Email',
-    website: 'Company website',
+    website: 'Company or website',
     whatsapp: 'WhatsApp',
     optional: '(optional)',
+    // The link under WhatsApp that shows company and the open question.
+    more: '+ Add company and details (optional)',
     phName: 'Your name',
     phEmail: 'you@company.com',
-    phWebsite: 'company.com',
+    phWebsite: 'Acme Clinic or acme.com',
     phWhatsapp: '+31 6 1234 5678',
     errName: 'Please add your name.',
-    errWebsite: "That website doesn't look right.",
     errWhatsapp: 'Please add your WhatsApp number.',
     errConsent: 'Please accept the Privacy Policy to continue.',
+    // Optional box under the consent, only shown while cookies are not accepted.
+    metaConsent: 'Optional: accept Meta cookies so we can see which ad brought you here. You can change this any time under Cookies.',
   },
 }
 
@@ -159,16 +173,17 @@ export const chrome = {
 }
 
 export const thankYou = {
+  // Not in the brief, pending review: the line above the title.
+  eyebrow: 'Request received',
   title: "We've got your details.",
   sub: "The person who replies is the person who'll look at your business.",
   stepsTitle: 'What happens now:',
   steps: [
-    'We review your answers and your website.',
+    // Was "your answers and your website": both are optional on the form now.
+    'We review what you sent us.',
     'We get in touch to set up your free discovery call, within two working days.',
     'If it makes sense to work together, we design your proposal, with phases and budget.',
   ],
-  readyTitle: 'Useful to have ready:',
-  ready: "What you've spent on marketing in the last three months, how many leads came in, and how many became customers. If you don't know the last number, that's usually the first finding.",
 }
 
 // Tab titles are not in the brief (pending review); the descriptions are.
