@@ -1,24 +1,24 @@
 export const translations = {
   en: {
     meta: {
-      title: 'Group ARGO | Performance Marketing & AI Systems Partner',
+      title: 'Group ARGO | Growth, Digital Marketing & AI Technology',
       description:
-        'A growth partner, not an agency: performance marketing, AI systems and creative, built around your business. Book a call.',
+        'A growth partner, not an agency: digital marketing and AI technology, built around your business. Book a call.',
       pages: {
         '/': {
-          title: 'Group ARGO | Performance Marketing & AI Systems Partner',
+          title: 'Group ARGO | Growth, Digital Marketing & AI Technology',
           description:
-            'A growth partner, not an agency: performance marketing, AI systems and creative, built around your business. Book a call.',
+            'A growth partner, not an agency: digital marketing and AI technology, built around your business. Book a call.',
         },
         '/about': {
-          title: 'About Group ARGO | Growth Partner for Marketing & AI',
+          title: 'About Group ARGO | Growth, Digital Marketing & AI Technology',
           description:
-            'Group ARGO is a growth partner for performance marketing, AI systems and brand, working with businesses worldwide from Barcelona and Miami.',
+            'Group ARGO is a growth partner for digital marketing and AI technology, working with businesses worldwide from Barcelona and Miami.',
         },
         '/contact': {
-          title: 'Contact Group ARGO | Performance Marketing & AI Systems',
+          title: 'Contact Group ARGO | Growth, Digital Marketing & AI Technology',
           description:
-            'Talk to the Group ARGO team about performance marketing, AI systems and creative for your business.',
+            'Talk to the Group ARGO team about growth, digital marketing and AI technology for your business.',
         },
         '/thank-you': {
           title: 'Thank You | Group ARGO',
@@ -54,9 +54,9 @@ export const translations = {
     },
     about: {
       title: 'About ARGO Group',
-      sub: 'A performance marketing and automation partner built around transparency, speed, and direct access.',
+      sub: 'A growth partner for digital marketing and AI technology, built around transparency, speed, and direct access.',
       intro: [
-        'ARGO Group is a performance marketing and AI automation agency. We work with companies that want their advertising spend to turn into predictable revenue, and we keep paid media, funnel automation, and creative production inside a single team so strategy, execution, and measurement never sit in separate silos.',
+        'ARGO Group is a growth partner for digital marketing and AI technology. We work with companies that want their advertising spend to turn into predictable revenue, and we keep paid media, funnel automation, and creative production inside a single team so strategy, execution, and measurement never sit in separate silos.',
         'We are based in Barcelona, Spain and Miami, Florida, and we operate online-first with on-ground support in both locations. That lets us work with clients across time zones, in English and Spanish, without the handoffs and delays that distance usually introduces.',
         'We are deliberately not a volume agency. Every client works with a dedicated account manager who knows the account, and you talk to the people doing the work rather than to a layer of account handlers.',
       ],
@@ -93,8 +93,8 @@ export const translations = {
     hero: {
       badge: 'Barcelona · Miami',
       headline: 'ARGO',
-      sub: 'We scale your business with performance marketing and automation systems',
-      sub2: 'Growth-Driven Digital Marketing & Automation',
+      sub: 'We scale your business with digital marketing and AI technology',
+      sub2: 'Growth, Digital Marketing & AI Technology',
       cta1: 'Talk to Our Team',
       cta2: 'Services',
       stats: [
@@ -111,7 +111,7 @@ export const translations = {
       accent: 'Services',
       items: [
         {
-          title: 'Performance Marketing',
+          title: 'Digital Marketing',
           subtitle: 'We run performance campaigns that turn ad spend into predictable revenue',
           sections: [
             {
@@ -144,7 +144,7 @@ export const translations = {
           ],
         },
         {
-          title: 'AI Process Automation',
+          title: 'AI Technology & Automation',
           subtitle: 'AI-Powered Funnel Automation & Integration',
           sections: [
             {
@@ -345,7 +345,7 @@ export const translations = {
       cta:      'Back to Home',
     },
     footer: {
-      tagline:      'We scale your business with performance marketing and automation systems.',
+      tagline:      'We scale your business with digital marketing and AI technology.',
       navTitle:     'Navigation',
       contactTitle: 'Contact',
       copy:         '© 2026 ARGO Group. All rights reserved.',
@@ -358,24 +358,24 @@ export const translations = {
 
   es: {
     meta: {
-      title: 'ARGO Group | Agencia de Performance Marketing en España y Miami',
+      title: 'ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
       description:
-        'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
+        'Un partner de crecimiento, no una agencia: marketing digital y tecnología de IA, a medida de tu negocio. Consigue una llamada.',
       pages: {
         '/': {
-          title: 'ARGO Group | Agencia de Performance Marketing en España y Miami',
+          title: 'ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
           description:
-            'Escalamos tu negocio con marketing de resultados: generación de leads, creatividades para paid media y sistemas de automatización. Consigue una llamada.',
+            'Un partner de crecimiento, no una agencia: marketing digital y tecnología de IA, a medida de tu negocio. Consigue una llamada.',
         },
         '/about': {
-          title: 'Sobre ARGO Group | Performance Marketing y Automatización',
+          title: 'Sobre ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
           description:
-            'ARGO Group es una agencia de performance marketing y automatización con IA, con oficinas en Barcelona y Miami, que atiende clientes en todo el mundo en inglés y español.',
+            'ARGO Group es un partner de crecimiento en marketing digital y tecnología de IA, con oficinas en Barcelona y Miami, que atiende clientes en todo el mundo en inglés y español.',
         },
         '/contact': {
-          title: 'Contacta con ARGO Group | Performance Marketing y Automatización',
+          title: 'Contacta con ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
           description:
-            'Habla con el equipo de ARGO Group sobre performance marketing, creatividades para paid media y automatización de procesos con IA. Respondemos en 24 horas.',
+            'Habla con el equipo de ARGO Group sobre crecimiento, marketing digital y tecnología de IA para tu negocio. Respondemos en 24 horas.',
         },
         '/thank-you': {
           title: 'Gracias | ARGO Group',
@@ -411,9 +411,9 @@ export const translations = {
     },
     about: {
       title: 'Sobre ARGO Group',
-      sub: 'Un partner de performance marketing y automatización construido sobre transparencia, rapidez y acceso directo.',
+      sub: 'Un partner de crecimiento en marketing digital y tecnología de IA, construido sobre transparencia, rapidez y acceso directo.',
       intro: [
-        'ARGO Group es una agencia de performance marketing y automatización con IA. Trabajamos con empresas que quieren que su inversión publicitaria se convierta en ingresos predecibles, y mantenemos paid media, automatización del funnel y producción creativa dentro de un mismo equipo, para que estrategia, ejecución y medición nunca queden en compartimentos separados.',
+        'ARGO Group es un partner de crecimiento en marketing digital y tecnología de IA. Trabajamos con empresas que quieren que su inversión publicitaria se convierta en ingresos predecibles, y mantenemos paid media, automatización del funnel y producción creativa dentro de un mismo equipo, para que estrategia, ejecución y medición nunca queden en compartimentos separados.',
         'Tenemos sede en Barcelona (España) y Miami (Florida), y operamos con un enfoque digital y soporte presencial en ambas ubicaciones. Eso nos permite trabajar con clientes en distintas zonas horarias, en inglés y español, sin las transferencias y demoras que suele introducir la distancia.',
         'No somos una agencia de volumen, y es deliberado. Cada cliente trabaja con un account manager dedicado que conoce la cuenta, y hablas con las personas que hacen el trabajo, no con una capa de intermediarios.',
       ],
@@ -450,8 +450,8 @@ export const translations = {
     hero: {
       badge: 'Barcelona · Miami',
       headline: 'ARGO',
-      sub: 'Escalamos tu negocio con performance marketing y sistemas de automatización',
-      sub2: 'Marketing Digital & Automatización Orientados al Crecimiento',
+      sub: 'Escalamos tu negocio con marketing digital y tecnología de IA',
+      sub2: 'Crecimiento, Marketing Digital y Tecnología IA',
       cta1: 'Habla con Nuestro Equipo',
       cta2: 'Servicios',
       stats: [
@@ -466,7 +466,7 @@ export const translations = {
       accent: 'Servicios',
       items: [
         {
-          title: 'Marketing de Resultados',
+          title: 'Marketing Digital',
           subtitle: 'Gestionamos campañas de performance que convierten inversión publicitaria en ingresos predecibles',
           sections: [
             {
@@ -499,7 +499,7 @@ export const translations = {
           ],
         },
         {
-          title: 'Automatización de Procesos con IA',
+          title: 'Tecnología IA y Automatización',
           subtitle: 'Automatización avanzada del funnel con IA e integración de sistemas',
           sections: [
             {
@@ -698,7 +698,7 @@ export const translations = {
       cta:      'Volver al Inicio',
     },
     footer: {
-      tagline:      'Escalamos tu negocio con marketing de resultados y sistemas de automatización.',
+      tagline:      'Escalamos tu negocio con marketing digital y tecnología de IA.',
       navTitle:     'Navegación',
       contactTitle: 'Contacto',
       copy:         '© 2026 ARGO. Todos los derechos reservados.',

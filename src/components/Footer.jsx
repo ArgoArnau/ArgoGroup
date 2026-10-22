@@ -23,7 +23,7 @@ export default function Footer({ setShowBanner }) {
                 <span className="lockup-argo">ARGO</span>
               </span>
             </Link>
-            <p className="lockup-line">Performance Marketing · AI Automation</p>
+            <p className="lockup-line">Growth · Digital Marketing · AI Technology</p>
             <p className="footer-tagline">{t.footer.tagline}</p>
             <div className="footer-social">
               <a className="social-btn" href={site.sameAs[0]} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">

@@ -150,7 +150,7 @@ export function llmsTxt(lang = 'en') {
     '',
     `> ${t.meta.description}`,
     '',
-    `${site.name} is a performance marketing and AI automation agency with offices in Barcelona (Spain) and Miami (Florida, USA), serving clients worldwide in English and Spanish. Services: performance marketing and paid media, AI process automation and CRM integration, and creative and brand assets.`,
+    `${site.name} is a growth partner for digital marketing and AI technology, with offices in Barcelona (Spain) and Miami (Florida, USA), serving clients worldwide in English and Spanish. Services: digital marketing and paid media, AI technology and automation (process automation, CRM integration, custom systems), and creative and brand assets.`,
     '',
     // llmstxt.org allows free-form markdown between the blockquote and the first
     // `##` section, but no headings there — so this guidance is bold-labelled
@@ -221,7 +221,7 @@ export function agentInstructions(lang = 'en') {
     '',
     `- Name: ${site.name} (also written ${site.alternateNames.join(', ')})`,
     `- Canonical domain: ${site.url}`,
-    `- What it is: a performance marketing and AI automation agency`,
+    `- What it is: a growth partner for digital marketing and AI technology`,
     `- Offices: Barcelona (Spain) and Miami (Florida, USA); clients served worldwide`,
     `- Languages: English and Spanish`,
     `- Hours: Monday to Friday, 09:00–18:00 (Spain and Miami)`,
