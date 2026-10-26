@@ -1592,3 +1592,33 @@ html.motion [data-loop]:not([data-onscreen]),
 html.motion [data-loop]:not([data-onscreen]) *,
 html.motion [data-loop]:not([data-onscreen]) *::before,
 html.motion [data-loop]:not([data-onscreen]) *::after { animation-play-state: paused !important; }
+
+/* ---------- Folded sections (phones, <768px) ----------
+   Visitors decide on the first screen and few scroll, so on phones the part
+   under the form stays short: sections 2-4 keep their title, the work list
+   names and the method steps, and fold the rest (the /systems mock too)
+   behind "See more" (shared/useFold.jsx); sections are a little tighter.
+   Wider screens show everything and no button. */
+.see-more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 14px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration-color: var(--argo-gold);
+}
+
+@media (max-width: 767px) {
+  .section[data-fold]:not([data-open]) :is(.bridge, .work-line, .focus, .mock, .lead, .steps p, .proof, .meaning, .rows, .about-closing, .cities-line) { display: none; }
+  .section[data-fold], .section.final { padding: 44px 0; }
+  .section.final .cities-line { display: none; }
+  .section[data-fold]:not([data-open]) .work-name { font-size: 1.375rem; }
+  .section[data-fold]:not([data-open]) .steps { gap: 8px; margin-top: 20px; }
+  .section[data-fold]:not([data-open]) .steps li { padding: 13px 16px; border-radius: 12px; align-items: center; }
+  .section[data-fold]:not([data-open]) .steps h3 { margin: 0; }
+}
+
+@media (min-width: 768px) {
+  .see-more { display: none; }
+}
