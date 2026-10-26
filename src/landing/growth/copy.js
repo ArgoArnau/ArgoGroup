@@ -48,8 +48,8 @@ export const hero = {
   narrow: {
     eyebrow: 'ARGO · YOUR GROWTH PARTNER',
     subtitle: 'Brand, ads, website and CRM run by one team. Measured in customers, not leads.',
-    // Same on /systems: the one button of the phone hero.
-    button: "Let's start working together",
+    // The one button of the phone hero (2026-10-26).
+    button: 'Get my free growth review',
     whatsapp: 'or message us on WhatsApp',
   },
 }
@@ -169,7 +169,9 @@ export const chrome = {
   reject: 'Reject',
   footer: { copyright: '© 2026 ARGO Group', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
   whatsappLabel: 'WhatsApp',
-  added: { close: 'Close' },
+  // Not in the brief, pending review: Close for the sheet; the phone-only
+  // "See more" under each folded section (GrowthPage.jsx).
+  added: { close: 'Close', seeMore: 'See more', seeLess: 'See less' },
 }
 
 export const thankYou = {

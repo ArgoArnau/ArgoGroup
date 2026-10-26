@@ -1,6 +1,6 @@
 import { SYMBOL_H, SYMBOL_PATH, SYMBOL_W } from './BrandSymbol.jsx'
 import { CtaButton, Dock, Footer, TopBar, WhatsAppIcon } from './chrome.jsx'
-import { about, finalCta, hero, method, thankYou, WHATSAPP_LINK, WHATSAPP_URL, work } from './copy.js'
+import { about, chrome, finalCta, hero, method, thankYou, WHATSAPP_LINK, WHATSAPP_URL, work } from './copy.js'
 import FormPanel from './FormPanel.jsx'
 import ThankYou from '../shared/ThankYou.jsx'
 import Ticker from './Ticker.jsx'
@@ -10,6 +10,7 @@ import { useFormPanel } from '../shared/useFormPanel.js'
 import { useReveal } from '../shared/useReveal.js'
 import { usePauseOffscreen } from '../shared/usePauseOffscreen.js'
 import { scrollToForm } from '../shared/scrollToForm.js'
+import { useFold } from '../shared/useFold.jsx'
 
 const pad = (n) => String(n).padStart(2, '0')
 
@@ -92,6 +93,8 @@ export function GrowthPage() {
   const { sheetOpen, openForm, closeForm } = useFormPanel()
   useReveal()
   usePauseOffscreen()
+  // Phones: the long parts of sections 2–4 fold behind "See more".
+  const { fold, seeMore } = useFold(chrome.added)
 
   return (
     <>
@@ -131,16 +134,17 @@ export function GrowthPage() {
         <Ticker items={work.items.map(([title]) => title)} />
 
         {/* 2 · What we work on */}
-        <section className="section tone-light" aria-labelledby="work-title">
+        <section className="section tone-light" aria-labelledby="work-title" {...fold('work')}>
           <div className="wrap content">
             <p className="bridge" data-reveal="">{work.bridge}</p>
             <h2 id="work-title" className="section-title" data-reveal="words"><Words text={work.title} goldFrom={lastWords(work.title, 2)} /></h2>
             <WorkList items={work.items} />
+            {seeMore('work')}
           </div>
         </section>
 
         {/* 3 · Method */}
-        <section className="section tone-dark plate" aria-labelledby="method-title" data-reveal="plate">
+        <section className="section tone-dark plate" aria-labelledby="method-title" data-reveal="plate" {...fold('method')}>
           <div className="wrap content">
             <h2 id="method-title" className="section-title" data-reveal="words"><Words text={method.title} goldFrom={lastWords(method.title, 6)} /></h2>
             <p className="lead" data-reveal="">{method.intro}</p>
@@ -161,11 +165,12 @@ export function GrowthPage() {
               <h3 className="meaning-title">{method.meaningTitle}</h3>
               <p className="meaning-line">{method.meaning}</p>
             </div>
+            {seeMore('method')}
           </div>
         </section>
 
         {/* 4 · Who we are */}
-        <section className="section tone-light" aria-labelledby="about-title">
+        <section className="section tone-light" aria-labelledby="about-title" {...fold('about')}>
           <div className="wrap content">
             <h2 id="about-title" className="section-title" data-reveal="words"><Words text={about.title} goldFrom={lastWords(about.title, 3)} /></h2>
             <p className="lead" data-reveal="">{about.intro}</p>
@@ -176,6 +181,7 @@ export function GrowthPage() {
             </ul>
             <p className="about-closing" data-reveal="clip">{about.closing}</p>
             <p className="cities-line">{about.cities}</p>
+            {seeMore('about')}
           </div>
         </section>
 

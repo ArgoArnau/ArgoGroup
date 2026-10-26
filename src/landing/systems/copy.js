@@ -34,8 +34,8 @@ export const hero = {
   // its gold sentence, which moves above the form with the points.
   narrow: {
     subtitle: 'Internal platforms, custom apps and AI, built around how your team already works.',
-    // Same on /growth: the one button of the phone hero, and the link under it.
-    button: "Let's start working together",
+    // The one button of the phone hero (2026-10-26), and the link under it.
+    button: 'Find out what to build first',
     whatsapp: 'or message us on WhatsApp',
   },
 }
@@ -171,7 +171,9 @@ export const chrome = {
   reject: 'Reject',
   footer: { copyright: '© 2026 ARGO Group', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
   whatsappLabel: 'WhatsApp',
-  added: { close: 'Close' },
+  // Not in the brief, pending review: Close for the sheet; the phone-only
+  // "See more" under each folded section (SystemsPage.jsx).
+  added: { close: 'Close', seeMore: 'See more', seeLess: 'See less' },
 }
 
 // Not in the brief: the page after the form is sent. Reuses the /growth
