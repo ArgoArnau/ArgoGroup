@@ -1,0 +1,103 @@
+/* Trial (2026-10-27): the landings on cream instead of black, like the main
+   site (src/styles/cream.css). Only active with <html data-theme="cream">
+   (growth.html, systems.html). Remove that attribute, or the @import at the
+   top of growth.css and systems.css, to go back to black.
+
+   The dark parts keep their layout; inside them the light-on-dark tokens
+   turn into the page's ink, and gold text takes the deeper gold-ink that
+   reads on cream. Gold backgrounds (the review button, the bullets, the
+   route) stay as they are. */
+
+:root[data-theme="cream"] :is(.tone-dark, .topbar, .hero, .form-slot, .footer, .cookie-bar, .mock-bar) {
+  --on-dark: var(--ink);
+  --on-dark-muted: var(--ink-muted);
+  --line-dark: var(--line);
+}
+
+/* Backgrounds: the hero and the top bar on the light cream, the old dark
+   sections a step deeper so the page keeps its rhythm. */
+:root[data-theme="cream"] :is(.tone-dark, .footer) { background: var(--argo-cream); }
+:root[data-theme="cream"] :is(.topbar, .hero) { background: var(--argo-cream-light); }
+/* Phones and portrait tablets: the form follows the hero on its colour.
+   Docked, the slot is a transparent column over the page (as before). */
+@media (max-width: 1023px) {
+  :root[data-theme="cream"] .form-slot { background: var(--argo-cream-light); }
+}
+:root[data-theme="cream"] .cookie-bar {
+  background: var(--argo-cream);
+  border-top: 1px solid var(--line);
+}
+:root[data-theme="cream"] .mock-bar { background: var(--argo-cream); }
+
+/* The rounded plates behind the method and the close. */
+:root[data-theme="cream"] .section.plate { background: var(--argo-cream-light); }
+:root[data-theme="cream"] .plate::after {
+  background: var(--argo-cream);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+:root[data-theme="cream"] .final.plate::after {
+  background:
+    radial-gradient(60% 70% at 50% 60%, rgba(196, 169, 85, 0.22), rgba(196, 169, 85, 0) 70%),
+    var(--argo-cream);
+}
+
+/* Ink where the black site had cream. */
+:root[data-theme="cream"] .logo-symbol { color: var(--ink); }
+:root[data-theme="cream"] :is(.hero .hero-sub, .thanks-sub) { color: var(--ink-soft); }
+
+/* Gold text a shade deeper. */
+:root[data-theme="cream"] :is(
+  .cities,
+  .hero .eyebrow,
+  .hero-title .gold > span,
+  .tone-dark .section-title .gold > span,
+  .moved-line,
+  .form-intro-line,
+  .tone-dark .num,
+  .meaning-title,
+  .thanks-eyebrow
+) { color: var(--argo-gold-ink); }
+
+/* Buttons on the old dark sections: the light pages' black button. */
+:root[data-theme="cream"] .tone-dark .btn:not(.btn-boom) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--argo-cream-light);
+}
+:root[data-theme="cream"] .tone-dark .btn:not(.btn-boom):hover {
+  background: var(--argo-gold);
+  border-color: var(--argo-gold);
+  color: var(--ink);
+}
+
+:root[data-theme="cream"] .cookie-btn:hover { background: var(--ink); color: var(--argo-cream-light); }
+
+/* Cards that sat on black now need an edge. */
+:root[data-theme="cream"] .form-card { background: #fff; box-shadow: 0 30px 70px -34px rgba(23, 21, 16, 0.35); }
+:root[data-theme="cream"] .steps li { background: rgba(255, 255, 255, 0.5); }
+:root[data-theme="cream"] .mock-dots i { background: rgba(23, 21, 16, 0.18); }
+:root[data-theme="cream"] .mock-search { border-color: var(--line); color: var(--ink-muted); }
+
+/* Thank-you page: the numbered steps were black discs. */
+:root[data-theme="cream"] .journey-num { background: var(--argo-cream-light); color: var(--argo-gold-ink); }
+:root[data-theme="cream"] .journey li[data-current] .journey-num { background: var(--argo-gold); color: var(--ink); }
+:root[data-theme="cream"] .journey-num { animation-name: thanks-hop-cream; }
+@keyframes thanks-hop-cream {
+  0% {
+    opacity: 1;
+    transform: scale(0.7);
+    background: var(--argo-gold);
+    color: var(--ink);
+    box-shadow: 0 0 0 0 rgba(196, 169, 85, 0.6);
+  }
+  5% { transform: scale(1.16); }
+  11% { transform: none; }
+  28% { background: var(--argo-gold); color: var(--ink); box-shadow: 0 0 0 16px rgba(196, 169, 85, 0); }
+  33.3%, 100% {
+    opacity: 1;
+    transform: none;
+    background: var(--argo-cream-light);
+    color: var(--argo-gold-ink);
+    box-shadow: 0 0 0 0 rgba(196, 169, 85, 0);
+  }
+}

@@ -4,6 +4,8 @@ import { HelmetProvider } from 'react-helmet-async'
 import './styles/fonts.css'
 import './index.css'
 import './styles/argo.css'
+// Trial: the cream theme, active with <html data-theme="cream"> (index.html).
+import './styles/cream.css'
 import App from './App.jsx'
 import { LangProvider } from './context/LangContext.jsx'
 

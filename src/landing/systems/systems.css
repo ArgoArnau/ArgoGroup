@@ -18,6 +18,8 @@
 /* The thank-you page. Imported here, not from main.jsx, so it is bundled into
    this stylesheet (the one prerender.mjs inlines) rather than a shared file. */
 @import '../shared/thank-you.css';
+/* Trial: the cream theme, active with <html data-theme="cream">. */
+@import '../shared/cream.css';
 
 @font-face {
   font-family: 'Cormorant Garamond';
