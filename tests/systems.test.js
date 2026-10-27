@@ -160,7 +160,7 @@ test('only name, email, WhatsApp and the consent are required on the form', () =
 test('phones get the shorter hero; wide screens keep the brief', () => {
   const html = built['/systems']
   const text = textOf(html)
-  for (const line of [hero.headline, hero.subtitle, hero.narrow.subtitle, hero.narrow.button]) {
+  for (const line of [hero.headline, hero.subtitle, hero.narrow.subtitle, hero.narrow.button, hero.narrow.note, hero.narrow.whatsapp]) {
     assert.ok(text.includes(line), `in the page: ${line}`)
   }
   assert.match(html, /class="hero-cta only-narrow"><a class="btn btn-boom" href="#form">/, 'the phone button goes down to the form')

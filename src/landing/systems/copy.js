@@ -34,8 +34,10 @@ export const hero = {
   // its gold sentence, which moves above the form with the points.
   narrow: {
     subtitle: 'Internal platforms, custom apps and AI, built around how your team already works.',
-    // The one button of the phone hero (2026-10-26), and the link under it.
-    button: 'Find out what to build first',
+    // The one button of the phone hero (2026-10-27), the small line under it
+    // and the WhatsApp link.
+    button: 'Get my free systems review',
+    note: "A short discovery call, then a plan built for your business on how it's going to work. Free, no commitment.",
     whatsapp: 'or message us on WhatsApp',
   },
 }

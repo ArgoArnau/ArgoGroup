@@ -50,6 +50,8 @@ export const hero = {
     subtitle: 'Brand, ads, website and CRM run by one team. Measured in customers, not leads.',
     // The one button of the phone hero (2026-10-26).
     button: 'Get my free growth review',
+    // The small line under the button, before WhatsApp (2026-10-27).
+    note: 'A short discovery call, then a plan built for your business on where to start. Free, no commitment.',
     whatsapp: 'or message us on WhatsApp',
   },
 }

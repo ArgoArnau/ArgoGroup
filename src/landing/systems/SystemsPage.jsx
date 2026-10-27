@@ -112,6 +112,7 @@ export function SystemsPage() {
             <Points className="only-wide" />
             <div className="hero-cta only-narrow">
               <a className="btn btn-boom" href="#form" onClick={scrollToForm}>{hero.narrow.button}<Arrow /></a>
+              <p className="hero-note">{hero.narrow.note}</p>
               <a className="wa-link" href={WHATSAPP_URL} target="_blank" rel="noopener">{hero.narrow.whatsapp}</a>
             </div>
           </div>
