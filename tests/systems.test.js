@@ -165,7 +165,7 @@ test('phones get the shorter hero; wide screens keep the brief', () => {
   for (const line of [hero.headline, hero.subtitle, hero.narrow.subtitle, hero.narrow.button, hero.narrow.note, hero.narrow.whatsapp]) {
     assert.ok(text.includes(line), `in the page: ${line}`)
   }
-  assert.match(html, /class="hero-cta"><a class="btn btn-boom" href="#form">/, 'the phone button goes down to the form')
+  assert.match(html, /class="hero-cta only-narrow"><a class="btn btn-boom" href="#form">/, 'the phone button goes down to the form')
   assert.match(html, /class="form-intro only-narrow"><p class="form-intro-line">Stronger, faster, and yours\.<\/p>/, 'gold sentence above the form')
   assert.match(html, /class="hero-sub only-wide"/, 'the brief subtitle stays for wide screens')
 })
