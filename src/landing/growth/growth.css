@@ -201,8 +201,8 @@ a { color: inherit; }
 }
 
 /* The two cities joined like a flight route: a thin gold line with a dot at
-   each end, and a light that flies from Barcelona to Miami (TopBar). With
-   reduced motion the light waits in the middle. */
+   each end, and a light that flies from Barcelona to Miami and back (TopBar).
+   With reduced motion the light waits in the middle. */
 .cities { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
 
 .route {
@@ -248,7 +248,7 @@ a { color: inherit; }
   100% { transform: translateX(var(--route-w)); opacity: 0; }
 }
 
-html.motion .route i { left: 0; animation: route-fly 2.8s ease-in-out infinite; }
+html.motion .route i { left: 0; animation: route-fly 2.8s ease-in-out infinite alternate; }
 
 /* ---------- Buttons and links ---------- */
 .btn {

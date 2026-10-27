@@ -217,7 +217,7 @@ test('wide screens keep the brief hero; phones and portrait tablets get the shor
   for (const line of [hero.narrow.eyebrow, hero.narrow.subtitle, hero.narrow.button, hero.narrow.note, hero.narrow.whatsapp]) {
     assert.ok(text(heroHtml).includes(line), `in the hero: ${line}`)
   }
-  assert.match(heroHtml, /class="hero-cta only-narrow"><a class="btn btn-boom" href="#form">/, 'the button goes down to the form')
+  assert.match(heroHtml, /class="hero-cta"><a class="btn btn-boom" href="#form">/, 'the button goes down to the form')
   assert.match(html, /class="form-intro only-narrow"><p class="moved-line">Not three suppliers and a gap between them\.<\/p><ul class="points">/, 'gold sentence and points above the form')
 })
 
