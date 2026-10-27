@@ -1,0 +1,48 @@
+/* Trial (2026-10-27): the main site on cream instead of black.
+   Only active with <html data-theme="cream"> (index.html). Remove that
+   attribute, or this import in main.jsx, to go back to black.
+
+   The site's colours are tokens (argo.css :root), so most of the change is
+   here; below them, the few places argo.css writes black by hand. Gold text
+   is a shade deeper so it still reads on cream. */
+:root[data-theme="cream"] {
+  color-scheme: light;
+  --bg: #fbf9f5;
+  --surface: #f3eee4;
+  --surface-2: #efe9dd;
+  --surface-3: #e6dfd0;
+  --border: #e0d8c7;
+  --border-soft: rgba(23, 21, 16, 0.08);
+  /* --cream is the light ink of the black site (logo, the hero's ARGO, the
+     waves): on cream it becomes the dark ink. */
+  --cream: #171510;
+  --text: #171510;
+  --text-soft: #3a362f;
+  --text-muted: #67625a;
+  --gold: #a8842a;
+  --gold-light: #bf9a3a;
+  --gold-dark: #8a6c1f;
+  --gold-08: rgba(168, 132, 42, 0.08);
+  --gold-15: rgba(168, 132, 42, 0.15);
+  --gold-25: rgba(168, 132, 42, 0.25);
+  --gold-40: rgba(168, 132, 42, 0.4);
+}
+
+:root[data-theme="cream"] .nav.scrolled {
+  background: rgba(251, 249, 245, 0.88);
+  box-shadow: 0 8px 30px -18px rgba(23, 21, 16, 0.35);
+}
+
+:root[data-theme="cream"] .mobile-menu { background: rgba(251, 249, 245, 0.97); }
+:root[data-theme="cream"] .hero-stat { background: rgba(243, 238, 228, 0.7); }
+
+:root[data-theme="cream"] .feature-card:hover {
+  box-shadow: 0 22px 44px -26px rgba(23, 21, 16, 0.35), 0 0 0 1px var(--gold-15);
+}
+
+:root[data-theme="cream"] .cookie-inner { box-shadow: 0 24px 60px -20px rgba(23, 21, 16, 0.3); }
+
+:root[data-theme="cream"] .btn-ghost { border-color: rgba(23, 21, 16, 0.22); }
+:root[data-theme="cream"] .channel { background: rgba(255, 255, 255, 0.45); }
+/* The glint along the wave was a light streak; a dark one reads as a crack. */
+:root[data-theme="cream"] .wave-glint { stroke: var(--gold-light); }
