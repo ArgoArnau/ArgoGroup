@@ -34,8 +34,10 @@ export const hero = {
   // its gold sentence, which moves above the form with the points.
   narrow: {
     subtitle: 'Internal platforms, custom apps and AI, built around how your team already works.',
-    // The one button of the phone hero (2026-10-26), and the link under it.
-    button: 'Find out what to build first',
+    // The one button of the phone hero (2026-10-27), the small line under it
+    // and the WhatsApp link.
+    button: 'Get my free systems review',
+    note: "A short discovery call, then a plan built for your business on how it's going to work. Free, no commitment.",
     whatsapp: 'or message us on WhatsApp',
   },
 }
@@ -130,7 +132,9 @@ export const finalCta = {
 export const form = {
   title: finalCta.title,
   sub: finalCta.sub,
-  button: CTA,
+  // The form's own submit button (2026-10-27); the phone bar and the final
+  // section keep CTA.
+  button: 'Start my free discovery call',
   consent: ['I have read the ', 'Privacy Policy', ' and agree to be contacted about my request.'],
   sending: 'Sending…',
   failed: ['Something went wrong. Try again, or ', 'message us on WhatsApp', '.'],

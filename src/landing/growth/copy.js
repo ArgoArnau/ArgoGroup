@@ -50,6 +50,8 @@ export const hero = {
     subtitle: 'Brand, ads, website and CRM run by one team. Measured in customers, not leads.',
     // The one button of the phone hero (2026-10-26).
     button: 'Get my free growth review',
+    // The small line under the button, before WhatsApp (2026-10-27).
+    note: 'A short discovery call, then a plan built for your business on where to start. Free, no commitment.',
     whatsapp: 'or message us on WhatsApp',
   },
 }
@@ -116,7 +118,9 @@ export const finalCta = {
 export const form = {
   title: 'Tell us where growth is stuck.',
   sub: "Within two working days you'll know what to fix first, and whether we're the right people for it.",
-  button: CTA,
+  // The form's own submit button (2026-10-27); the phone bar and the final
+  // section keep CTA.
+  button: 'Start my free discovery call',
   // The open question changes with the variant.
   openQuestion: {
     '1a': 'What does your business do, and where has growth stalled?',

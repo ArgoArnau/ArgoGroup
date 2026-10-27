@@ -114,11 +114,14 @@ export function GrowthPage() {
             <h1 className="hero-title"><Headline options={hero.headlines} /></h1>
             <p className="hero-sub only-wide">{hero.subtitle}</p>
             <p className="hero-sub only-narrow">{hero.narrow.subtitle}</p>
-            <Points className="only-wide" />
+            {/* Phones and portrait tablets: the review button, its line and WhatsApp.
+                Wide screens have the form beside the hero and need no button. */}
             <div className="hero-cta only-narrow">
               <a className="btn btn-boom" href="#form" onClick={scrollToForm}>{hero.narrow.button}<Arrow /></a>
+              <p className="hero-note">{hero.narrow.note}</p>
               <a className="wa-link" href={WHATSAPP_URL} target="_blank" rel="noopener">{hero.narrow.whatsapp}</a>
             </div>
+            <Points className="only-wide" />
           </div>
         </section>
 
