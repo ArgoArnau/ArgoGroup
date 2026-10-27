@@ -1910,3 +1910,8 @@ html.motion [data-loop]:not([data-onscreen]) *::after { animation-play-state: pa
   html.motion .mock[data-in] .mock-deal,
   html.motion .mock[data-in] .mock-deal[data-live] { animation: none; }
 }
+
+/* Phones: "Start my free discovery call" stays on one line. */
+@media (max-width: 479px) {
+  .lead-form .btn-block { gap: 8px; padding-left: 16px; padding-right: 16px; font-size: min(1.0625rem, 4.1vw); white-space: nowrap; }
+}

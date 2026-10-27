@@ -86,7 +86,9 @@ test('every variant has a headline and an open question; the rest is shared', ()
     assert.ok(form.openQuestion[key], `${key} open question`)
   }
   assert.equal(typeof hero.subtitle, 'string')
-  assert.equal(form.button, finalCta.button)
+  // The form has its own button; the final section keeps the one CTA.
+  assert.equal(form.button, 'Start my free discovery call')
+  assert.equal(finalCta.button, "Let's work together")
 })
 
 // ── Form fields ────────────────────────────────────────────────────────────
@@ -215,7 +217,7 @@ test('wide screens keep the brief hero; phones and portrait tablets get the shor
   for (const line of [hero.narrow.eyebrow, hero.narrow.subtitle, hero.narrow.button, hero.narrow.note, hero.narrow.whatsapp]) {
     assert.ok(text(heroHtml).includes(line), `in the hero: ${line}`)
   }
-  assert.match(heroHtml, /class="hero-cta"><a class="btn btn-boom" href="#form">/, 'the button goes down to the form')
+  assert.match(heroHtml, /class="hero-cta only-narrow"><a class="btn btn-boom" href="#form">/, 'the button goes down to the form')
   assert.match(html, /class="form-intro only-narrow"><p class="moved-line">Not three suppliers and a gap between them\.<\/p><ul class="points">/, 'gold sentence and points above the form')
 })
 

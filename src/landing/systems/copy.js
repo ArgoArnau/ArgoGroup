@@ -132,7 +132,9 @@ export const finalCta = {
 export const form = {
   title: finalCta.title,
   sub: finalCta.sub,
-  button: CTA,
+  // The form's own submit button (2026-10-27); the phone bar and the final
+  // section keep CTA.
+  button: 'Start my free discovery call',
   consent: ['I have read the ', 'Privacy Policy', ' and agree to be contacted about my request.'],
   sending: 'Sending…',
   failed: ['Something went wrong. Try again, or ', 'message us on WhatsApp', '.'],

@@ -135,7 +135,9 @@ test('the page follows the five-part structure, with the form straight after the
   assert.equal(method.steps.length, 4)
   assert.equal(method.meaning.length, 4)
   assert.equal(about.rows.length, 3)
-  assert.equal(form.button, finalCta.button)
+  // The form has its own button; the final section keeps the one CTA.
+  assert.equal(form.button, 'Start my free discovery call')
+  assert.equal(finalCta.button, "Let's work together")
   assert.equal(html.match(/<form\b/g).length, 1, 'one form on the page')
   // The form posts as this landing, so the CRM can tell the two apart.
   assert.match(read('src', 'landing', 'systems', 'LeadForm.jsx'), /crmPayload\(\{\s*landing: 'systems'/, 'the form sends as /systems')
@@ -163,7 +165,7 @@ test('phones get the shorter hero; wide screens keep the brief', () => {
   for (const line of [hero.headline, hero.subtitle, hero.narrow.subtitle, hero.narrow.button, hero.narrow.note, hero.narrow.whatsapp]) {
     assert.ok(text.includes(line), `in the page: ${line}`)
   }
-  assert.match(html, /class="hero-cta"><a class="btn btn-boom" href="#form">/, 'the phone button goes down to the form')
+  assert.match(html, /class="hero-cta only-narrow"><a class="btn btn-boom" href="#form">/, 'the phone button goes down to the form')
   assert.match(html, /class="form-intro only-narrow"><p class="form-intro-line">Stronger, faster, and yours\.<\/p>/, 'gold sentence above the form')
   assert.match(html, /class="hero-sub only-wide"/, 'the brief subtitle stays for wide screens')
 })
