@@ -10,7 +10,7 @@
 // page staying open long enough. This relay refuses it, so a lead is never
 // counted twice from the server.
 //
-// Served at /api/event by api/event.js (Vercel). Environment: see server/meta.js. Without META_PIXEL_ID and
+// Served at /api/event by server/worker.js. Environment: see server/meta.js. Without META_PIXEL_ID and
 // META_CAPI_TOKEN it answers 204 and contacts nobody.
 
 import { host, metaConfigured, postToMeta, shortText } from './meta.js'

@@ -19,19 +19,18 @@
 // carries the email, phone, name and country as SHA-256 hashes, which is what
 // lets Meta match the lead to the ad. Without that consent nothing goes to
 // Meta (privacy policy, section 11). It runs after the answer is on its way
-// (context.waitUntil, see server/vercel.js): the visitor never waits for Meta, and a Meta failure
+// (context.waitUntil, see server/worker.js): the visitor never waits for Meta, and a Meta failure
 // never turns into a form error.
 //
-// Served at /api/lead by api/lead.js (Vercel).
+// Served at /api/lead by server/worker.js (Cloudflare).
 //
-// Environment (Vercel → Settings → Environment Variables, marked sensitive;
+// Environment (Cloudflare → the Worker → Settings → Variables and Secrets, as
+// secrets;
 // never in the code: this repo is public):
 //   CRM_LEADS_URL                     the CRM route, production or a preview's
 //   CRM_ENTRADA_SECRETO               the same key as in argo-planning's Vercel
 //   CRM_BYPASS_SECRET                 only to reach a protected CRM preview: the
-//                                     CRM project's automation bypass secret.
-//                                     Not VERCEL_AUTOMATION_BYPASS_SECRET, which
-//                                     Vercel sets for this site's own project.
+//                                     CRM's Vercel automation bypass secret
 //   META_PIXEL_ID, META_CAPI_TOKEN    for the Meta Lead (server/meta.js)
 // Without the first two it answers 503 and sends nothing; without the Meta
 // pair the lead still reaches the CRM and nothing goes to Meta. Logs carry no

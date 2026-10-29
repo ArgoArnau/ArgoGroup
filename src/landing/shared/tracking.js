@@ -5,7 +5,7 @@
 // cookie banner; elsewhere it runs from the start unless they press Reject.
 // Every event checks first and is dropped, not queued, when it may not run. The
 // server half is server/meta-capi.js (/api/event); without
-// META_PIXEL_ID and META_CAPI_TOKEN in Vercel it sends nothing to Meta.
+// META_PIXEL_ID and META_CAPI_TOKEN in Cloudflare it sends nothing to Meta.
 //
 // Pixel and CAPI receive the same event_id for each event, so Meta keeps one.
 //

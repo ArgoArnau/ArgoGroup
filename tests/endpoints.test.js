@@ -1,6 +1,6 @@
 // End-to-end checks of every public endpoint, run against scripts/serve.mjs —
 // a local stand-in for the host that resolves static files the same way and
-// runs server/markdown.js (middleware.js on Vercel) in front of them.
+// runs server/markdown.js (server/worker.js on Cloudflare) in front of them.
 
 import assert from 'node:assert/strict'
 import { after, before, test } from 'node:test'

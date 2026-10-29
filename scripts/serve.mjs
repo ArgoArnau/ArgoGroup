@@ -1,7 +1,7 @@
-// Local stand-in for the host (Vercel), so the built site can be verified end
+// Local stand-in for the host (Cloudflare), so the built site can be verified end
 // to end without deploying: static file resolution with clean URLs, a real 404
 // status backed by dist/404.html, and the markdown handler (server/markdown.js,
-// middleware.js on Vercel) running in front of it with the same path rules.
+// server/worker.js on Cloudflare) running in front of it with the same path rules.
 //
 // Usage: node scripts/serve.mjs [port]
 
