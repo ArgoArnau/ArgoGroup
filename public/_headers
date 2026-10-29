@@ -1,0 +1,11 @@
+# Cloudflare static assets: headers for the files the Worker never sees
+# (wrangler.jsonc, run_worker_first). Content-hashed bundles and the
+# self-hosted fonts: never negotiated, safe to cache forever. Give a changed
+# font a new file name rather than overwriting this one.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff

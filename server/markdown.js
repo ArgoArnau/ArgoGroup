@@ -9,9 +9,11 @@
 // `.md`, `.txt`, `.xml` and static assets are excluded below, so the internal
 // fetch for the markdown body does not re-enter this function.
 //
-// `context.next()` returns the response the path would get without it. On
-// Vercel, middleware.js runs it in front of every page; locally,
-// scripts/serve.mjs does, with the same path rules.
+// `context.next()` returns the response the path would get without it, and
+// `context.asset(path)`, when given, reads another file of the site (the
+// Worker reads them from its assets instead of fetching its own domain).
+// server/worker.js runs it in front of every page; locally, scripts/serve.mjs
+// does, with the same path rules.
 
 import { markdownPathFor, canonicalFor, site } from '../src/site.js'
 import { MARKDOWN_CONTENT_TYPE, VARY, negotiate } from '../src/shared/negotiate.js'
@@ -27,12 +29,10 @@ export const withNegotiationHeaders = (headers, { markdownPath, canonical }) => 
   return headers
 }
 
-async function readMarkdown(request, path) {
-  const response = await fetch(new URL(path, request.url), {
-    // The cookie lets the fetch through a protected Vercel preview.
-    headers: { accept: 'text/plain', cookie: request.headers.get('cookie') ?? '' },
-    redirect: 'follow',
-  })
+async function readMarkdown(request, path, context) {
+  const response = context.asset
+    ? await context.asset(path)
+    : await fetch(new URL(path, request.url), { headers: { accept: 'text/plain' }, redirect: 'follow' })
   return response.ok ? await response.text() : null
 }
 
@@ -86,7 +86,7 @@ export default async function handler(request, context) {
 
   // The path does not exist: answer the 404 in the format that was asked for.
   if (response.status === 404) {
-    const body = await readMarkdown(request, NOT_FOUND_MARKDOWN_PATH)
+    const body = await readMarkdown(request, NOT_FOUND_MARKDOWN_PATH, context)
     if (body === null) {
       const fallback = new Response(response.body, response)
       withNegotiationHeaders(fallback.headers, { markdownPath: null, canonical: null })
@@ -96,7 +96,7 @@ export default async function handler(request, context) {
   }
 
   if (markdownPath && response.ok) {
-    const body = await readMarkdown(request, markdownPath)
+    const body = await readMarkdown(request, markdownPath, context)
     if (body !== null) {
       return markdownResponse(body, 200, request, { markdownPath, canonical })
     }
@@ -121,8 +121,8 @@ export default async function handler(request, context) {
   return passthrough
 }
 
-// The paths the handler runs on. middleware.js repeats them in its `matcher`
-// (Vercel needs that one written out literally); keep the two in step.
+// The paths the handler runs on; server/worker.js and scripts/serve.mjs pass
+// the rest straight through.
 export const config = {
   path: '/*',
   excludedPath: [

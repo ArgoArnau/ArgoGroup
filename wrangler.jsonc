@@ -1,0 +1,23 @@
+// Cloudflare Worker for groupargous.com: the built site as static assets, and
+// server/worker.js in front of the pages and /api/*. The Worker's name must
+// match the one in the Cloudflare dashboard (Workers Builds checks it).
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "argo-web",
+  "main": "server/worker.js",
+  // From 2025-04-01 on, nodejs_compat also fills process.env with the
+  // Worker's variables and secrets, which is how server/ reads them.
+  "compatibility_date": "2025-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // /about.html answers at /about, /about/ redirects there; unknown paths
+    // get dist/404.html with a real 404.
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // Hashed bundles and fonts go straight to the assets (public/_headers).
+    "run_worker_first": ["/*", "!/assets/*", "!/fonts/*"]
+  },
+  "observability": { "enabled": true }
+}
