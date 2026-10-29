@@ -20,6 +20,10 @@
     "run_worker_first": ["/*", "!/assets/*", "!/fonts/*"]
   },
   "observability": { "enabled": true },
+  // argo-web.<account>.workers.dev for production, and
+  // <branch>-argo-web.<account>.workers.dev for each branch's Preview.
+  "workers_dev": true,
+  "preview_urls": true,
   // Preview builds of other branches (`npx wrangler preview`, the dashboard's
   // preview command) need this block; empty means "same as production".
   "previews": {}
