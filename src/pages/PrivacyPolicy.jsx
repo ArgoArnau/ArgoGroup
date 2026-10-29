@@ -54,13 +54,13 @@ export default function PrivacyPolicy() {
                 <span className="legal-term">Landing page forms:</span> When you fill out the form on one of our landing pages, we collect your name, email address, WhatsApp number, company website and your answer about your business. We also record the exact consent text you saw beside the checkbox and when you accepted it.
               </li>
               <li>
-                <span className="legal-term">How you reached us:</span> With any of our forms we also record the page you sent it from, the website that referred you (its domain only), the campaign details in the link (UTM parameters), the click identifiers that Meta and Google add to their ad links (fbclid, gclid), on our landing pages which version of the page you saw and, if you accepted cookies, the Meta identifiers described in section 11 (fbc, fbp).
+                <span className="legal-term">How you reached us:</span> With any of our forms we also record the page you sent it from, the website that referred you (its domain only), the campaign details in the link (UTM parameters), the click identifiers that Meta and Google add to their ad links (fbclid, gclid), on our landing pages which version of the page you saw and, if the Meta Pixel was active for you, the Meta identifiers described in section 11 (fbc, fbp).
               </li>
               <li>
                 <span className="legal-term">Abuse prevention:</span> To limit repeated submissions, we keep a one-way, salted hash of your IP address for up to 2 days. We never store the IP address itself.
               </li>
               <li>
-                <span className="legal-term">Cookies:</span> Only if you accept them, the Meta Pixel and related cookies described in section 11.
+                <span className="legal-term">Cookies:</span> The Meta Pixel and related cookies described in section 11: in the EU/EEA, the UK and Switzerland only if you accept them; elsewhere, on our landing pages, until you reject them.
               </li>
               <li>
                 <span className="legal-term">Client service data:</span> As part of delivering our services, including advertising campaigns, CRM integrations and automation workflows, we may process data you share with us about your business, customers and operations.
@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
                 <span className="legal-term">To deliver our services:</span> manage client accounts and the contracted work. Legal basis: performance of a contract (Art. 6(1)(b)).
               </li>
               <li>
-                <span className="legal-term">To measure our advertising:</span> know which ads bring people to our pages and which of them become clients, through the Meta Pixel and the Meta Conversions API. Legal basis: your consent (Art. 6(1)(a)), which you can withdraw at any time.
+                <span className="legal-term">To measure our advertising:</span> know which ads bring people to our pages and which of them become clients, through the Meta Pixel and the Meta Conversions API. Legal basis: your consent (Art. 6(1)(a)), which you can withdraw at any time. Outside the EU/EEA, the UK and Switzerland, our landing pages measure by default and you can opt out at any time (section 11).
               </li>
               <li>
                 <span className="legal-term">To keep our forms safe:</span> stop spam and repeated submissions. Legal basis: our legitimate interest in protecting our systems (Art. 6(1)(f)).
@@ -178,9 +178,12 @@ export default function PrivacyPolicy() {
             <p>
               When you first visit, a banner asks whether you accept cookies. On our landing pages, the form also offers an optional box to accept them when you send it. Until you accept, we set no advertising cookies and send nothing to Meta.
             </p>
+            <p>
+              On our landing pages (/growth and /systems), that applies in the European Union and the European Economic Area, the United Kingdom and Switzerland, and whenever we cannot tell where you are visiting from (the page asks our server for your country, derived from your IP address and not stored). Everywhere else, the Meta Pixel's measurement cookies are on by default: they load when the page opens, the banner tells you so, and you can reject them at any time from that banner (the "Cookies" link at the bottom of the page brings it back). After you reject, nothing more is sent to Meta, on that visit or later ones.
+            </p>
             <ul>
               <li><span className="legal-term">Always:</span> your cookie choice, stored in your browser so we do not ask again, and, on our landing pages, the campaign details of your visit, kept in your browser only for that visit.</li>
-              <li><span className="legal-term">Only if you accept:</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API). When you send one of our landing page forms after accepting, our server tells Meta about it together with your email address, phone number, name and country, converted into one-way codes (SHA-256 hashes) so Meta can match your request to the ad you saw. These details never reach Meta in readable form.</li>
+              <li><span className="legal-term">Only if you accept (or, outside the EU/EEA, the UK and Switzerland, on our landing pages, until you reject):</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API). When you send one of our landing page forms while the Pixel is active for you, our server tells Meta about it together with your email address, phone number, name and country, converted into one-way codes (SHA-256 hashes) so Meta can match your request to the ad you saw. These details never reach Meta in readable form.</li>
             </ul>
             <p>
               You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Every cookie and stored item, with its purpose and duration, is listed in our <Link to="/cookie-policy">Cookie Policy</Link>. Meta's own use of this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.

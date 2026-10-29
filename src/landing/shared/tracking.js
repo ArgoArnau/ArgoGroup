@@ -1,7 +1,9 @@
 // Meta Pixel + Conversions API for the paid landings (/growth, /systems).
 //
-// Nothing runs until the visitor presses Accept on the cookie banner: every
-// event checks consent first and is dropped, not queued, without it. The
+// Whether anything runs depends on the visitor's country (region.js): in the
+// EU/EEA, the UK and Switzerland nothing runs until they press Accept on the
+// cookie banner; elsewhere it runs from the start unless they press Reject.
+// Every event checks first and is dropped, not queued, when it may not run. The
 // server half is netlify/functions/meta-capi.js (/api/event); without
 // META_PIXEL_ID and META_CAPI_TOKEN in Netlify it sends nothing to Meta.
 //
@@ -16,8 +18,9 @@
 // The Lead's server half is not sent from here: netlify/functions/lead.js
 // sends it once the CRM has taken the request (SERVER_SENT below).
 
-import { hasConsent, onConsentChange } from '../../lib/consent.js'
+import { onConsentChange } from '../../lib/consent.js'
 import { newEventId } from './attribution.js'
+import { metaAllowed, resolveRegion } from './region.js'
 
 // The same Pixel as the main site (src/lib/pixel.js): one per domain.
 export const PIXEL_ID = '3872072809596261'
@@ -30,7 +33,7 @@ const SERVER_SENT = new Set(['Lead'])
 let loaded = false
 let context = { fbc: '', fbp: '' }
 
-const enabled = () => PIXEL_ID !== '' && hasConsent()
+const enabled = () => PIXEL_ID !== '' && metaAllowed()
 
 /** True when events are actually leaving the page. */
 export const trackingActive = enabled
@@ -88,8 +91,9 @@ export function setTrackingContext(ids) {
 }
 
 /**
- * Load-time events. Sent now if consent already exists, or the moment the
- * visitor accepts; revoked if they later reject. Returns a cleanup.
+ * Load-time events. Sent once the visitor's country is known if the Pixel may
+ * run (region.js), or the moment they accept; revoked if they later reject.
+ * Returns a cleanup.
  */
 export function startPageTracking({ contentName, category }) {
   let sent = false
@@ -100,9 +104,10 @@ export function startPageTracking({ contentName, category }) {
     track('ViewContent', { content_category: category, content_name: contentName })
   }
   onLoad()
+  resolveRegion().then(onLoad)
 
-  const stopConsent = onConsentChange((choice) => {
-    if (choice === 'accepted') onLoad()
+  const stopConsent = onConsentChange(() => {
+    if (enabled()) onLoad()
     else if (loaded) window.fbq('consent', 'revoke')
   })
 

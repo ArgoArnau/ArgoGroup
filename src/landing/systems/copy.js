@@ -173,6 +173,10 @@ export const chrome = {
   cookiePrivacy: 'Privacy policy',
   accept: 'Accept',
   reject: 'Reject',
+  // Outside the EU/EEA, the UK and Switzerland (shared/region.js): the Pixel
+  // already runs, so the banner informs and offers to reject.
+  cookieInformative: 'We use cookies to measure and improve our ads.',
+  ok: 'OK',
   footer: { copyright: '© 2026 ARGO Group', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
   whatsappLabel: 'WhatsApp',
   // Not in the brief, pending review: Close for the sheet; the phone-only
