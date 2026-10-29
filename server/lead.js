@@ -19,20 +19,25 @@
 // carries the email, phone, name and country as SHA-256 hashes, which is what
 // lets Meta match the lead to the ad. Without that consent nothing goes to
 // Meta (privacy policy, section 11). It runs after the answer is on its way
-// (context.waitUntil): the visitor never waits for Meta, and a Meta failure
+// (context.waitUntil, see server/vercel.js): the visitor never waits for Meta, and a Meta failure
 // never turns into a form error.
 //
-// Environment (Netlify → Site configuration → Environment variables, marked
-// secret; never in the code: this repo is public):
+// Served at /api/lead by api/lead.js (Vercel).
+//
+// Environment (Vercel → Settings → Environment Variables, marked sensitive;
+// never in the code: this repo is public):
 //   CRM_LEADS_URL                     the CRM route, production or a preview's
 //   CRM_ENTRADA_SECRETO               the same key as in argo-planning's Vercel
-//   VERCEL_AUTOMATION_BYPASS_SECRET   only to reach a protected Vercel preview
-//   META_PIXEL_ID, META_CAPI_TOKEN    for the Meta Lead (netlify/lib/meta.js)
+//   CRM_BYPASS_SECRET                 only to reach a protected CRM preview: the
+//                                     CRM project's automation bypass secret.
+//                                     Not VERCEL_AUTOMATION_BYPASS_SECRET, which
+//                                     Vercel sets for this site's own project.
+//   META_PIXEL_ID, META_CAPI_TOKEN    for the Meta Lead (server/meta.js)
 // Without the first two it answers 503 and sends nothing; without the Meta
 // pair the lead still reaches the CRM and nothing goes to Meta. Logs carry no
 // personal data: status codes and error names only.
 
-import { host, metaConfigured, postToMeta, sha256, shortText } from '../lib/meta.js'
+import { host, metaConfigured, postToMeta, sha256, shortText } from './meta.js'
 
 const MAX_BODY = 16 * 1024
 const TIMEOUT_MS = 10_000
@@ -76,7 +81,7 @@ export function metaLead(lead, request, context) {
       fn: hashed(names[0]),
       ln: hashed(names.length > 1 ? names[names.length - 1] : ''),
       country: hashed(/^[a-z]{2}$/.test(country) ? country : ''),
-      client_ip_address: context?.ip || request.headers.get('x-nf-client-connection-ip') || undefined,
+      client_ip_address: context?.ip || undefined,
       client_user_agent: shortText(request.headers.get('user-agent')),
       fbc: shortText(lead.fbc),
       fbp: shortText(lead.fbp),
@@ -143,9 +148,9 @@ export default async (request, context) => {
 
   const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` }
   // Without it every lead would share one submission cap in the CRM.
-  const ip = context?.ip || request.headers.get('x-nf-client-connection-ip')
+  const ip = context?.ip
   if (ip) headers['X-Argo-Ip-Cliente'] = ip
-  const bypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+  const bypass = process.env.CRM_BYPASS_SECRET
   if (bypass) headers['x-vercel-protection-bypass'] = bypass
 
   try {
@@ -176,4 +181,3 @@ export default async (request, context) => {
   }
 }
 
-export const config = { path: '/api/lead' }

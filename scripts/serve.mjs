@@ -1,7 +1,7 @@
-// Local stand-in for the Netlify runtime, so the built site can be verified end
-// to end without deploying: static file resolution with pretty URLs, a real 404
-// status backed by dist/404.html, and the markdown edge function running in
-// front of it with the same path inclusion/exclusion rules.
+// Local stand-in for the host (Vercel), so the built site can be verified end
+// to end without deploying: static file resolution with clean URLs, a real 404
+// status backed by dist/404.html, and the markdown handler (server/markdown.js,
+// middleware.js on Vercel) running in front of it with the same path rules.
 //
 // Usage: node scripts/serve.mjs [port]
 
@@ -13,7 +13,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = join(ROOT, 'dist')
 
-const edge = await import(pathToFileURL(join(ROOT, 'netlify', 'edge-functions', 'markdown.js')).href)
+const edge = await import(pathToFileURL(join(ROOT, 'server', 'markdown.js')).href)
 const edgeHandler = edge.default
 const edgeConfig = edge.config
 
@@ -60,8 +60,8 @@ const ok = (body, path) => new Response(body, {
 
 const movedTo = (location) => new Response(null, { status: 301, headers: { Location: location } })
 
-// Mirrors Netlify's static resolution, including the redirects its Pretty URLs
-// behaviour adds — `<name>.html` is served in place at /name, while a
+// Mirrors the host's static resolution, including the redirects its clean URLs
+// add — `<name>.html` is served in place at /name, while a
 // `<name>/index.html` would make /name a 301 to /name/. Modelling the redirects
 // rather than resolving straight through is the point: it is what catches a
 // canonical URL that does not answer 200.

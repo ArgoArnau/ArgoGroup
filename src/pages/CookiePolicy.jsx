@@ -8,7 +8,7 @@ const EMAIL = 'info@groupargous.com'
 // on 2026-10-17 (before any choice, after Decline and after Accept). Keep this
 // list in step with the code: src/lib/consent.js, src/context/LangContext.jsx,
 // src/landing/growth/boot.js, src/landing/shared/attribution.js, the country
-// rule (src/landing/shared/region.js, netlify/functions/geo.js) and the Meta
+// rule (src/landing/shared/region.js, server/geo.js) and the Meta
 // Pixel (src/lib/pixel.js, src/landing/shared/tracking.js).
 const ITEMS = [
   {

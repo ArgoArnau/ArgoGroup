@@ -5,15 +5,15 @@
 // Meta keeps one of the pair. This function adds what only a server knows,
 // the visitor's IP and user agent, and the token the browser must never see.
 //
-// Not the Lead: that one is sent by netlify/functions/lead.js, from the server
+// Not the Lead: that one is sent by server/lead.js, from the server
 // and only after the CRM has taken the request, so it no longer depends on the
 // page staying open long enough. This relay refuses it, so a lead is never
 // counted twice from the server.
 //
-// Environment: see netlify/lib/meta.js. Without META_PIXEL_ID and
+// Served at /api/event by api/event.js (Vercel). Environment: see server/meta.js. Without META_PIXEL_ID and
 // META_CAPI_TOKEN it answers 204 and contacts nobody.
 
-import { host, metaConfigured, postToMeta, shortText } from '../lib/meta.js'
+import { host, metaConfigured, postToMeta, shortText } from './meta.js'
 
 const ALLOWED_EVENTS = new Set(['PageView', 'ViewContent', 'Scroll50', 'FormStart', 'Contact'])
 const MAX_BODY = 4 * 1024
@@ -59,7 +59,7 @@ export default async (request, context) => {
     action_source: 'website',
     event_source_url: event.event_source_url,
     user_data: {
-      client_ip_address: context?.ip || request.headers.get('x-nf-client-connection-ip') || undefined,
+      client_ip_address: context?.ip || undefined,
       client_user_agent: shortText(request.headers.get('user-agent')),
       fbc: shortText(event.user_data?.fbc),
       fbp: shortText(event.user_data?.fbp),
@@ -69,4 +69,3 @@ export default async (request, context) => {
   return done(sent ? 204 : 502)
 }
 
-export const config = { path: '/api/event' }

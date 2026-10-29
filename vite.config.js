@@ -21,7 +21,7 @@ const landingsInDev = () => ({
 export default defineConfig({
   plugins: [react(), landingsInDev()],
   // Only VITE_* reaches the browser. The landings' CRM settings live in the
-  // Netlify function (netlify/functions/lead.js), never in the bundle.
+  // server function (server/lead.js), never in the bundle.
   envPrefix: ['VITE_'],
   build: {
     rollupOptions: {

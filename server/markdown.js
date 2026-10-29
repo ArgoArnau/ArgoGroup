@@ -1,20 +1,24 @@
 // Markdown content negotiation for agents (acceptmarkdown.com).
 //
-// Every HTML route has a `.md` twin built by scripts/prerender.mjs. This edge
-// function serves that twin when the client asks for `Accept: text/markdown`,
+// Every HTML route has a `.md` twin built by scripts/prerender.mjs. This
+// handler serves that twin when the client asks for `Accept: text/markdown`,
 // and — just as importantly — makes every negotiated response advertise
 // `Vary: Accept` so a CDN can never hand the HTML variant to an agent that
 // asked for markdown, or vice versa.
 //
 // `.md`, `.txt`, `.xml` and static assets are excluded below, so the internal
 // fetch for the markdown body does not re-enter this function.
+//
+// `context.next()` returns the response the path would get without it. On
+// Vercel, middleware.js runs it in front of every page; locally,
+// scripts/serve.mjs does, with the same path rules.
 
-import { markdownPathFor, canonicalFor, site } from '../../src/site.js'
-import { MARKDOWN_CONTENT_TYPE, VARY, negotiate } from '../../src/shared/negotiate.js'
+import { markdownPathFor, canonicalFor, site } from '../src/site.js'
+import { MARKDOWN_CONTENT_TYPE, VARY, negotiate } from '../src/shared/negotiate.js'
 
 const NOT_FOUND_MARKDOWN_PATH = '/404.md'
 
-const withNegotiationHeaders = (headers, { markdownPath, canonical }) => {
+export const withNegotiationHeaders = (headers, { markdownPath, canonical }) => {
   headers.set('Vary', VARY)
   const links = []
   if (markdownPath) links.push(`<${site.origin}${markdownPath}>; rel="alternate"; type="text/markdown"`)
@@ -25,7 +29,8 @@ const withNegotiationHeaders = (headers, { markdownPath, canonical }) => {
 
 async function readMarkdown(request, path) {
   const response = await fetch(new URL(path, request.url), {
-    headers: { accept: 'text/plain' },
+    // The cookie lets the fetch through a protected Vercel preview.
+    headers: { accept: 'text/plain', cookie: request.headers.get('cookie') ?? '' },
     redirect: 'follow',
   })
   return response.ok ? await response.text() : null
@@ -43,17 +48,21 @@ const markdownResponse = (body, status, request, links) =>
     ),
   })
 
+/** What this request should get, decided from its path and Accept header alone. */
+export function negotiationFor(request) {
+  const { pathname } = new URL(request.url)
+  const decision = negotiate(request.headers.get('accept'), pathname, markdownPathFor)
+  const canonical = decision.markdownPath ? canonicalFor(pathname === '/' ? '/' : pathname.replace(/\/+$/, '')) : null
+  return { ...decision, canonical }
+}
+
 export default async function handler(request, context) {
-  // Netlify's config.method does not accept HEAD, and `curl -sI` — the command
-  // acceptmarkdown.com verifies with — sends HEAD. So the method filter lives
-  // here rather than in the declaration: document fetches negotiate, anything
-  // else passes straight through.
+  // Document fetches negotiate (GET, and HEAD: `curl -sI`, the command
+  // acceptmarkdown.com verifies with, sends HEAD); anything else passes
+  // straight through.
   if (request.method !== 'GET' && request.method !== 'HEAD') return context.next()
 
-  const { pathname } = new URL(request.url)
-  const accept = request.headers.get('accept')
-  const { serveMarkdown, markdownPath, notAcceptable } = negotiate(accept, pathname, markdownPathFor)
-  const canonical = markdownPath ? canonicalFor(pathname === '/' ? '/' : pathname.replace(/\/+$/, '')) : null
+  const { serveMarkdown, markdownPath, notAcceptable, canonical } = negotiationFor(request)
 
   const response = await context.next()
 
@@ -66,7 +75,7 @@ export default async function handler(request, context) {
     return passthrough
   }
 
-  // Netlify normalises trailing slashes with a 301. Pass redirects through so
+  // The host normalises trailing slashes with a redirect. Pass redirects through so
   // the client lands on the canonical URL and negotiates there, rather than
   // returning a markdown body under a 3xx status.
   if (response.status >= 300 && response.status < 400) {
@@ -112,10 +121,14 @@ export default async function handler(request, context) {
   return passthrough
 }
 
+// The paths the handler runs on. middleware.js repeats them in its `matcher`
+// (Vercel needs that one written out literally); keep the two in step.
 export const config = {
   path: '/*',
   excludedPath: [
+    '/api/*',
     '/assets/*',
+    '/fonts/*',
     '/*.md',
     '/*.txt',
     '/*.xml',
@@ -130,12 +143,6 @@ export const config = {
     '/*.gif',
     '/*.ico',
     '/*.webmanifest',
+    '/*.woff2',
   ],
-  // No `method` key on purpose: Netlify only accepts GET, POST, PUT, PATCH,
-  // DELETE and OPTIONS there, and declaring GET alone would skip HEAD requests.
-  // The handler filters methods itself instead.
-  //
-  // If anything in here throws, serve the plain origin response instead of an
-  // error page: agent readiness must never cost the site its availability.
-  onError: 'bypass',
 }

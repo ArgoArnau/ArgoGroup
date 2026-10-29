@@ -196,7 +196,7 @@ test('nothing from the /growth brief leaks into /systems', () => {
   for (const phrase of growthOnly) assert.ok(!text.includes(phrase), `found "${phrase}"`)
 })
 
-// ── Served like Netlify serves it ──────────────────────────────────────────
+// ── Served like the host serves it ──────────────────────────────────────────
 
 let server
 let origin
