@@ -7,14 +7,15 @@ const EMAIL = 'info@groupargous.com'
 // Everything this site stores in a visitor's browser, as checked in a browser
 // on 2026-10-17 (before any choice, after Decline and after Accept). Keep this
 // list in step with the code: src/lib/consent.js, src/context/LangContext.jsx,
-// src/landing/growth/boot.js, src/landing/shared/attribution.js and the Meta
+// src/landing/growth/boot.js, src/landing/shared/attribution.js, the country
+// rule (src/landing/shared/region.js, netlify/functions/geo.js) and the Meta
 // Pixel (src/lib/pixel.js, src/landing/shared/tracking.js).
 const ITEMS = [
   {
     name: 'argo_cookie_consent',
     kind: 'Browser storage (local)',
     by: 'Group ARGO',
-    purpose: 'Remembers your choice on the cookie banner, so we do not ask again.',
+    purpose: 'Remembers your choice on the cookie banner (accepted, rejected or, outside the EU/EEA, the UK and Switzerland, OK), so we do not ask again.',
     duration: 'Until you change your choice or clear your browser data',
     consent: 'No: it is needed to respect your choice',
   },
@@ -48,7 +49,7 @@ const ITEMS = [
     by: 'Meta, through the Meta Pixel',
     purpose: 'Tells Meta that visits and form submissions come from the same browser, so we can measure which ads work.',
     duration: '90 days',
-    consent: 'Yes: only set after you accept',
+    consent: 'Yes in the EU/EEA, the UK and Switzerland: only set after you accept. Outside the EU/EEA, the UK and Switzerland, on our landing pages: on by default, until you reject',
   },
   {
     name: '_fbc',
@@ -56,7 +57,7 @@ const ITEMS = [
     by: 'Meta, through the Meta Pixel',
     purpose: 'Keeps the identifier of the Meta ad you clicked, when you arrive from one.',
     duration: '90 days',
-    consent: 'Yes: only set after you accept',
+    consent: 'Yes in the EU/EEA, the UK and Switzerland: only set after you accept. Outside the EU/EEA, the UK and Switzerland, on our landing pages: on by default, until you reject',
   },
 ]
 
@@ -94,6 +95,9 @@ export default function CookiePolicy() {
               On your first visit, a banner asks whether you accept cookies. On our landing pages, the form also offers an optional box to accept them when you send it; ticking it is the same choice as Accept on the banner. Until you accept, we set no advertising cookies and send nothing to Meta. If you decline, nothing changes: the site works the same.
             </p>
             <p>
+              Our landing pages (/growth and /systems) follow the rules of the country you visit from. To know which apply, the page asks our server for your country, which our hosting provider derives from your IP address; we do not store it. In the European Union and the European Economic Area, the United Kingdom and Switzerland, and whenever we cannot tell your country, everything works as described above. Everywhere else, the measurement cookies of the Meta Pixel are on by default: the Pixel loads when the page opens, and the banner tells you so, with an OK button and a Reject button. You can reject them at any time from that banner, which the "Cookies" link at the bottom of the page brings back. Once you reject, the Pixel stops sending anything to Meta on that visit and on later ones, and when you send a form our server does not tell Meta about it.
+            </p>
+            <p>
               You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Withdrawing your consent does not affect what was done before.
             </p>
           </div>
@@ -109,7 +113,7 @@ export default function CookiePolicy() {
               ))}
             </ul>
             <p>
-              When you accept, the Meta Pixel also tells Meta which of our pages you visit and whether you send a form, and we may send the same events to Meta from our own servers (Meta Conversions API). For a form sent from a landing page, that server event carries your email address, phone number, name and country as one-way SHA-256 hashes, never in readable form, as described in our <Link to="/privacy-policy">Privacy Policy</Link>. If you are logged in to Facebook or Instagram, Meta may also read or set its own cookies on its own domains. How Meta uses this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
+              When it is active (after you accept or, outside the EU/EEA, the UK and Switzerland, until you reject), the Meta Pixel also tells Meta which of our pages you visit and whether you send a form, and we may send the same events to Meta from our own servers (Meta Conversions API). For a form sent from a landing page, that server event carries your email address, phone number, name and country as one-way SHA-256 hashes, never in readable form, as described in our <Link to="/privacy-policy">Privacy Policy</Link>. If you are logged in to Facebook or Instagram, Meta may also read or set its own cookies on its own domains. How Meta uses this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
             </p>
           </div>
 

@@ -136,11 +136,13 @@ export function Dock({ cookies, onOpenForm, sheetOpen = false }) {
           data-reopened={cookies.reopened ? 'true' : undefined}
         >
           <p>
-            {chrome.cookie}{' '}
+            {cookies.informative ? chrome.cookieInformative : chrome.cookie}{' '}
             <a href={PRIVACY_URL} target="_blank" rel="noopener">{chrome.cookiePrivacy}</a>
           </p>
           <div className="cookie-actions">
-            <button type="button" className="cookie-btn" onClick={() => cookies.choose('accepted')}>{chrome.accept}</button>
+            {cookies.informative
+              ? <button type="button" className="cookie-btn" onClick={() => cookies.choose('acknowledged')}>{chrome.ok}</button>
+              : <button type="button" className="cookie-btn" onClick={() => cookies.choose('accepted')}>{chrome.accept}</button>}
             <button type="button" className="cookie-btn" onClick={() => cookies.choose('rejected')}>{chrome.reject}</button>
           </div>
         </section>
