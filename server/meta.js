@@ -1,11 +1,8 @@
-// Meta Conversions API, shared by the two Netlify functions that talk to it:
-//   netlify/functions/meta-capi.js  /api/event  browser events (PageView, ViewContent…)
-//   netlify/functions/lead.js       /api/lead   the Lead, once the CRM has taken it
+// Meta Conversions API, shared by the two functions that talk to it:
+//   server/meta-capi.js  /api/event  browser events (PageView, ViewContent…)
+//   server/lead.js       /api/lead   the Lead, once the CRM has taken it
 //
-// Lives outside netlify/functions on purpose: every file in there is deployed
-// as its own function. The functions import it and Netlify bundles it in.
-//
-// Environment (Netlify, secrets; never in the code: this repo is public):
+// Environment (Vercel, sensitive; never in the code: this repo is public):
 //   META_PIXEL_ID          the Pixel the events go to
 //   META_CAPI_TOKEN        Conversions API access token from Events Manager
 //   META_TEST_EVENT_CODE   optional: sends to Events Manager → Test events

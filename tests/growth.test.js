@@ -270,7 +270,7 @@ test('banned words and claims appear nowhere in the landing', () => {
   assert.deepEqual(elsewhere, [])
 })
 
-// ── Served like Netlify serves it ──────────────────────────────────────────
+// ── Served like the host serves it ──────────────────────────────────────────
 
 let server
 let origin

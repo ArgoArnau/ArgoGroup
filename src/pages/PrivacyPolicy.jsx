@@ -104,9 +104,9 @@ export default function PrivacyPolicy() {
               We use the following service providers. Each processes data on our behalf, under its own data processing terms, and receives only what it needs:
             </p>
             <ul>
-              <li><span className="legal-term">Website hosting:</span> Netlify, which hosts groupargous.com and passes our forms' submissions to our CRM</li>
+              <li><span className="legal-term">Website hosting:</span> Vercel, which hosts groupargous.com and passes our forms' submissions to our CRM</li>
               <li><span className="legal-term">Our CRM:</span> our own internal platform, hosted on Vercel, with its database on Supabase. Only the Group ARGO partners can access it</li>
-              <li><span className="legal-term">Advertising:</span> Meta (Facebook and Instagram) for the Pixel and the Conversions API, only with your consent; and the ad platforms we run campaigns on (Meta Ads, Google Ads, TikTok Ads and LinkedIn Ads)</li>
+              <li><span className="legal-term">Advertising:</span> Meta (Facebook and Instagram) for the Pixel and the Conversions API: in the EU/EEA, the UK and Switzerland only with your consent, elsewhere on our landing pages until you opt out (section 11); and the ad platforms we run campaigns on (Meta Ads, Google Ads, TikTok Ads and LinkedIn Ads)</li>
               <li><span className="legal-term">Email and communication tools:</span> services we use to talk to you and our clients</li>
               <li><span className="legal-term">Automation and AI tools:</span> platforms such as n8n and Make, and AI services, used to run our workflows and in service delivery</li>
               <li><span className="legal-term">Client CRMs:</span> tools such as HubSpot and Pipedrive, when we work inside a client's own system</li>

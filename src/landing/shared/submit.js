@@ -1,5 +1,5 @@
 // Sends a landing lead (/growth, /systems) to the CRM, through this site's own
-// /api/lead (netlify/functions/lead.js), which adds the key the browser must
+// /api/lead (server/lead.js), which adds the key the browser must
 // never see. The body is the CRM's contract (crm.js).
 //
 // Review mode: under `vite dev` and in the standalone review copy opened from
@@ -14,7 +14,7 @@ export const reviewMode = () => Boolean(import.meta.env?.DEV) || window.location
 /**
  * Resolves true when the CRM took the lead, false in review mode; throws on
  * failure. `metaConsent`: the visitor accepted Meta's cookies, so /api/lead
- * also sends the Lead to Meta from the server (netlify/functions/lead.js). It
+ * also sends the Lead to Meta from the server (server/lead.js). It
  * travels as a header, not in the body, because the body goes to the CRM as is.
  */
 export async function sendLead(payload, { metaConsent = false } = {}) {

@@ -27,9 +27,9 @@ export default defineConfig([
     },
   },
   {
-    // Build tooling, tests, and the Netlify edge function run outside the
+    // Build tooling, tests, and the server code run outside the
     // browser and outside the React component model.
-    files: ['scripts/**/*.mjs', 'tests/**/*.js', 'netlify/**/*.js', '*.config.js'],
+    files: ['scripts/**/*.mjs', 'tests/**/*.js', 'server/**/*.js', 'api/**/*.js', 'middleware.js', '*.config.js'],
     languageOptions: {
       ecmaVersion: 'latest',
       globals: { ...globals.node, URLPattern: 'readonly' },

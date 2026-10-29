@@ -1,9 +1,9 @@
-// The Conversions API relay (netlify/functions/meta-capi.js, /api/event), with
+// The Conversions API relay (server/meta-capi.js, /api/event), with
 // a fake Meta in place of fetch. Nothing here touches the network.
 
 import assert from 'node:assert/strict'
 import { afterEach, beforeEach, test } from 'node:test'
-import relay, { config } from '../netlify/functions/meta-capi.js'
+import relay from '../server/meta-capi.js'
 
 const SITE = 'https://www.groupargous.com'
 const ENV = ['META_PIXEL_ID', 'META_CAPI_TOKEN', 'META_TEST_EVENT_CODE']
@@ -41,10 +41,6 @@ const post = (body, headers = {}) => new Request(`${SITE}/api/event`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json', Origin: SITE, 'User-Agent': 'test-agent', ...headers },
   body: typeof body === 'string' ? body : JSON.stringify(body),
-})
-
-test('it answers at /api/event', () => {
-  assert.equal(config.path, '/api/event')
 })
 
 test('it sends the event to Meta with the IP, the user agent and the shared event_id', async () => {

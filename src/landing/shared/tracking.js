@@ -4,8 +4,8 @@
 // EU/EEA, the UK and Switzerland nothing runs until they press Accept on the
 // cookie banner; elsewhere it runs from the start unless they press Reject.
 // Every event checks first and is dropped, not queued, when it may not run. The
-// server half is netlify/functions/meta-capi.js (/api/event); without
-// META_PIXEL_ID and META_CAPI_TOKEN in Netlify it sends nothing to Meta.
+// server half is server/meta-capi.js (/api/event); without
+// META_PIXEL_ID and META_CAPI_TOKEN in Vercel it sends nothing to Meta.
 //
 // Pixel and CAPI receive the same event_id for each event, so Meta keeps one.
 //
@@ -15,7 +15,7 @@
 // and Contact are Meta's standard events (the campaign optimises for Lead);
 // Scroll50 and FormStart are custom, the "C" in Meta Pixel Helper.
 //
-// The Lead's server half is not sent from here: netlify/functions/lead.js
+// The Lead's server half is not sent from here: server/lead.js
 // sends it once the CRM has taken the request (SERVER_SENT below).
 
 import { onConsentChange } from '../../lib/consent.js'

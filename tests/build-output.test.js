@@ -18,7 +18,7 @@ if (!existsSync(join(DIST, 'index.html'))) {
 
 const read = (relative) => readFileSync(join(DIST, relative), 'utf8')
 
-// Flat `<slug>.html`, so Netlify serves the canonical URL directly rather than
+// Flat `<slug>.html`, so the host serves the canonical URL directly rather than
 // redirecting /slug to /slug/.
 const htmlFor = (path) => read(path === '/' ? 'index.html' : `${path.slice(1)}.html`)
 

@@ -1,6 +1,6 @@
 // End-to-end checks of every public endpoint, run against scripts/serve.mjs —
-// a local stand-in for the Netlify runtime that resolves static files the same
-// way and runs netlify/edge-functions/markdown.js in front of them.
+// a local stand-in for the host that resolves static files the same way and
+// runs server/markdown.js (middleware.js on Vercel) in front of them.
 
 import assert from 'node:assert/strict'
 import { after, before, test } from 'node:test'
@@ -58,7 +58,7 @@ test('HTML responses vary on Accept and advertise their markdown alternate', asy
 })
 
 test('canonical URLs answer 200 directly, with no redirect hop', async () => {
-  // A `<slug>/index.html` layout would make Netlify 301 /slug to /slug/, putting
+  // A `<slug>/index.html` layout would make the host redirect /slug to /slug/, putting
   // a redirect on every canonical URL and sitemap entry. Guard against that.
   for (const route of routes) {
     const response = await get(route.path, { accept: BROWSER_ACCEPT })
@@ -151,14 +151,6 @@ test('HEAD negotiates the same way but sends no body', async () => {
   assert.equal(response.headers.get('content-type'), 'text/markdown; charset=utf-8')
   assert.ok(varyIncludesAccept(response))
   assert.equal(await response.text(), '')
-})
-
-test('the edge function declares no method filter, so HEAD still reaches it', async () => {
-  // Netlify rejects HEAD in config.method; declaring GET alone would skip the
-  // HEAD requests that `curl -sI` makes, so the filter lives in the handler.
-  const { config } = await import('../netlify/edge-functions/markdown.js')
-  assert.equal(config.method, undefined)
-  assert.equal(config.onError, 'bypass')
 })
 
 test('methods other than GET and HEAD pass straight through', async () => {

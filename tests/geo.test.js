@@ -1,15 +1,14 @@
-// The visitor's country (netlify/functions/geo.js, /api/geo) and the cookie
+// The visitor's country (server/geo.js, /api/geo) and the cookie
 // rule the landings draw from it (src/landing/shared/region.js).
 
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import geo, { config } from '../netlify/functions/geo.js'
+import geo from '../server/geo.js'
 import { OPT_IN_COUNTRIES, ruleFor } from '../src/landing/shared/region.js'
 
 const ask = (context) => geo(new Request('https://www.groupargous.com/api/geo'), context)
 
-test('/api/geo answers the two-letter country Netlify gives it, never cached', async () => {
-  assert.equal(config.path, '/api/geo')
+test('/api/geo answers the two-letter country the host gives it, never cached', async () => {
   const response = await ask({ geo: { country: { code: 'US', name: 'United States' } } })
   assert.equal(response.status, 200)
   assert.deepEqual(await response.json(), { country: 'US' })

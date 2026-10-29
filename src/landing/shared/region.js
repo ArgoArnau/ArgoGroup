@@ -5,7 +5,7 @@
 // has. 'opt-out': everywhere else. The Pixel loads at once, the banner only
 // informs (OK / Reject), and Reject stops it for this visit and the next ones.
 //
-// The country comes from /api/geo (netlify/functions/geo.js). Until it
+// The country comes from /api/geo (server/geo.js). Until it
 // answers, the rule is unknown and nothing is sent; if it fails or is slow,
 // the visitor gets the opt-in rule.
 

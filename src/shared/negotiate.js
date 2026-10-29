@@ -1,6 +1,6 @@
 // Accept-header content negotiation, per RFC 9110 §12.5.1 and the
 // acceptmarkdown.com conventions. Pure functions with no runtime dependencies
-// so the Netlify edge function (Deno) and the Node test suite share one
+// so the Vercel middleware and the Node test suite share one
 // implementation.
 
 export const MARKDOWN_CONTENT_TYPE = 'text/markdown; charset=utf-8'

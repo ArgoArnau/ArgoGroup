@@ -1,5 +1,5 @@
 // The landings' road to the CRM: the lead each form builds (src/landing/shared/crm.js)
-// and the Netlify function that forwards it (netlify/functions/lead.js), with
+// and the function that forwards it (server/lead.js, /api/lead), with
 // a fake CRM in place of fetch. Nothing here touches the network.
 
 import assert from 'node:assert/strict'
@@ -7,7 +7,7 @@ import { afterEach, beforeEach, test } from 'node:test'
 
 globalThis.window = { location: { href: 'https://www.groupargous.com/growth?utm_source=facebook&fbclid=abc' } }
 const { crmPayload, CRM_FORMS } = await import('../src/landing/shared/crm.js')
-const { default: lead, config } = await import('../netlify/functions/lead.js')
+const { default: lead } = await import('../server/lead.js')
 
 const context = {
   mountedAt: 1_791_547_200_000,
@@ -80,7 +80,7 @@ test('the lead fits the contract limits', () => {
 
 // ---------- The function ----------
 
-const ENV = ['CRM_LEADS_URL', 'CRM_ENTRADA_SECRETO', 'VERCEL_AUTOMATION_BYPASS_SECRET']
+const ENV = ['CRM_LEADS_URL', 'CRM_ENTRADA_SECRETO', 'CRM_BYPASS_SECRET']
 let calls
 let reply
 const realFetch = globalThis.fetch
@@ -90,7 +90,7 @@ beforeEach(() => {
   reply = () => new Response(JSON.stringify({ ok: true }), { status: 200 })
   process.env.CRM_LEADS_URL = 'https://crm.example/api/leads'
   process.env.CRM_ENTRADA_SECRETO = 'test-key'
-  delete process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+  delete process.env.CRM_BYPASS_SECRET
   globalThis.fetch = async (url, init) => {
     calls.push({ url, init })
     return reply()
@@ -108,10 +108,6 @@ const post = (body, headers = {}) => new Request('https://www.groupargous.com/ap
   body: typeof body === 'string' ? body : JSON.stringify(body),
 })
 
-test('it answers at /api/lead', () => {
-  assert.equal(config.path, '/api/lead')
-})
-
 test('it forwards the body with the key and the visitor IP, and returns the CRM answer', async () => {
   const body = JSON.stringify({ nombre: 'Lola' })
   const response = await lead(post(body), { ip: '203.0.113.7' })
@@ -125,10 +121,10 @@ test('it forwards the body with the key and the visitor IP, and returns the CRM 
   assert.equal(calls[0].init.body, body, 'the body goes as it came')
 })
 
-test('the IP falls back to the Netlify header, and the preview bypass is added when set', async () => {
-  process.env.VERCEL_AUTOMATION_BYPASS_SECRET = 'bypass'
-  await lead(post({}, { 'x-nf-client-connection-ip': '198.51.100.4' }), {})
-  assert.equal(calls[0].init.headers['X-Argo-Ip-Cliente'], '198.51.100.4')
+test('the CRM preview bypass is added when set; without an IP none is sent', async () => {
+  process.env.CRM_BYPASS_SECRET = 'bypass'
+  await lead(post({}), {})
+  assert.equal(calls[0].init.headers['X-Argo-Ip-Cliente'], undefined)
   assert.equal(calls[0].init.headers['x-vercel-protection-bypass'], 'bypass')
 })
 
