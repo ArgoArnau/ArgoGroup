@@ -89,6 +89,22 @@ test('files the negotiation skips go straight to the assets, with their content 
   assert.equal(missing.status, 404)
 })
 
+test('the bare domain and plain http go to https://www with a 301, path and query kept', async () => {
+  const env = assets({ '/about': '<h1>About</h1>' })
+  for (const from of ['https://groupargous.com/about?utm_source=x', 'http://groupargous.com/about?utm_source=x', 'http://www.groupargous.com/about?utm_source=x']) {
+    const response = await worker.fetch(new Request(from), env, ctx)
+    assert.equal(response.status, 301, from)
+    assert.equal(response.headers.get('location'), 'https://www.groupargous.com/about?utm_source=x', from)
+  }
+  assert.deepEqual(env.seen, [], 'redirects never reach the assets')
+  // The canonical host and the workers.dev address are served as they are.
+  const canonical = await worker.fetch(new Request(`${SITE}/about`), env, ctx)
+  assert.equal(canonical.status, 200)
+  assert.equal(canonical.headers.get('strict-transport-security'), 'max-age=31536000')
+  const preview = await worker.fetch(new Request('https://argo-web.example.workers.dev/about'), env, ctx)
+  assert.equal(preview.status, 200)
+})
+
 test('wrangler.jsonc: the Worker, its assets, nodejs_compat and process.env', () => {
   const config = JSON.parse(readFileSync(new URL('../wrangler.jsonc', import.meta.url), 'utf8').replace(/^\s*\/\/.*$/gm, ''))
   assert.equal(config.main, 'server/worker.js')
